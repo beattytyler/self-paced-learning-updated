@@ -5,6 +5,7 @@ and primary user-facing functionality.
 """
 
 import json
+import re
 
 from flask import (
     Blueprint,
@@ -83,6 +84,37 @@ def filter_active_subtopics(subtopics: Dict[str, Any]) -> Dict[str, Any]:
         for subtopic_id, subtopic_data in (subtopics or {}).items()
         if is_active_subtopic(subtopic_data)
     }
+
+
+def normalize_tag_key(tag: str) -> str:
+    """Normalize tag text for cross-file matching."""
+    if not isinstance(tag, str):
+        return ""
+    cleaned = tag.strip().lower()
+    cleaned = cleaned.replace("comparsion", "comparison")
+    return re.sub(r"[^a-z0-9]+", "", cleaned)
+
+
+def expand_tag_keys(tag_value: Any) -> Set[str]:
+    """Return normalized tag keys for matching, including split tokens."""
+    if tag_value is None:
+        return set()
+    text = str(tag_value)
+    parts = [text]
+    if re.search(r"[,;/|]", text):
+        parts = re.split(r"[,;/|]+", text)
+    elif " " in text and "_" in text:
+        parts = re.split(r"\s+", text)
+
+    keys: Set[str] = set()
+    full_key = normalize_tag_key(text)
+    if full_key:
+        keys.add(full_key)
+    for part in parts:
+        key = normalize_tag_key(part)
+        if key:
+            keys.add(key)
+    return keys
 
 
 # ============================================================================
@@ -466,13 +498,26 @@ def show_results_page():
 
         for topic in normalized_topics:
             match = None
-            topic_lower = topic.lower()
+            topic_keys = expand_tag_keys(topic)
+            if not topic_keys:
+                continue
 
-            # Search ONLY remedial lessons with strict tag matching
+            # Search ONLY remedial lessons with normalized tag matching
             # Results page is exclusively for remediation after quiz identifies weak topics
             for lesson in remedial_lessons:
-                lesson_tags = [tag.lower() for tag in lesson.get("tags", [])]
-                if topic_lower in lesson_tags:
+                raw_tags = lesson.get("tags", [])
+                if isinstance(raw_tags, (list, tuple, set)):
+                    tags_iter = raw_tags
+                elif isinstance(raw_tags, str):
+                    tags_iter = [raw_tags]
+                else:
+                    tags_iter = []
+
+                lesson_tag_keys: Set[str] = set()
+                for tag in tags_iter:
+                    lesson_tag_keys.update(expand_tag_keys(tag))
+
+                if topic_keys & lesson_tag_keys:
                     match = lesson
                     break
 
@@ -602,7 +647,45 @@ def generate_remedial_quiz():
             current_subject, current_subtopic
         )
 
-        if not wrong_indices:
+        weak_topics_raw = progress_service.get_weak_topics(
+            current_subject, current_subtopic
+        )
+        had_stored_weak_topics = bool(weak_topics_raw)
+
+        if not weak_topics_raw:
+            stored_analysis = progress_service.get_quiz_analysis(
+                current_subject, current_subtopic
+            ) or {}
+            weak_topics_raw = (
+                stored_analysis.get("weak_topics")
+                or stored_analysis.get("weak_tags")
+                or stored_analysis.get("weak_areas")
+                or []
+            )
+
+        if isinstance(weak_topics_raw, str):
+            weak_topics_raw = [weak_topics_raw]
+
+        weak_topics: List[str] = []
+        seen_topics = set()
+        for topic in weak_topics_raw or []:
+            if not isinstance(topic, str):
+                continue
+            cleaned = topic.strip()
+            if not cleaned:
+                continue
+            key = cleaned.lower()
+            if key in seen_topics:
+                continue
+            seen_topics.add(key)
+            weak_topics.append(cleaned)
+
+        if weak_topics and not had_stored_weak_topics:
+            progress_service.set_weak_topics(
+                current_subject, current_subtopic, weak_topics
+            )
+
+        if not wrong_indices and not weak_topics:
             return (
                 jsonify(
                     {
@@ -639,7 +722,7 @@ def generate_remedial_quiz():
 
         # Use AI to generate targeted remedial quiz based on wrong answers
         remedial_questions = ai_service.generate_remedial_quiz(
-            original_questions, wrong_indices, question_pool
+            original_questions, wrong_indices, question_pool, weak_topics
         )
 
         print(
@@ -658,7 +741,7 @@ def generate_remedial_quiz():
             )
 
         # Get weak topics for storage (from previous analysis)
-        weak_topics = progress_service.get_weak_topics(
+        weak_topics = weak_topics or progress_service.get_weak_topics(
             current_subject, current_subtopic
         )
 

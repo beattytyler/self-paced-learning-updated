@@ -1,0 +1,460 @@
+{
+  "lessons": [
+    {
+      "id": "python-turtlebasic-drawshapes",
+      "order": 1,
+      "title": "Python Turtle Intro",
+      "lessonType": "initial",
+      "tags": [
+        "TurtleBasics",
+        "DrawShapes",
+        "Colors",
+        "Crests"
+      ],
+      "content": [
+        {
+          "type": "story",
+          "text": "The Tower’s doors swing open… and you step into the Hall of Glyphs. A turtle-shaped spirit 🐢 greets you: “Use the magic of lines and shapes to draw your Hero Crest.”"
+        },
+        {
+          "type": "paragraph",
+          "text": "In Python, drawing magic comes from the turtle module. Your turtle is a magical pet that draws wherever it moves."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Summon the turtle module to draw on the screen.",
+            "Use movement commands to create lines and shapes.",
+            "Add color and combine shapes into a crest."
+          ]
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "python-turtlebasic-forward",
+      "order": 2,
+      "title": "Turtle Basics",
+      "lessonType": "initial",
+      "tags": [
+        "TurtleBasics"
+      ],
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Import turtle: import turtle",
+            "Create a turtle: t = turtle.Turtle()",
+            "Move: t.forward(x), t.backward(x)",
+            "Turn: t.right(angle), t.left(angle)",
+            "Finish: turtle.done()"
+          ]
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "python-turtlebasic-forward-drill-1",
+      "title": "Hero Training Drill 1 – Make Your Turtle Walk 🐢",
+      "videoId": "",
+      "content": [
+        {
+          "type": "section",
+          "title": "Hero Training Drill 1 – Make Your Turtle Walk 🐢"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Walk forward 100 steps.",
+            "Turn right 90 degrees.",
+            "Walk forward 100 steps again."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import turtle\n\nt = turtle.Turtle()\n\nt.forward(100)\nt.right(90)\nt.forward(100)\n\nturtle.done()"
+        }
+      ],
+      "tags": [
+        "TurtleBasics"
+      ],
+      "type": "initial",
+      "lessonType": "initial",
+      "updated_date": "2025-12-31",
+      "order": 3
+    },
+    {
+      "id": "python-drawshapes-square",
+      "order": 4,
+      "title": "Draw Shapes",
+      "lessonType": "initial",
+      "tags": [
+        "DrawShapes"
+      ],
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Loops help draw shapes quickly. A square has 4 equal sides with 90° turns. A triangle has 3 sides with 120° turns. A circle can be drawn with t.circle(radius)."
+        },
+        {
+          "type": "code",
+          "text": "for i in range(4):\n    t.forward(100)\n    t.right(90)"
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "python-drawshapes-square-drill-1",
+      "title": "Hero Training Drill 2 – Draw a Shield 🛡️",
+      "videoId": "",
+      "content": [
+        {
+          "type": "section",
+          "title": "Hero Training Drill 2 – Draw a Shield 🛡️"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Use a loop to draw 4 sides.",
+            "Each side = 100 steps, turn 90° right."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import turtle\n\nt = turtle.Turtle()\n\nfor i in range(4):\n    t.forward(100)\n    t.right(90)\n\nturtle.done()"
+        }
+      ],
+      "tags": [
+        "DrawShapes"
+      ],
+      "type": "initial",
+      "lessonType": "initial",
+      "updated_date": "2025-12-31",
+      "order": 5
+    },
+    {
+      "id": "python-colors-fillcolor",
+      "order": 6,
+      "title": "Colors",
+      "lessonType": "initial",
+      "tags": [
+        "Colors"
+      ],
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Pen color: t.pencolor(\"red\")",
+            "Fill color: t.fillcolor(\"blue\")",
+            "Fill a shape with: t.begin_fill() ... t.end_fill()"
+          ]
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "python-colors-fillcolor-drill-1",
+      "title": "Hero Training Drill 3 – Paint Your Shield 🎨",
+      "videoId": "",
+      "content": [
+        {
+          "type": "section",
+          "title": "Hero Training Drill 3 – Paint Your Shield 🎨"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Set pencolor = black.",
+            "Set fillcolor = red.",
+            "Draw a square and fill it."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import turtle\n\nt = turtle.Turtle()\n\nt.pencolor(\"black\")\nt.fillcolor(\"red\")\n\nt.begin_fill()\nfor i in range(4):\n    t.forward(100)\n    t.right(90)\nt.end_fill()\n\nturtle.done()"
+        }
+      ],
+      "tags": [
+        "Colors"
+      ],
+      "type": "initial",
+      "lessonType": "initial",
+      "updated_date": "2025-12-31",
+      "order": 7
+    },
+    {
+      "id": "python-crests-symbol",
+      "order": 8,
+      "title": "Crests",
+      "lessonType": "initial",
+      "tags": [
+        "Crests"
+      ],
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Combine shapes (square + circle + triangle) to build a crest.",
+            "Add initials with t.write(\"A\").",
+            "Customize colors for each part."
+          ]
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "python-crests-symbol-drill-1",
+      "title": "Hero Training Drill 4 – Add a Crest Symbol ⭐",
+      "videoId": "",
+      "content": [
+        {
+          "type": "section",
+          "title": "Hero Training Drill 4 – Add a Crest Symbol ⭐"
+        },
+        {
+          "type": "paragraph",
+          "text": "Add a circle in the middle of your shield."
+        },
+        {
+          "type": "code",
+          "text": "import turtle\n\nt = turtle.Turtle()\n\nt.pencolor(\"black\")\nt.fillcolor(\"yellow\")\n\n# Shield\n\nt.begin_fill()\nfor i in range(4):\n    t.forward(120)\n    t.right(90)\nt.end_fill()\n\n# Move turtle to center\n\nt.penup()\nt.goto(60, -60)\nt.pendown()\n\n# Crest circle\n\nt.fillcolor(\"blue\")\nt.begin_fill()\nt.circle(40)\nt.end_fill()\n\nturtle.done()"
+        }
+      ],
+      "tags": [
+        "Crests"
+      ],
+      "type": "initial",
+      "lessonType": "initial",
+      "updated_date": "2025-12-31",
+      "order": 9
+    },
+    {
+      "id": "python-turtlebasic-challenge",
+      "order": 10,
+      "title": "Challenge Quest",
+      "lessonType": "initial",
+      "tags": [
+        "TurtleBasics",
+        "DrawShapes",
+        "Colors",
+        "Crests"
+      ],
+      "content": [
+        {
+          "type": "story",
+          "text": "Forge your Hero Crest — a badge that will travel with you forever."
+        },
+        {
+          "type": "challenge",
+          "instructions": [
+            "Draw a shield base (square or circle).",
+            "Fill it with your hero’s color.",
+            "Add at least one symbol (circle, triangle, star).",
+            "Write your hero’s initial on it."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import turtle\n\nt = turtle.Turtle()\n\n# Shield\n\nt.pencolor(\"black\")\nt.fillcolor(\"red\")\nt.begin_fill()\nfor i in range(4):\n    t.forward(150)\n    t.right(90)\nt.end_fill()\n\n# Crest circle\n\nt.penup()\nt.goto(75, -75)\nt.pendown()\nt.fillcolor(\"yellow\")\nt.begin_fill()\nt.circle(50)\nt.end_fill()\n\n# Initial\n\nt.penup()\nt.goto(30, -20)\nt.pendown()\nt.write(\"H\", font=(\"Arial\", 24, \"bold\"))\n\nturtle.done()"
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "python-turtlebasic-recap",
+      "order": 11,
+      "title": "Recap",
+      "lessonType": "initial",
+      "tags": [
+        "TurtleBasics",
+        "DrawShapes",
+        "Colors",
+        "Crests"
+      ],
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Import turtle and summon a Turtle() to draw.",
+            "Move with forward/backward and turn left/right.",
+            "Use loops to draw shapes like squares and triangles.",
+            "Use pencolor/fillcolor and begin_fill/end_fill to add color.",
+            "Combine shapes and text to forge a personal Hero Crest."
+          ]
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "week-13-remedial",
+      "order": 17,
+      "title": "Turtle Basics",
+      "lessonType": "remedial",
+      "tags": [
+        "TurtleBasics",
+        "DrawShapes",
+        "Colors",
+        "Crests"
+      ],
+      "content": [
+        {
+          "type": "story",
+          "text": "🐢 First Steps — your turtle draws wherever it goes."
+        },
+        {
+          "type": "list",
+          "items": [
+            "import turtle to summon drawing magic.",
+            "t = turtle.Turtle() creates the turtle.",
+            "Move with forward/backward and turn left/right."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import turtle\n\nt = turtle.Turtle()\nt.forward(50)\nt.right(90)\nt.forward(50)\n\nturtle.done()"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Make the turtle draw a short L: forward 30, right 90, forward 30.",
+            "✅ Solution:\nimport turtle\n\nt=turtle.Turtle()\nt.forward(30)\nt.right(90)\nt.forward(30)\n\nturtle.done()"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Draw Shapes"
+        },
+        {
+          "type": "story",
+          "text": "🛡️ Shape Forge — loops make shapes easy and repeatable."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Square: 4 sides, turn 90°.",
+            "Triangle: 3 sides, turn 120°.",
+            "Circle: t.circle(radius)."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import turtle\n\nt=turtle.Turtle()\nfor _ in range(4):\n    t.forward(80)\n    t.right(90)\n\nturtle.done()"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Draw a triangle with side 60.",
+            "✅ Solution:\nimport turtle\n\nt=turtle.Turtle()\nfor _ in range(3):\n    t.forward(60)\n    t.right(120)\n\nturtle.done()"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Colors"
+        },
+        {
+          "type": "story",
+          "text": "🎨 Color Enchantment — bring your crest to life with pen and fill."
+        },
+        {
+          "type": "list",
+          "items": [
+            "t.pencolor(\"black\") sets line color.",
+            "t.fillcolor(\"red\") sets fill color.",
+            "Use begin_fill() and end_fill() around the drawing."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import turtle\n\nt=turtle.Turtle()\nt.pencolor(\"black\")\nt.fillcolor(\"red\")\n\nt.begin_fill()\nfor _ in range(4):\n    t.forward(80)\n    t.right(90)\nt.end_fill()\n\nturtle.done()"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Fill a circle with blue.",
+            "✅ Solution:\nimport turtle\n\nt=turtle.Turtle()\nt.fillcolor(\"blue\")\nt.begin_fill()\nt.circle(40)\nt.end_fill()\n\nturtle.done()"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Crests"
+        },
+        {
+          "type": "story",
+          "text": "⭐ Crest Builder — combine shapes and add an initial."
+        },
+        {
+          "type": "list",
+          "items": [
+            "You can move the turtle with penup(), goto(x,y), pendown().",
+            "Write text with t.write(\"A\", font=(...)).",
+            "Combine a base shape + a symbol shape."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import turtle\n\nt=turtle.Turtle()\n# base square\nfor _ in range(4):\n    t.forward(100)\n    t.right(90)\n\n# move to center\n\nt.penup(); t.goto(50, -50); t.pendown()\nt.circle(30)\n\nt.penup(); t.goto(10, -10); t.pendown()\nt.write(\"H\", font=(\"Arial\", 18, \"bold\"))\n\nturtle.done()"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Draw a square, then write your initial somewhere on it.",
+            "✅ Solution: (example)\nimport turtle\n\nt=turtle.Turtle()\nfor _ in range(4):\n    t.forward(100)\n    t.right(90)\n\nt.penup(); t.goto(20, -20); t.pendown()\nt.write(\"A\", font=(\"Arial\", 20, \"bold\"))\n\nturtle.done()"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Boss Challenge"
+        },
+        {
+          "type": "story",
+          "text": "🗝️ Boss Challenge — Forge Your Hero Crest (Turtle)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Summon turtle and draw a filled base shape.",
+            "Add a symbol (circle/triangle).",
+            "Write an initial on the crest."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import turtle\n\nt = turtle.Turtle()\n\nt.pencolor(\"black\")\nt.fillcolor(\"red\")\n\n# Base shield\n\nt.begin_fill()\nfor _ in range(4):\n    t.forward(150)\n    t.right(90)\nt.end_fill()\n\n# Symbol\n\nt.penup(); t.goto(75, -75); t.pendown()\nt.fillcolor(\"yellow\")\nt.begin_fill(); t.circle(50); t.end_fill()\n\n# Initial\n\nt.penup(); t.goto(30, -20); t.pendown()\nt.write(\"H\", font=(\"Arial\", 24, \"bold\"))\n\nturtle.done()"
+        }
+      ],
+      "type": "remedial",
+      "videoId": "",
+      "updated_date": "2026-01-09"
+    }
+  ]
+}

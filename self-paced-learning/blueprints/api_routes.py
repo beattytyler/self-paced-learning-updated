@@ -7,6 +7,7 @@ and learning management APIs.
 from flask import Blueprint, jsonify, request, session
 from services import get_data_service, get_progress_service, get_ai_service
 from typing import Dict, List, Optional
+from urllib.parse import unquote
 
 # Create the Blueprint
 api_bp = Blueprint("api", __name__, url_prefix="/api")
@@ -227,6 +228,9 @@ def api_lesson_plans(subject, subtopic):
 
         ordered_lessons = []
         normalised_lessons = {}
+        completed_lessons = set(
+            progress_service.get_completed_lessons(subject, subtopic)
+        )
 
         for lesson in lessons:
             if not isinstance(lesson, dict):
@@ -235,9 +239,7 @@ def api_lesson_plans(subject, subtopic):
             lesson_copy = dict(lesson)
             lesson_id = lesson_copy.get("id") or f"lesson_{len(ordered_lessons) + 1}"
             lesson_copy["id"] = lesson_id
-            lesson_copy["completed"] = progress_service.is_lesson_complete(
-                subject, subtopic, lesson_id
-            )
+            lesson_copy["completed"] = lesson_id in completed_lessons
 
             ordered_lessons.append(lesson_copy)
             normalised_lessons[lesson_id] = lesson_copy
@@ -319,7 +321,7 @@ def api_find_lessons_by_tags():
 # ============================================================================
 
 
-@api_bp.route("/subjects/<subject>/tags")
+@api_bp.route("/subjects/<subject>/tags", methods=["GET"])
 def api_get_subject_tags(subject):
     """API endpoint to get available tags for a subject."""
     try:
@@ -330,11 +332,90 @@ def api_get_subject_tags(subject):
         if subject not in subjects:
             return jsonify({"error": "Subject not found"}), 404
 
-        # Get tags for the subject
-        tags = data_service.get_subject_tags(subject)
+        source = (request.args.get("source") or "").strip().lower()
 
+        if source == "allowed":
+            tags = data_service.get_subject_allowed_tags(subject)
+        else:
+            tags = data_service.get_subject_tags(subject)
+
+        # Get tags for the subject
         return jsonify({"subject": subject, "tags": tags})
 
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@api_bp.route("/subjects/<subject>/tags", methods=["POST"])
+def api_add_subject_tag(subject):
+    """API endpoint to add a new tag to a subject's tag pool."""
+    try:
+        data_service = get_data_service()
+
+        # Validate subject exists
+        subjects = data_service.discover_subjects()
+        if subject not in subjects:
+            return jsonify({"error": "Subject not found"}), 404
+
+        payload = request.get_json() or {}
+        tag = payload.get("tag", "")
+        if not isinstance(tag, str) or not tag.strip():
+            return jsonify({"error": "Tag is required"}), 400
+
+        updated_tags = data_service.add_subject_tag(subject, tag)
+        if updated_tags is None:
+            return jsonify({"error": "Failed to save tag"}), 500
+
+        # Preserve the saved casing for the tag in the response
+        normalized = tag.strip().lower()
+        saved_tag = next(
+            (item for item in updated_tags if item.lower() == normalized),
+            tag.strip(),
+        )
+
+        return jsonify(
+            {"success": True, "tag": saved_tag, "tags": updated_tags, "subject": subject}
+        )
+
+    except (TypeError, ValueError) as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@api_bp.route("/subjects/<subject>/tags/<path:tag>", methods=["DELETE"])
+def api_remove_subject_tag(subject, tag):
+    """API endpoint to remove a tag from a subject's tag pool."""
+    try:
+        data_service = get_data_service()
+
+        # Validate subject exists
+        subjects = data_service.discover_subjects()
+        if subject not in subjects:
+            return jsonify({"error": "Subject not found"}), 404
+
+        decoded_tag = unquote(tag) if tag is not None else ""
+        if not isinstance(decoded_tag, str) or not decoded_tag.strip():
+            return jsonify({"error": "Tag is required"}), 400
+
+        updated_tags = data_service.remove_subject_tag(subject, decoded_tag)
+        if updated_tags is None:
+            return jsonify({"error": "Failed to remove tag"}), 500
+
+        normalized = decoded_tag.strip().lower()
+        removed = all(item.lower() != normalized for item in updated_tags)
+
+        return jsonify(
+            {
+                "success": removed,
+                "tags": updated_tags,
+                "subject": subject,
+                "removed": removed,
+            }
+        )
+
+    except (TypeError, ValueError) as e:
+        return jsonify({"error": str(e)}), 400
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

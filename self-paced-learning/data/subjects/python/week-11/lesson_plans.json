@@ -1,0 +1,398 @@
+{
+  "lessons": [
+    {
+      "id": "python-input-casting",
+      "order": 1,
+      "title": "Python Input Casting",
+      "lessonType": "initial",
+      "tags": [
+        "Input",
+        "Casting",
+        "Print"
+      ],
+      "content": [
+        {
+          "type": "story",
+          "text": "Your hero has stats now, but the villagers are not impressed. They shout: \"Traveler, tell us your name! How many coins do you carry? How strong are you?\""
+        },
+        {
+          "type": "paragraph",
+          "text": "To answer them, your hero needs to listen and respond. This is where we use input() and friendly output."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Input → let the player type information",
+            "Casting → convert input text into numbers",
+            "Print (f-strings) → produce clean, friendly output"
+          ]
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "python-input-villagers",
+      "order": 2,
+      "title": "Input",
+      "lessonType": "initial",
+      "tags": [
+        "Input"
+      ],
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The input() function is your hero’s ears 👂. It lets the player type something in, and the hero remembers it."
+        },
+        {
+          "type": "code",
+          "text": "hero_name = input(\"What is your hero's name? \")\nprint(\"Welcome,\", hero_name)"
+        },
+        {
+          "type": "paragraph",
+          "text": "Important: Everything typed in with input() is stored as text (a string), even if it looks like a number."
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "python-input-villagers-drill-1",
+      "title": "Hero Training Drill 1 – Coins from the Villagers 💰",
+      "videoId": "",
+      "content": [
+        {
+          "type": "section",
+          "title": "Hero Training Drill 1 – Coins from the Villagers 💰"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Use input() to ask: “How many coins do you carry?”",
+            "Print: \"You have X coins.\" (replace X with the answer)."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "hero_coins = input(\"How many coins do you carry? \")\nprint(\"You have\", hero_coins, \"coins.\")"
+        }
+      ],
+      "tags": [
+        "Input"
+      ],
+      "type": "initial",
+      "lessonType": "initial",
+      "updated_date": "2025-12-31",
+      "order": 3
+    },
+    {
+      "id": "python-casting-villagers",
+      "order": 4,
+      "title": "Casting",
+      "lessonType": "initial",
+      "tags": [
+        "Casting"
+      ],
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Sometimes the villagers give you numbers, but they arrive as text scrolls 📜. To use them for math, you must turn them into numbers. This is called casting."
+        },
+        {
+          "type": "list",
+          "items": [
+            "int() → makes an integer (whole number)",
+            "float() → makes a decimal number"
+          ]
+        },
+        {
+          "type": "code",
+          "text": "coins = int(input(\"How many coins do you carry? \"))\nattack = float(input(\"What is your attack power? \"))"
+        },
+        {
+          "type": "paragraph",
+          "text": "Now you can do math:"
+        },
+        {
+          "type": "code",
+          "text": "coins += 5\nprint(\"After treasure, you have\", coins, \"coins.\")"
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "python-casting-villagers-drill-1",
+      "title": "Hero Training Drill 2 – Strength Check 💪",
+      "videoId": "",
+      "content": [
+        {
+          "type": "section",
+          "title": "Hero Training Drill 2 – Strength Check 💪"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Use float(input()) to ask for attack power.",
+            "Add 2.5 to the attack power (magic boost).",
+            "Print the boosted power."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "hero_attack = float(input(\"What is your attack power? \"))\nhero_attack += 2.5\nprint(\"With a magic boost, your attack is now\", hero_attack)"
+        }
+      ],
+      "tags": [
+        "Casting"
+      ],
+      "type": "initial",
+      "lessonType": "initial",
+      "updated_date": "2025-12-31",
+      "order": 5
+    },
+    {
+      "id": "python-print-fstrings",
+      "order": 6,
+      "title": "Print",
+      "lessonType": "initial",
+      "tags": [
+        "Print"
+      ],
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Using commas with print() works fine, but Python also has a magic shortcut called f-strings. It’s like inserting variables directly into your sentence."
+        },
+        {
+          "type": "code",
+          "text": "hero_name = \"Kai\"\nhero_hp = 100\nprint(f\"Welcome {hero_name}! You start with {hero_hp} HP.\")"
+        },
+        {
+          "type": "paragraph",
+          "text": "F-strings make your game output look cleaner and easier to write."
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "python-print-fstrings-drill-1",
+      "title": "Hero Training Drill 3 – Fancy Greeting 🎉",
+      "videoId": "",
+      "content": [
+        {
+          "type": "section",
+          "title": "Hero Training Drill 3 – Fancy Greeting 🎉"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Ask for hero’s name with input().",
+            "Give them 100 HP automatically.",
+            "Print: \"Welcome Kai! You have 100 HP.\" using an f-string (with their name)."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "hero_name = input(\"What is your hero's name? \")\nhero_hp = 100\nprint(f\"Welcome {hero_name}! You have {hero_hp} HP.\")"
+        }
+      ],
+      "tags": [
+        "Print"
+      ],
+      "type": "initial",
+      "lessonType": "initial",
+      "updated_date": "2025-12-31",
+      "order": 7
+    },
+    {
+      "id": "python-input-print",
+      "order": 8,
+      "title": "Challenge Quest",
+      "lessonType": "initial",
+      "tags": [
+        "Input",
+        "Casting",
+        "Print"
+      ],
+      "content": [
+        {
+          "type": "story",
+          "text": "The villagers surround you and ask three questions: “What is your name?” “How many coins do you carry?” “What is your attack power?”"
+        },
+        {
+          "type": "challenge",
+          "instructions": [
+            "Ask for hero name.",
+            "Ask for coins (cast to int).",
+            "Ask for attack power (cast to float).",
+            "Print a full hero introduction using f-strings."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "hero_name = input(\"What is your hero's name? \")\nhero_coins = int(input(\"How many coins do you carry? \"))\nhero_attack = float(input(\"What is your attack power? \"))\n\nprint(f\"Welcome {hero_name}!\")\nprint(f\"You have {hero_coins} coins and {hero_attack} attack power.\")"
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "python-input-casting-recap",
+      "order": 9,
+      "title": "Recap",
+      "lessonType": "initial",
+      "tags": [
+        "Input",
+        "Casting",
+        "Print"
+      ],
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Use input() so the hero can listen to players.",
+            "Cast input into numbers with int() and float() for math.",
+            "Use f-strings to print clean, friendly sentences."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Next: your hero faces their first real choice — fight, run, or bribe? We’ll learn about if/elif/else conditionals."
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "week-11-remedial",
+      "order": 14,
+      "title": "Input",
+      "lessonType": "remedial",
+      "tags": [
+        "Input",
+        "Casting",
+        "Print"
+      ],
+      "content": [
+        {
+          "type": "story",
+          "text": "👂 Listening Practice — Pip learns input() so villagers can talk to the hero."
+        },
+        {
+          "type": "list",
+          "items": [
+            "input(prompt) waits for the player to type something.",
+            "The result is always a string (text)."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "name = input(\"Name? \")\nprint(\"Welcome\", name)"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Ask for favorite spell and print it back.",
+            "✅ Solution:\nspell=input(\"Favorite spell? \")\nprint(\"You chose\", spell)"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Casting"
+        },
+        {
+          "type": "story",
+          "text": "📜 Number Scroll Decoder — convert input text into real numbers."
+        },
+        {
+          "type": "list",
+          "items": [
+            "int(...) converts to whole numbers.",
+            "float(...) converts to decimals."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "coins = int(input(\"Coins? \"))\ncoins += 5\nprint(\"Now you have\", coins)"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Ask for attack power (float), add 2.5, print it.",
+            "✅ Solution:\nap=float(input(\"Attack power? \"))\nap += 2.5\nprint(ap)"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Print"
+        },
+        {
+          "type": "story",
+          "text": "🗣️ Friendly Output — Professor Glyph wants clean sentences (f-strings!)."
+        },
+        {
+          "type": "list",
+          "items": [
+            "f-strings start with f\"...\"",
+            "Put variables inside { }."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "hero = \"Kai\"\nhp = 100\nprint(f\"Welcome {hero}! You have {hp} HP.\")"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) name='Luna', coins=12 → print \"Luna carries 12 coins.\"",
+            "✅ Solution:\nname='Luna'; coins=12\nprint(f\"{name} carries {coins} coins.\")"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Boss Challenge"
+        },
+        {
+          "type": "story",
+          "text": "🗝️ Boss Challenge — Full Hero Introduction"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Ask for name (input).",
+            "Ask for coins (int casting).",
+            "Ask for attack power (float casting).",
+            "Print a clean introduction using f-strings."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "name = input(\"What is your hero's name? \")\ncoins = int(input(\"How many coins do you carry? \"))\nattack = float(input(\"What is your attack power? \"))\n\nprint(f\"Welcome {name}!\")\nprint(f\"You have {coins} coins and {attack} attack power.\")"
+        }
+      ],
+      "type": "remedial",
+      "videoId": "",
+      "updated_date": "2026-01-09"
+    }
+  ]
+}

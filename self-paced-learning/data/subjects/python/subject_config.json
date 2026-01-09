@@ -6,13 +6,6 @@
       "lesson_count": 0,
       "name": "NumPy Arrays",
       "order": 1,
-      "prerequisites": [
-        "functions",
-        "dictionaries",
-        "lists",
-        "loops",
-        "sets"
-      ],
       "progress": {
         "lessons": {
           "completed_count": 0,
@@ -46,9 +39,6 @@
       "lesson_count": 0,
       "name": "Python Dictionaries",
       "order": 2,
-      "prerequisites": [
-        "lists"
-      ],
       "progress": {
         "overall": {
           "completion_percentage": 0,
@@ -65,7 +55,6 @@
       "lesson_count": 7,
       "name": "Python Functions",
       "order": 3,
-      "prerequisites": [],
       "progress": {
         "lessons": {
           "completed_count": 0,
@@ -96,7 +85,6 @@
       "lesson_count": 10,
       "name": "Python Lists",
       "order": 4,
-      "prerequisites": [],
       "progress": {
         "lessons": {
           "completed_count": 0,
@@ -121,13 +109,28 @@
       "status": "inactive",
       "video_count": 0
     },
+    "sets": {
+      "description": "Learn about unordered collections and set operations like union and intersection",
+      "estimated_time": "1 hour",
+      "lesson_count": 0,
+      "name": "Python Sets",
+      "order": 5,
+      "progress": {
+        "overall": {
+          "completion_percentage": 0,
+          "is_complete": false
+        }
+      },
+      "question_count": 0,
+      "status": "inactive",
+      "video_count": 0
+    },
     "loops": {
       "description": "Learn how to automate repetitive tasks using for and while loops",
       "estimated_time": "1.5 hours",
       "lesson_count": 7,
       "name": "Python Loops",
-      "order": 5,
-      "prerequisites": [],
+      "order": 6,
       "progress": {
         "lessons": {
           "completed_count": 0,
@@ -152,42 +155,32 @@
       "status": "inactive",
       "video_count": 0
     },
-    "sets": {
-      "description": "Learn about unordered collections and set operations like union and intersection",
-      "estimated_time": "1 hour",
-      "lesson_count": 0,
-      "name": "Python Sets",
-      "order": 6,
-      "prerequisites": [
-        "lists"
-      ],
-      "progress": {
-        "overall": {
-          "completion_percentage": 0,
-          "is_complete": false
-        }
-      },
-      "question_count": 0,
-      "status": "inactive",
-      "video_count": 0
-    },
-    "week_1": {
+    "week-1": {
       "description": "Meet Python & Hello World - Learn print() and comments through an RPG adventure",
       "estimated_time": "1 hour",
       "lesson_count": 10,
       "name": "Week 1 - The Hero Awakens",
       "order": 7,
-      "prerequisites": [],
       "progress": {
         "lessons": {
-          "completed_count": 0,
-          "completed_lessons": [],
-          "completion_percentage": 0,
+          "completed_count": 9,
+          "completed_lessons": [
+            "adventure-begins",
+            "challenge-prologue",
+            "comments-in-python",
+            "intro-to-python",
+            "print-function",
+            "print-multiple-values",
+            "training-drill-1",
+            "training-drill-2",
+            "week-1-summary"
+          ],
+          "completion_percentage": 90,
           "total_count": 10
         },
         "overall": {
-          "completed_items": 0,
-          "completion_percentage": 0,
+          "completed_items": 9,
+          "completion_percentage": 90,
           "is_complete": false,
           "total_items": 10
         },
@@ -202,15 +195,12 @@
       "status": "active",
       "video_count": 0
     },
-    "week_2": {
+    "week-2": {
       "description": "Variables & Data Types - Create and manage hero stats using variables",
       "estimated_time": "1.5 hours",
       "lesson_count": 12,
       "name": "Week 2 - Hero Stats Training",
       "order": 8,
-      "prerequisites": [
-        "week_1"
-      ],
       "progress": {
         "lessons": {
           "completed_count": 0,
@@ -236,22 +226,32 @@
       "video_count": 0
     },
     "week-3": {
-      "description": "Your hero has stats now, but the villagers are not impressed. They shout:\n\"Traveler, tell us your name! How many coins do you carry? How strong are you?\"\n\nTo answer them, your hero needs to listen and respond. This is where we use input() and friendly output.",
-      "lesson_count": 0,
+      "description": "Heroes learn to listen and respond using input, casting, and friendly output. By gathering information from villagers and introducing themselves properly, students master user input and clear communication in Python.",
+      "lesson_count": 9,
       "name": "Week 3 – Speak with the Villagers",
       "order": 9,
       "progress": {
         "lessons": {
-          "completed_count": 0,
-          "completed_lessons": [],
-          "completion_percentage": 0,
-          "total_count": 0
+          "completed_count": 9,
+          "completed_lessons": [
+            "python-casting",
+            "python-input",
+            "python-input-intro",
+            "python-print",
+            "python-week-3-challenge-quest",
+            "python-week-3-drill-1",
+            "python-week-3-drill-2",
+            "python-week-3-drill-3",
+            "python-week-3-recap"
+          ],
+          "completion_percentage": 100,
+          "total_count": 9
         },
         "overall": {
-          "completed_items": 0,
-          "completion_percentage": 0,
-          "is_complete": false,
-          "total_items": 0
+          "completed_items": 9,
+          "completion_percentage": 100,
+          "is_complete": true,
+          "total_items": 9
         },
         "videos": {
           "completion_percentage": 0,
@@ -260,32 +260,34 @@
           "watched_videos": []
         }
       },
-      "question_count": 2,
+      "question_count": 12,
       "status": "active",
       "video_count": 0
     },
     "week-4": {
       "description": "Your hero steps bravely into the forest. Birds sing… until suddenly — BAM! 🐉\nA monster blocks the path.\n\nThe villagers whisper:\n\"Now we’ll see if this hero is smart… or just lunch.\"\n\nIt’s time for your first big choice:\n\nWill you fight the monster?\n\nWill you run away (screaming, probably)?\n\nOr will you bribe it with shiny coins?\n\nIn Python, choices are written with conditionals: if, elif, and else.",
-      "lesson_count": 5,
+      "lesson_count": 8,
       "name": "Week 4 – The Hero’s First Choice",
       "order": 10,
       "pool_questions_count": 2,
       "progress": {
         "lessons": {
-          "completed_count": 3,
+          "completed_count": 5,
           "completed_lessons": [
-            "python_conditions",
+            "challenge_quest_–_the_monster’s_challenge",
             "comparison_operators",
-            "challenge_quest_–_the_monster’s_challenge"
+            "ifelse",
+            "python_conditions",
+            "summary"
           ],
-          "completion_percentage": 60,
-          "total_count": 5
+          "completion_percentage": 62.5,
+          "total_count": 8
         },
         "overall": {
-          "completed_items": 3,
-          "completion_percentage": 60,
+          "completed_items": 5,
+          "completion_percentage": 62.5,
           "is_complete": false,
-          "total_items": 5
+          "total_items": 8
         },
         "videos": {
           "completion_percentage": 0,
@@ -294,9 +296,13 @@
           "watched_videos": []
         }
       },
-      "question_count": 4,
+      "question_count": 9,
       "quiz_questions_count": 4,
       "status": "active",
+      "tags": [
+        "IfElse",
+        "ComparisonOperators"
+      ],
       "video_count": 0
     },
     "week-5": {
@@ -305,6 +311,139 @@
       "name": "Week 5 - Battle Math",
       "order": 11,
       "pool_questions_count": 0,
+      "progress": {
+        "lessons": {
+          "completed_count": 7,
+          "completed_lessons": [
+            "challenge-quest-the-epic-slime-battle",
+            "python-exponent",
+            "python-floor-division",
+            "python-modulus",
+            "python-precedence",
+            "python_arithmetic_operators",
+            "summary-operators-and-expressions"
+          ],
+          "completion_percentage": 53.84615384615385,
+          "total_count": 13
+        },
+        "overall": {
+          "completed_items": 7,
+          "completion_percentage": 53.84615384615385,
+          "is_complete": false,
+          "total_items": 13
+        },
+        "videos": {
+          "completion_percentage": 0,
+          "total_count": 0,
+          "watched_count": 0,
+          "watched_videos": []
+        }
+      },
+      "question_count": 12,
+      "quiz_questions_count": 4,
+      "status": "active",
+      "tags": [
+        "Arithmetic Operators",
+        "Floor Division",
+        "Modulus",
+        "Exponent",
+        "Precedence"
+      ],
+      "video_count": 0
+    },
+    "week-6": {
+      "description": "The guild master smirks: \n'So you beat one orc? Cute. But real monsters don’t give up in one turn. They fight, and fight, and fight… until one of you falls. You need the magic of loops to survive.' \n \nLoops are like battle systems: they repeat actions until the monster is gone or the hero wins.",
+      "estimated_time": "2 Hours",
+      "lesson_count": 12,
+      "name": "Week 6 - Endless Battles (Loops)",
+      "order": 12,
+      "progress": {
+        "lessons": {
+          "completed_count": 6,
+          "completed_lessons": [
+            "challenge-quest-the-orc-battle-reduc",
+            "python-break",
+            "python-continue",
+            "python-for-loop",
+            "python-range",
+            "python-while-loop"
+          ],
+          "completion_percentage": 50,
+          "total_count": 12
+        },
+        "overall": {
+          "completed_items": 6,
+          "completion_percentage": 50,
+          "is_complete": false,
+          "total_items": 12
+        },
+        "videos": {
+          "completion_percentage": 0,
+          "total_count": 0,
+          "watched_count": 0,
+          "watched_videos": []
+        }
+      },
+      "question_count": 12,
+      "status": "active",
+      "tags": [
+        "ForLoop",
+        "Range",
+        "WhileLoop",
+        "Break",
+        "Continue"
+      ],
+      "video_count": 0
+    },
+    "week-7": {
+      "description": "The Library of Whispering Scrolls welcomes you. Candles flicker, dusty tomes float around, and a hooded wizard mutters: \n\"Words are not just words here. They are weapons. Shout them, twist them, slice them — and reality bends to your will.\"",
+      "estimated_time": "1.5 Hours",
+      "lesson_count": 11,
+      "name": "Week 7 - String Magic (Text Spells & Scrolls)",
+      "order": 13,
+      "progress": {
+        "lessons": {
+          "completed_count": 6,
+          "completed_lessons": [
+            "challenge-quest-the-magic-door-of-destiny",
+            "python-string-basics",
+            "python-string-formatting",
+            "python-string-index-slice",
+            "python-string-intro",
+            "python-string-methods"
+          ],
+          "completion_percentage": 54.54545454545454,
+          "total_count": 11
+        },
+        "overall": {
+          "completed_items": 6,
+          "completion_percentage": 54.54545454545454,
+          "is_complete": false,
+          "total_items": 11
+        },
+        "videos": {
+          "completion_percentage": 0,
+          "total_count": 0,
+          "watched_count": 0,
+          "watched_videos": []
+        }
+      },
+      "question_count": 12,
+      "status": "active",
+      "tags": [
+        "StringBasics",
+        "StringIndexSlice",
+        "StringMethods",
+        "StringFormatting"
+      ],
+      "video_count": 0
+    },
+    "week-8": {
+      "description": "The Magic Door creaks open, and you stumble into a glittering dungeon chamber. \n\nPiles of coins glimmer, potions bubble in glass bottles, and… socks? Lots of socks. Who even brings socks into a dungeon?! 🧦",
+      "estimated_time": "1.5 Hours",
+      "lesson_count": 13,
+      "name": "Week 8 - Power of Lists (Inventory & Loot Bags)",
+      "order": 14,
       "progress": {
         "lessons": {
           "completed_count": 0,
@@ -325,72 +464,179 @@
           "watched_videos": []
         }
       },
-      "question_count": 5,
-      "quiz_questions_count": 4,
+      "question_count": 12,
       "status": "active",
       "tags": [
-        "Arithmetic Operators",
-        "Floor Division",
-        "Modulus",
-        "Exponent",
-        "Precedence"
+        "ListBasics",
+        "ListIndexSlice",
+        "ListMutate",
+        "ListIterate"
       ],
       "video_count": 0
     },
-    "week-6": {
-      "description": "The guild master smirks: \n'So you beat one orc? Cute. But real monsters don’t give up in one turn. They fight, and fight, and fight… until one of you falls. You need the magic of loops to survive.' \n \nLoops are like battle systems: they repeat actions until the monster is gone or the hero wins.",
-      "estimated_time": "2 Hours",
-      "name": "Week 6 - Endless Battles (Loops)",
-      "order": 12,
-      "prerequisites": [
-        "week-3",
-        "week-4",
-        "week-5",
-        "week_1",
-        "week_2"
-      ],
+    "week-9": {
+      "description": "This week, heroes unlock the power of Python functions. Students learn how to define abilities once and reuse them, pass information into functions, return results like damage or healing, and understand where variables work. By the end of the week, they defeat the Shadow Beast using skill, structure, and strategy.",
+      "lesson_count": 14,
+      "name": "Week 9 – Functions of Power",
+      "order": 15,
+      "progress": {
+        "lessons": {
+          "completed_count": 0,
+          "completed_lessons": [],
+          "completion_percentage": 0,
+          "total_count": 14
+        },
+        "overall": {
+          "completed_items": 0,
+          "completion_percentage": 0,
+          "is_complete": false,
+          "total_items": 14
+        },
+        "videos": {
+          "completion_percentage": 0,
+          "total_count": 0,
+          "watched_count": 0,
+          "watched_videos": []
+        }
+      },
+      "question_count": 12,
       "status": "active",
-      "tags": [
-        "ForLoop",
-        "Range",
-        "WhileLoop",
-        "Break",
-        "Continue"
-      ]
+      "video_count": 0
     },
-    "week-7": {
-      "description": "The Library of Whispering Scrolls welcomes you. Candles flicker, dusty tomes float around, and a hooded wizard mutters: \n\"Words are not just words here. They are weapons. Shout them, twist them, slice them — and reality bends to your will.\"",
-      "estimated_time": "1.5 Hours",
-      "name": "Week 7 - String Magic (Text Spells & Scrolls)",
-      "order": 13,
-      "prerequisites": [
-        "week-3",
-        "week-4",
-        "week-5",
-        "week-6",
-        "week_1",
-        "week_2"
-      ],
+    "week-10": {
+      "description": "Master Python dictionaries using key–value pairs to build a Monster Codex.",
+      "estimated_time": "2 hours",
+      "lesson_count": 12,
+      "name": "Week 10 - Dictionary of Secrets (Monster Codex & Spellbook)",
+      "order": 16,
+      "progress": {
+        "lessons": {
+          "completed_count": 0,
+          "completed_lessons": [],
+          "completion_percentage": 0,
+          "total_count": 12
+        },
+        "overall": {
+          "completed_items": 0,
+          "completion_percentage": 0,
+          "is_complete": false,
+          "total_items": 12
+        },
+        "videos": {
+          "completion_percentage": 0,
+          "total_count": 0,
+          "watched_count": 0,
+          "watched_videos": []
+        }
+      },
+      "question_count": 12,
       "status": "active",
-      "tags": [
-        "StringBasics",
-        "StringIndexSlice",
-        "StringMethods",
-        "StringFormatting"
-      ]
+      "video_count": 0
+    },
+    "week-11": {
+      "description": "Practice week: heroes learn to gather information with input(), convert that input into numbers with casting, and speak clearly using f-strings for friendly output.",
+      "lesson_count": 13,
+      "name": "Week 11 – Speak with the Villagers",
+      "order": 17,
+      "progress": {
+        "lessons": {
+          "completed_count": 0,
+          "completed_lessons": [],
+          "completion_percentage": 0,
+          "total_count": 13
+        },
+        "overall": {
+          "completed_items": 0,
+          "completion_percentage": 0,
+          "is_complete": false,
+          "total_items": 13
+        },
+        "videos": {
+          "completion_percentage": 0,
+          "total_count": 0,
+          "watched_count": 0,
+          "watched_videos": []
+        }
+      },
+      "question_count": 12,
+      "status": "active",
+      "video_count": 0
+    },
+    "week-12": {
+      "description": "Heroes learn how to import and use Python modules. They master randomness with the random module, combine random with math for battle damage and critical hits, and use time.sleep for suspenseful moments—plus learn module aliases for faster spellcasting.",
+      "lesson_count": 22,
+      "name": "Week 12 – The Tome of Fate",
+      "order": 18,
+      "progress": {
+        "lessons": {
+          "completed_count": 0,
+          "completed_lessons": [],
+          "completion_percentage": 0,
+          "total_count": 22
+        },
+        "overall": {
+          "completed_items": 0,
+          "completion_percentage": 0,
+          "is_complete": false,
+          "total_items": 22
+        },
+        "videos": {
+          "completion_percentage": 0,
+          "total_count": 0,
+          "watched_count": 0,
+          "watched_videos": []
+        }
+      },
+      "question_count": 12,
+      "status": "active",
+      "video_count": 0
+    },
+    "week-13": {
+      "description": "Heroes learn to draw using Python’s turtle module. Students summon a turtle, move it with commands, draw shapes with loops, add colors and fills, and combine shapes into a personalized Hero Crest with an initial.",
+      "lesson_count": 16,
+      "name": "Week 13 – Hall of Glyphs",
+      "order": 19,
+      "progress": {
+        "lessons": {
+          "completed_count": 0,
+          "completed_lessons": [],
+          "completion_percentage": 0,
+          "total_count": 16
+        },
+        "overall": {
+          "completed_items": 0,
+          "completion_percentage": 0,
+          "is_complete": false,
+          "total_items": 16
+        },
+        "videos": {
+          "completion_percentage": 0,
+          "total_count": 0,
+          "watched_count": 0,
+          "watched_videos": []
+        }
+      },
+      "question_count": 12,
+      "status": "active",
+      "video_count": 0
     }
   },
   "allowed_tags": [
     "*args and **kwargs",
+    "Arithmetic Operators",
     "Comment",
     "DataType",
     "default parameter values",
     "error handling",
+    "Exponent",
+    "Floor Division",
     "function definition",
     "function return values",
     "keyword arguments",
+    "Modulus",
     "passing function arguments",
     "positional-only and keyword-only arguments",
+    "Precedence",
     "Print",
     "python function basics",
     "python syntax",
@@ -398,11 +644,6 @@
     "return values",
     "syntax",
     "terminology",
-    "Variable",
-    "Arithmetic Operators",
-    "Floor Division",
-    "Modulus",
-    "Exponent",
-    "Precedence"
+    "Variable"
   ]
 }

@@ -1,27 +1,154 @@
 {
-  "pool_title": "Python - Week-4 Question Pool",
   "questions": [
     {
-      "answer_index": 1,
+      "type": "multiple_choice",
+      "question": "What will this code print if the player inputs 'RUN'?",
+      "tags": [
+        "if-else"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "choice = 'RUN'\nif choice == 'FIGHT':\n    print('You swing your sword!')\nelif choice == 'RUN':\n    print('You flee the battlefield!')\nelse:\n    print('You stand still.')"
+        }
+      ],
+      "options": [
+        "You swing your sword!",
+        "You flee the battlefield!",
+        "You stand still.",
+        "Error"
+      ],
+      "answer_index": 1
+    },
+    {
+      "type": "multiple_choice",
+      "question": "If hero_choice = 'SLEEP', what happens?",
+      "tags": [
+        "if-else"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hero_choice = 'SLEEP'\nif hero_choice == 'RUN':\n    print('You run away!')\nelse:\n    print('The monster attacks!')"
+        }
+      ],
       "options": [
         "You run away!",
         "The monster attacks!",
         "Nothing happens",
         "Error"
       ],
-      "question": "If hero_choice = 'SLEEP', what happens?\nif hero_choice == 'RUN':\n    print('You run away!')\nelse:\n    print('The monster attacks!')",
+      "answer_index": 1
+    },
+    {
+      "type": "short_answer",
+      "question": "Predict the output.",
       "tags": [
         "if-else"
       ],
-      "type": "multiple_choice"
+      "content": [
+        {
+          "type": "code",
+          "text": "choice = 'BRIBE'\nif choice == 'FIGHT':\n    print('Fight!')\nelif choice == 'BRIBE':\n    print('You toss coins!')\nelse:\n    print('You run away!')"
+        }
+      ],
+      "expected_answer": "You toss coins!"
     },
     {
-      "type": "coding",
-      "question": "hero_coins = 12\npotion_cost = 10\nif hero_coins >= potion_cost:\n    print('You buy the potion!')\nelse:\n    print('Not enough coins!')",
-      "tags": [],
-      "starter_code": "",
-      "sample_solution": "You buy the potion!"
+      "type": "multiple_choice",
+      "question": "What will this code print?",
+      "tags": [
+        "comparsion_operators"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hero_hp = 0\nif hero_hp > 0:\n    print('Alive!')\nelse:\n    print('Game Over!')"
+        }
+      ],
+      "options": [
+        "Alive!",
+        "Game Over!",
+        "Error",
+        "Nothing printed"
+      ],
+      "answer_index": 1
+    },
+    {
+      "type": "short_answer",
+      "question": "What is the output?",
+      "tags": [
+        "comparsion_operators"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hero_coins = 12\npotion_cost = 10\nif hero_coins >= potion_cost:\n    print('You buy the potion!')\nelse:\n    print('Not enough coins!')"
+        }
+      ],
+      "expected_answer": "You buy the potion!"
+    },
+    {
+      "type": "short_answer",
+      "question": "What’s the output?",
+      "tags": [
+        "comparsion_operators"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "score = 100\nif score != 50:\n    print('Bonus unlocked!')\nelse:\n    print('Try again!')"
+        }
+      ],
+      "expected_answer": "Bonus unlocked!"
+    },
+    {
+      "type": "short_answer",
+      "question": "What is the output?",
+      "tags": [
+        "ifelse comparsion_operators"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "monster_hp = 30\nhero_attack = 40\nif hero_attack > monster_hp:\n    print('Monster defeated!')\nelse:\n    print('Monster still stands!')"
+        }
+      ],
+      "expected_answer": "Monster defeated!"
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What will this code print?",
+      "tags": [
+        "ifelse comparsion_operators"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hp = 50\nif hp > 100:\n    print('Strong!')\nelif hp >= 50:\n    print('Average!')\nelse:\n    print('Weak!')"
+        }
+      ],
+      "options": [
+        "Strong!",
+        "Average!",
+        "Weak!",
+        "Error"
+      ],
+      "answer_index": 1
+    },
+    {
+      "type": "short_answer",
+      "question": "Predict the output.",
+      "tags": [
+        "ifelse comparsion_operators"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "coins = 5\nif coins >= 10:\n    print('Rich!')\nelif coins == 5:\n    print('Halfway there!')\nelse:\n    print('Broke!')"
+        }
+      ],
+      "expected_answer": "Halfway there!"
     }
-  ],
-  "updated_date": "2025-01-01"
+  ]
 }

@@ -17,8 +17,14 @@
           "text": "Every hero needs stats to prove themselves:"
         },
         {
-          "type": "paragraph",
-          "text": "- Name\n- Health Points (HP)\n- Attack Power\n- Coins\n- Alive or Dead status"
+          "type": "list",
+          "items": [
+            "Name",
+            "Health Points (HP)",
+            "Attack Power",
+            "Coins",
+            "Alive or Dead status"
+          ]
         },
         {
           "type": "paragraph",
@@ -29,15 +35,20 @@
           "text": "Tags Introduced"
         },
         {
-          "type": "paragraph",
-          "text": "- Variable\n- DataType (int, float, str, bool)\n- Print (printing different types)"
+          "type": "list",
+          "items": [
+            "Variable",
+            "DataType (int, float, str, bool)",
+            "Print (printing different types)"
+          ]
         }
       ],
       "tags": [],
       "type": "initial",
       "updated_date": "2025-10-08",
       "order": 1,
-      "id": "story-setup-hero-stats"
+      "id": "story-setup-hero-stats",
+      "lessonType": "initial"
     },
     {
       "title": "Introduction to Variables",
@@ -57,7 +68,7 @@
         },
         {
           "type": "paragraph",
-          "text": "hero_name -> holds the hero's name (string of text)\nhero_hp -> holds the hero's health points (number)"
+          "text": "hero_name -> holds the hero's name (string of text) hero_hp -> holds the hero's health points (number)"
         },
         {
           "type": "paragraph",
@@ -72,11 +83,14 @@
           "text": "Just like your HP bar in a video game - it updates as you take damage or heal."
         }
       ],
-      "tags": ["Variable"],
+      "tags": [
+        "Variable"
+      ],
       "type": "initial",
       "updated_date": "2025-10-08",
       "order": 2,
-      "id": "intro-to-variables"
+      "id": "intro-to-variables",
+      "lessonType": "initial"
     },
     {
       "title": "Hero Training Drill 1 - Count Your Coins",
@@ -92,7 +106,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Create a variable hero_coins = 20.\nPrint: \"Your hero jingles 20 shiny coins.\""
+          "text": "Create a variable hero_coins = 20. Print: \"Your hero jingles 20 shiny coins.\""
         },
         {
           "type": "code_runner",
@@ -106,11 +120,15 @@
           ]
         }
       ],
-      "tags": ["Variable", "Print"],
+      "tags": [
+        "Variable",
+        "Print"
+      ],
       "type": "initial",
       "updated_date": "2025-10-08",
       "order": 3,
-      "id": "training-drill-1-coins"
+      "id": "training-drill-1-coins",
+      "lessonType": "initial"
     },
     {
       "title": "Introduction to Data Types",
@@ -125,19 +143,27 @@
           "text": "Not all variables are the same kind. Heroes have many types of stats."
         },
         {
-          "type": "paragraph",
-          "text": "- int -> whole numbers (HP, coins, level)\n- float -> decimals (attack power, speed)\n- str -> strings of text (name, weapon)\n- bool -> True/False (alive or dead, door open or shut)"
+          "type": "list",
+          "items": [
+            "int -> whole numbers (HP, coins, level)",
+            "float -> decimals (attack power, speed)",
+            "str -> strings of text (name, weapon)",
+            "bool -> True/False (alive or dead, door open or shut)"
+          ]
         },
         {
           "type": "code",
           "text": "hero_level = 3        # int\nhero_attack = 12.5    # float\nhero_name = \"Kai\"     # str\nhero_alive = True     # bool"
         }
       ],
-      "tags": ["DataType"],
+      "tags": [
+        "DataType"
+      ],
       "type": "initial",
       "updated_date": "2025-10-08",
       "order": 4,
-      "id": "intro-to-data-types"
+      "id": "intro-to-data-types",
+      "lessonType": "initial"
     },
     {
       "title": "Checking Data Types",
@@ -156,11 +182,14 @@
           "text": "This is like asking the guild scribe: \"What kind of stat is written here?\""
         }
       ],
-      "tags": ["DataType"],
+      "tags": [
+        "DataType"
+      ],
       "type": "initial",
       "updated_date": "2025-10-08",
       "order": 5,
-      "id": "checking-data-types"
+      "id": "checking-data-types",
+      "lessonType": "initial"
     },
     {
       "title": "Hero Training Drill 2 - Show Your Stats",
@@ -176,7 +205,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Create hero_level = 3 (int).\nCreate hero_magic = 5.5 (float).\nPrint both stats in one line."
+          "text": "Create hero_level = 3 (int). Create hero_magic = 5.5 (float). Print both stats in one line."
         },
         {
           "type": "code_runner",
@@ -190,11 +219,16 @@
           ]
         }
       ],
-      "tags": ["Variable", "DataType", "Print"],
+      "tags": [
+        "Variable",
+        "DataType",
+        "Print"
+      ],
       "type": "initial",
       "updated_date": "2025-10-08",
       "order": 6,
-      "id": "training-drill-2-stats"
+      "id": "training-drill-2-stats",
+      "lessonType": "initial"
     },
     {
       "title": "Hero Training Drill 3 - Alive or Dead",
@@ -210,7 +244,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Create a variable hero_alive = True.\nPrint: \"Is the hero alive? True\""
+          "text": "Create a variable hero_alive = True. Print: \"Is the hero alive? True\""
         },
         {
           "type": "code_runner",
@@ -224,11 +258,16 @@
           ]
         }
       ],
-      "tags": ["Variable", "DataType", "Print"],
+      "tags": [
+        "Variable",
+        "DataType",
+        "Print"
+      ],
       "type": "initial",
       "updated_date": "2025-10-08",
       "order": 7,
-      "id": "training-drill-3-alive"
+      "id": "training-drill-3-alive",
+      "lessonType": "initial"
     },
     {
       "title": "Printing Different Data Types",
@@ -271,11 +310,15 @@
           "text": "Hero alive? True | HP: 100"
         }
       ],
-      "tags": ["Print", "DataType"],
+      "tags": [
+        "Print",
+        "DataType"
+      ],
       "type": "initial",
       "updated_date": "2025-10-08",
       "order": 8,
-      "id": "printing-different-types"
+      "id": "printing-different-types",
+      "lessonType": "initial"
     },
     {
       "title": "Hero Training Drill 4 - Announce Your Weapon",
@@ -291,7 +334,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Create hero_weapon = \"Wooden Sword\".\nPrint: \"Kai grabs a Wooden Sword!\""
+          "text": "Create hero_weapon = \"Wooden Sword\". Print: \"Kai grabs a Wooden Sword!\""
         },
         {
           "type": "code_runner",
@@ -305,11 +348,16 @@
           ]
         }
       ],
-      "tags": ["Variable", "DataType", "Print"],
+      "tags": [
+        "Variable",
+        "DataType",
+        "Print"
+      ],
       "type": "initial",
       "updated_date": "2025-10-08",
       "order": 9,
-      "id": "training-drill-4-weapon"
+      "id": "training-drill-4-weapon",
+      "lessonType": "initial"
     },
     {
       "title": "Challenge Quest - The Hero Card",
@@ -324,8 +372,14 @@
           "text": "Story: The guild refuses to admit you unless you present your official Hero Card. This card must show your hero's stats clearly."
         },
         {
-          "type": "paragraph",
-          "text": "Your Mission: Create a program that prints a hero profile card with:\n- Name (string)\n- HP (int)\n- Attack Power (float)\n- Alive status (boolean)"
+          "type": "list",
+          "items": [
+            "Your Mission: Create a program that prints a hero profile card with:",
+            "Name (string)",
+            "HP (int)",
+            "Attack Power (float)",
+            "Alive status (boolean)"
+          ]
         },
         {
           "type": "code_runner",
@@ -339,11 +393,16 @@
           ]
         }
       ],
-      "tags": ["Variable", "DataType", "Print"],
+      "tags": [
+        "Variable",
+        "DataType",
+        "Print"
+      ],
       "type": "initial",
       "updated_date": "2025-10-08",
       "order": 10,
-      "id": "challenge-hero-card"
+      "id": "challenge-hero-card",
+      "lessonType": "initial"
     },
     {
       "title": "Week 2 Summary",
@@ -354,19 +413,29 @@
           "text": "By the end of Week 2:"
         },
         {
-          "type": "paragraph",
-          "text": "- Kids understand what variables are and how to update them.\n- They know the four main data types (int, float, str, bool).\n- They can use print() to display stats in story format.\n- Their hero now has an official Hero Card to show the guild."
+          "type": "list",
+          "items": [
+            "Kids understand what variables are and how to update them.",
+            "They know the four main data types (int, float, str, bool).",
+            "They can use print() to display stats in story format.",
+            "Their hero now has an official Hero Card to show the guild."
+          ]
         },
         {
           "type": "paragraph",
           "text": "Next week: the villagers want to talk to your hero directly. We'll use input() and friendly output to let the player choose names, coins, and powers."
         }
       ],
-      "tags": ["Variable", "DataType", "Print"],
+      "tags": [
+        "Variable",
+        "DataType",
+        "Print"
+      ],
       "type": "initial",
       "updated_date": "2025-10-08",
       "order": 11,
-      "id": "week-2-summary"
+      "id": "week-2-summary",
+      "lessonType": "initial"
     },
     {
       "title": "Week 2 Remedial Lesson - Hero Stats Training",
@@ -414,7 +483,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Task: Create a variable hero_coins = 35.\nPrint: The hero carries 35 coins."
+          "text": "Task: Create a variable hero_coins = 35. Print: The hero carries 35 coins."
         },
         {
           "type": "code_runner",
@@ -432,8 +501,12 @@
           "text": "Drill V2 - The Changing Torch"
         },
         {
-          "type": "paragraph",
-          "text": "Task: Create a variable torch_light = 100.\nPrint it.\nThen set torch_light = 60 and print it again."
+          "type": "list",
+          "items": [
+            "Task: Create a variable torch_light = 100.",
+            "Print it.",
+            "Then set torch_light = 60 and print it again."
+          ]
         },
         {
           "type": "code_runner",
@@ -470,8 +543,14 @@
           "text": "DataType - Concept Review"
         },
         {
-          "type": "paragraph",
-          "text": "Not all variables are the same type. Different stats use different data types:\n- int -> whole numbers\n- float -> decimals\n- str -> text in quotes\n- bool -> True/False values"
+          "type": "list",
+          "items": [
+            "Not all variables are the same type. Different stats use different data types:",
+            "int -> whole numbers",
+            "float -> decimals",
+            "str -> text in quotes",
+            "bool -> True/False values"
+          ]
         },
         {
           "type": "header",
@@ -499,7 +578,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Task: Create hero_level = 6 (int) and hero_magic = 12.5 (float).\nPrint them together: Level and Magic."
+          "text": "Task: Create hero_level = 6 (int) and hero_magic = 12.5 (float). Print them together: Level and Magic."
         },
         {
           "type": "code_runner",
@@ -518,7 +597,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Task: Create hero_alive = True.\nPrint: Is hero alive? True"
+          "text": "Task: Create hero_alive = True. Print: Is hero alive? True"
         },
         {
           "type": "code_runner",
@@ -537,7 +616,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Task: Create one variable of each type (int, float, str, bool).\nPrint them all in one block."
+          "text": "Task: Create one variable of each type (int, float, str, bool). Print them all in one block."
         },
         {
           "type": "code_runner",
@@ -588,7 +667,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Task: Create hero_weapon = \"Bronze Axe\".\nPrint: The hero swings a Bronze Axe!"
+          "text": "Task: Create hero_weapon = \"Bronze Axe\". Print: The hero swings a Bronze Axe!"
         },
         {
           "type": "code_runner",
@@ -607,7 +686,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Task: Create hero_name = \"Sora\", hero_hp = 60.\nPrint both in one line: Hero: Sora | HP: 60"
+          "text": "Task: Create hero_name = \"Sora\", hero_hp = 60. Print both in one line: Hero: Sora | HP: 60"
         },
         {
           "type": "code_runner",
@@ -626,7 +705,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Task: Create at least three variables (name, HP, item).\nPrint them in one creative line."
+          "text": "Task: Create at least three variables (name, HP, item). Print them in one creative line."
         },
         {
           "type": "code_runner",
@@ -653,7 +732,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Task: Create hero_name, hero_hp, hero_attack, hero_alive.\nPrint them in a hero card format with labels."
+          "text": "Task: Create hero_name, hero_hp, hero_attack, hero_alive. Print them in a hero card format with labels."
         },
         {
           "type": "code_runner",
@@ -672,7 +751,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Task: Create hero_hp = 100, then reduce it to 85.\nPrint both before and after."
+          "text": "Task: Create hero_hp = 100, then reduce it to 85. Print both before and after."
         },
         {
           "type": "code_runner",
@@ -691,7 +770,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Task: Create at least four stats of different types.\nPrint them all in one formatted block with labels."
+          "text": "Task: Create at least four stats of different types. Print them all in one formatted block with labels."
         },
         {
           "type": "code_runner",
@@ -705,11 +784,16 @@
           ]
         }
       ],
-      "tags": ["Variable", "DataType", "Print"],
-      "type": "remedial",
+      "tags": [
+        "Variable",
+        "DataType",
+        "Print"
+      ],
+      "type": "initial",
       "updated_date": "2025-10-08",
       "order": 12,
-      "id": "week-2-remedial"
+      "id": "week-2-remedial",
+      "lessonType": "initial"
     }
   ]
 }

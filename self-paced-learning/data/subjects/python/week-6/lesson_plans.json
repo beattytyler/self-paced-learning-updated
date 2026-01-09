@@ -15,7 +15,11 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "🧙‍♀️ Loop Master Luna: 'Discipline, hero! You must train your strikes to repeat perfectly!' \n \nA for loop repeats something a fixed number of times. \nIt’s like telling your hero: 'Swing exactly 5 times, no matter what.' "
+          "text": "🧙‍♀️ Loop Master Luna: 'Discipline, hero! You must train your strikes to repeat perfectly!'"
+        },
+        {
+          "type": "paragraph",
+          "text": "A for loop repeats something a fixed number of times. It’s like telling your hero: 'Swing exactly 5 times, no matter what.'"
         },
         {
           "type": "code_runner",
@@ -43,7 +47,15 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Loop Master Luna taps her staff: \n'Count your turns, young warrior! Use range() to track your progress.' \n \nrange(stop) → counts from 0 up to stop-1. \nrange(start, stop) → counts from start up to stop-1. \nrange(start, stop, step) → counts with a step/jump. "
+          "text": "Loop Master Luna taps her staff: 'Count your turns, young warrior! Use range() to track your progress.'"
+        },
+        {
+          "type": "list",
+          "items": [
+            "range(stop) → counts from 0 up to stop-1.",
+            "range(start, stop) → counts from start up to stop-1.",
+            "range(start, stop, step) → counts with a step/jump."
+          ]
         },
         {
           "type": "code_runner",
@@ -71,7 +83,11 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "🐱 Healer Cat Meowlin: 'While you still breathe, you must fight!' \n\nA while loop repeats as long as a condition is true. \nIt’s like saying: 'Keep swinging until the monster’s HP is 0.' "
+          "text": "🐱 Healer Cat Meowlin: 'While you still breathe, you must fight!'"
+        },
+        {
+          "type": "paragraph",
+          "text": "A while loop repeats as long as a condition is true. It’s like saying: 'Keep swinging until the monster’s HP is 0.'"
         },
         {
           "type": "code_runner",
@@ -99,7 +115,11 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "🧌 Lazy Goblin Greg: 'Sometimes, I just give up halfway. That’s what break does!' \n \nbreak stops the loop immediately — no more turns, no more swings. "
+          "text": "🧌 Lazy Goblin Greg: 'Sometimes, I just give up halfway. That’s what break does!'"
+        },
+        {
+          "type": "paragraph",
+          "text": "break stops the loop immediately — no more turns, no more swings."
         },
         {
           "type": "code_runner",
@@ -127,7 +147,11 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "🐉 Loop Master Luna: 'Even if you stumble, the battle continues!' \n \ncontinue skips the current loop turn but keeps the battle going. "
+          "text": "🐉 Loop Master Luna: 'Even if you stumble, the battle continues!'"
+        },
+        {
+          "type": "paragraph",
+          "text": "continue skips the current loop turn but keeps the battle going."
         },
         {
           "type": "code_runner",
@@ -148,12 +172,29 @@
       "title": "Challenge Quest - The Orc Battle Redux",
       "lessonType": "initial",
       "videoId": "",
-      "tags": [],
+      "tags": [
+        "ForLoop",
+        "WhileLoop",
+        "Range",
+        "Break",
+        "Continue"
+      ],
       "order": 6,
       "content": [
         {
           "type": "paragraph",
-          "text": "✨ Story: \nA roaring orc blocks the path again! But this time, you’re ready to use your looping power.\n\nSteps: \n- Create orc_hp = 40, turn = 1 \n- While HP > 0, attack and print status \n- Subtract 9 HP per turn \n- Add +1 to turn each round \n- Print final victory message"
+          "text": "✨ Story: A roaring orc blocks the path again! But this time, you’re ready to use your looping power."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Steps:",
+            "Create orc_hp = 40, turn = 1",
+            "While HP > 0, attack and print status",
+            "Subtract 9 HP per turn",
+            "Add +1 to turn each round",
+            "Print final victory message"
+          ]
         },
         {
           "type": "code_runner",
@@ -172,18 +213,32 @@
       "subject": "python",
       "subtopic": "week-6",
       "lesson_id": "remedial-python-for-loop",
-      "id": "remedial-python-for-loop",
+      "id": "week-6-remedial",
       "title": "Remedial Python For Loop",
-      "lessonType": "remedial",
+      "lessonType": "initial",
       "videoId": "",
       "tags": [
-        "ForLoop"
+        "ForLoop",
+        "Range",
+        "WhileLoop",
+        "Break",
+        "Continue"
       ],
-      "order": 1,
+      "order": 7,
       "content": [
         {
           "type": "paragraph",
-          "text": "🌲 Training Arena – Loop Master Luna says: “Discipline is key! Repeat your attack exactly the right number of times.” \n\n💡 Concept: \nA for loop repeats an action a specific number of times. \nSyntax: \nfor i in range(number): \n    # do something "
+          "text": "🌲 Training Arena – Loop Master Luna says: “Discipline is key! Repeat your attack exactly the right number of times.”"
+        },
+        {
+          "type": "list",
+          "items": [
+            "💡 Concept:",
+            "A for loop repeats an action a specific number of times.",
+            "Syntax:",
+            "for i in range(number):",
+            "# do something"
+          ]
         },
         {
           "type": "header",
@@ -202,7 +257,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Drill F1 – Wooden Dummy 🪵 \nTask: Print 'Hit!' three times using a for loop. "
+          "text": "Drill F1 – Wooden Dummy 🪵 Task: Print 'Hit!' three times using a for loop."
         },
         {
           "type": "code_runner",
@@ -213,7 +268,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Drill F2 – Count Attacks ⚔️ \nTask: Print 'Turn 1', 'Turn 2', 'Turn 3' using range(1,4). "
+          "text": "Drill F2 – Count Attacks ⚔️ Task: Print 'Turn 1', 'Turn 2', 'Turn 3' using range(1,4)."
         },
         {
           "type": "code_runner",
@@ -224,7 +279,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Drill F3 – Meowlin’s Potion Test 🧪 \nTask: Print 'Potion ready!' five times. "
+          "text": "Drill F3 – Meowlin’s Potion Test 🧪 Task: Print 'Potion ready!' five times."
         },
         {
           "type": "code_runner",
@@ -232,27 +287,18 @@
           "expected_output": "Potion ready!\nPotion ready!\nPotion ready!\nPotion ready!\nPotion ready!",
           "hints": [],
           "solution": "for i in range(5): \n    print('Potion ready!')"
-        }
-      ],
-      "type": "remedial",
-      "updated_date": "2025-10-02"
-    },
-    {
-      "subject": "python",
-      "subtopic": "week-6",
-      "lesson_id": "remedial-python-range",
-      "id": "remedial-python-range",
-      "title": "Remedial Python Range",
-      "lessonType": "remedial",
-      "videoId": "",
-      "tags": [
-        "Range"
-      ],
-      "order": 2,
-      "content": [
+        },
+        {
+          "type": "header",
+          "text": "Section: Remedial Python Range"
+        },
         {
           "type": "paragraph",
-          "text": "🧙‍♀️ Loop Master Luna: “The range spell controls how far your power stretches!” \n\n💡 Concept: \nrange() defines how many times the loop runs and where counting starts or stops. "
+          "text": "🧙‍♀️ Loop Master Luna: “The range spell controls how far your power stretches!”"
+        },
+        {
+          "type": "paragraph",
+          "text": "💡 Concept: range() defines how many times the loop runs and where counting starts or stops."
         },
         {
           "type": "header",
@@ -284,7 +330,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Drill R2 – Skip Counting 🎯\nCount from 0 to 8 in increments of 2."
+          "text": "Drill R2 – Skip Counting 🎯 Count from 0 to 8 in increments of 2."
         },
         {
           "type": "code_runner",
@@ -297,7 +343,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Drill R3 – Countdown Preparation ⏳\nCountdown from 5 to 1."
+          "text": "Drill R3 – Countdown Preparation ⏳ Countdown from 5 to 1."
         },
         {
           "type": "code_runner",
@@ -307,27 +353,22 @@
             "Use 3 parameters."
           ],
           "solution": "for i in range(5,0,-1): \n    print(i)"
-        }
-      ],
-      "type": "remedial",
-      "updated_date": "2025-10-02"
-    },
-    {
-      "subject": "python",
-      "subtopic": "week-6",
-      "lesson_id": "remedial-python-while-loop",
-      "id": "remedial-python-while-loop",
-      "title": "Remedial Python While Loop",
-      "lessonType": "remedial",
-      "videoId": "",
-      "tags": [
-        "WhileLoop"
-      ],
-      "order": 3,
-      "content": [
+        },
+        {
+          "type": "header",
+          "text": "Section: Remedial Python While Loop"
+        },
         {
           "type": "paragraph",
-          "text": "🐱 Healer Cat Meowlin: “As long as you have breath, fight on!” \n\n💡 Concept: \nA while loop repeats as long as its condition is True. \nWhen the condition becomes False, the loop stops. "
+          "text": "🐱 Healer Cat Meowlin: “As long as you have breath, fight on!”"
+        },
+        {
+          "type": "list",
+          "items": [
+            "💡 Concept:",
+            "A while loop repeats as long as its condition is True.",
+            "When the condition becomes False, the loop stops."
+          ]
         },
         {
           "type": "header",
@@ -346,7 +387,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Drill W1 – Goblin Fight 🧌 \nTask: Goblin HP=25, deal 7 per hit."
+          "text": "Drill W1 – Goblin Fight 🧌 Task: Goblin HP=25, deal 7 per hit."
         },
         {
           "type": "code_runner",
@@ -357,7 +398,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Drill W2 – Training Counter 🏋️\nDo 4 push ups."
+          "text": "Drill W2 – Training Counter 🏋️ Do 4 push ups."
         },
         {
           "type": "code_runner",
@@ -368,7 +409,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Drill W3 – Lazy Loop Greg 🧌\nTask: Greg energy = 10, each time Greg trains, he loses 3 energy."
+          "text": "Drill W3 – Lazy Loop Greg 🧌 Task: Greg energy = 10, each time Greg trains, he loses 3 energy."
         },
         {
           "type": "code_runner",
@@ -376,27 +417,18 @@
           "expected_output": "Greg naps.",
           "hints": [],
           "solution": "energy = 10 \nwhile energy > 0: \n    print('Greg trains. Energy:', energy) \n    energy -= 3 \nprint('Greg naps.')"
-        }
-      ],
-      "type": "remedial",
-      "updated_date": "2025-10-02"
-    },
-    {
-      "subject": "python",
-      "subtopic": "week-6",
-      "lesson_id": "remedial-python-break",
-      "id": "remedial-python-break",
-      "title": "Remedial Python Break",
-      "lessonType": "remedial",
-      "videoId": "",
-      "tags": [
-        "Break"
-      ],
-      "order": 4,
-      "content": [
+        },
+        {
+          "type": "header",
+          "text": "Section: Remedial Python Break"
+        },
         {
           "type": "paragraph",
-          "text": "🧌 Lazy Goblin Greg: “Sometimes I just quit early. That’s called break.” \n\n💡 Concept: \nThe break keyword ends the loop immediately, even if the condition or range isn’t done. "
+          "text": "🧌 Lazy Goblin Greg: “Sometimes I just quit early. That’s called break.”"
+        },
+        {
+          "type": "paragraph",
+          "text": "💡 Concept: The break keyword ends the loop immediately, even if the condition or range isn’t done."
         },
         {
           "type": "header",
@@ -415,7 +447,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Drill B1 – Cowardly Rat 🐀\nAttack the rat until it flees. It should flee after 1 hit. Use 'break' to stop the range function early."
+          "text": "Drill B1 – Cowardly Rat 🐀 Attack the rat until it flees. It should flee after 1 hit. Use 'break' to stop the range function early."
         },
         {
           "type": "code_runner",
@@ -426,7 +458,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Drill B2 – Monster Retreat 🧌\nAttack the monster until it retreats. It should flee after 3 strikes. Use 'break' to stop the range function early."
+          "text": "Drill B2 – Monster Retreat 🧌 Attack the monster until it retreats. It should flee after 3 strikes. Use 'break' to stop the range function early."
         },
         {
           "type": "code_runner",
@@ -437,7 +469,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Drill B3 – Greg’s Early Lunch 🍗\nGreg is going to stop for lunch early after his 2nd turn. Use 'break' to stop the range function early."
+          "text": "Drill B3 – Greg’s Early Lunch 🍗 Greg is going to stop for lunch early after his 2nd turn. Use 'break' to stop the range function early."
         },
         {
           "type": "code_runner",
@@ -445,27 +477,18 @@
           "expected_output": "Turn 1\nTurn 2\nGreg stops for lunch.",
           "hints": [],
           "solution": "for t in range(1,5): \n    if t == 3: \n        print('Greg stops for lunch.') \n        break \n    print('Turn', t)"
-        }
-      ],
-      "type": "remedial",
-      "updated_date": "2025-10-02"
-    },
-    {
-      "subject": "python",
-      "subtopic": "week-6",
-      "lesson_id": "remedial-python-continue",
-      "id": "remedial-python-continue",
-      "title": "Remedial Python Continue",
-      "lessonType": "remedial",
-      "videoId": "",
-      "tags": [
-        "Continue"
-      ],
-      "order": 5,
-      "content": [
+        },
+        {
+          "type": "header",
+          "text": "Section: Remedial Python Continue"
+        },
         {
           "type": "paragraph",
-          "text": "️ Luna: “Even heroes make mistakes. When you skip a turn but keep fighting, that’s continue.” \n\n💡 Concept: \ncontinue tells Python to skip the rest of the loop and go to the next iteration. "
+          "text": "️ Luna: “Even heroes make mistakes. When you skip a turn but keep fighting, that’s continue.”"
+        },
+        {
+          "type": "paragraph",
+          "text": "💡 Concept: continue tells Python to skip the rest of the loop and go to the next iteration."
         },
         {
           "type": "header",
@@ -484,7 +507,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Drill C1 – Missed Hit ⚔️\nOh no! You missed the 3rd attack! Keep going!"
+          "text": "Drill C1 – Missed Hit ⚔️ Oh no! You missed the 3rd attack! Keep going!"
         },
         {
           "type": "code_runner",
@@ -495,7 +518,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Drill C2 – Potion Turn 🧪\nYou're getting low on health, take your 2nd turn to drink a healing potion!"
+          "text": "Drill C2 – Potion Turn 🧪 You're getting low on health, take your 2nd turn to drink a healing potion!"
         },
         {
           "type": "code_runner",
@@ -506,7 +529,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Drill C3 – Greg Trips 🧌\nGreg was training, but tripped on his 4th turn!"
+          "text": "Drill C3 – Greg Trips 🧌 Greg was training, but tripped on his 4th turn!"
         },
         {
           "type": "code_runner",
@@ -514,31 +537,24 @@
           "expected_output": "Training turn 1\nTraining turn 2\nTraining turn 3\nGreg slips!\nTraining turn 5",
           "hints": [],
           "solution": "for t in range(1,6): \n    if t == 4: \n        print('Greg slips!') \n        continue \n    print('Training turn', t)"
-        }
-      ],
-      "type": "remedial",
-      "updated_date": "2025-10-02"
-    },
-    {
-      "subject": "python",
-      "subtopic": "week-6",
-      "lesson_id": "remedial-python-for-loop-range-while-loop-break-continue",
-      "id": "remedial-python-for-loop-range-while-loop-break-continue",
-      "title": "Remedial Python Review All",
-      "lessonType": "initial",
-      "videoId": "",
-      "tags": [
-        "ForLoop",
-        "Range",
-        "WhileLoop",
-        "Break",
-        "Continue"
-      ],
-      "order": 6,
-      "content": [
+        },
+        {
+          "type": "header",
+          "text": "Section: Remedial Python Review All"
+        },
         {
           "type": "paragraph",
-          "text": "🏆 Loop Tournament – Final Boss Battle \nLoop Master Luna declares: 'To graduate, you must combine every loop technique!' \n\n💡 Mission Steps: \n1. Use a for loop for 5 turns. \n2. Skip turn 3 (continue). \n3. Stop early if turn == 5 (break). \n4. Inside a while loop, decrease monster HP until 0. \n "
+          "text": "🏆 Loop Tournament – Final Boss Battle Loop Master Luna declares: 'To graduate, you must combine every loop technique!'"
+        },
+        {
+          "type": "list",
+          "items": [
+            "💡 Mission Steps:",
+            "Use a for loop for 5 turns.",
+            "Skip turn 3 (continue).",
+            "Stop early if turn == 5 (break).",
+            "Inside a while loop, decrease monster HP until 0."
+          ]
         },
         {
           "type": "code_runner",
@@ -548,8 +564,8 @@
           "solution": "orc_hp = 30 \nfor turn in range(1,6): \n    if turn == 3: \n        print('You stumble, skip this turn!') \n        continue \n    if turn == 5: \n        print('Battle ends early!') \n        break \n    print('Turn', turn, ': You attack!') \n \nwhile orc_hp > 0: \n    print('Orc HP:', orc_hp) \n    orc_hp -= 10 \nprint('Victory!')"
         }
       ],
-      "type": "initial",
-      "updated_date": "2025-10-02"
+      "type": "remedial",
+      "updated_date": "2026-01-09"
     }
   ],
   "updated_date": "2025-10-02"

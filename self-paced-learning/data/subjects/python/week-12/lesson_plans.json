@@ -1,0 +1,630 @@
+{
+  "lessons": [
+    {
+      "id": "python-importbasics-randommodule",
+      "order": 1,
+      "title": "Python Modules Intro",
+      "lessonType": "initial",
+      "tags": [
+        "ImportBasics",
+        "RandomModule",
+        "RandomAdvanced",
+        "MathSupport",
+        "TimeSupport",
+        "ModuleAlias"
+      ],
+      "content": [
+        {
+          "type": "story",
+          "text": "The spiral staircase leads you to the highest chamber of the Tower of Ancient Knowledge. Three massive tomes float above an ancient pedestal: the Tome of Fate (random), Tome of Numbers (math), and Tome of Time (time)."
+        },
+        {
+          "type": "paragraph",
+          "text": "You’ll learn to summon these tomes with imports, then use their powers for dice rolls, damage math, and dramatic pauses."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Chance (random) → dice rolls, loot, encounters",
+            "Numbers (math) → formulas, powers, precise calculations",
+            "Time (time) → pauses and suspense"
+          ]
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "python-importbasics-randint",
+      "order": 2,
+      "title": "Import Basics",
+      "lessonType": "initial",
+      "tags": [
+        "ImportBasics"
+      ],
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "import modulename = summon the tome into your hands.",
+            "After importing, cast spells with modulename.function()."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import random\nprint(random.randint(1, 6))  # dice roll"
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "python-importbasics-randint-drill-1",
+      "title": "Hero Training Drill 1 – Open the Tome of Fate 📖",
+      "videoId": "",
+      "content": [
+        {
+          "type": "section",
+          "title": "Hero Training Drill 1 – Open the Tome of Fate 📖"
+        },
+        {
+          "type": "paragraph",
+          "text": "Mission: Import random and roll a 1–6 dice roll."
+        },
+        {
+          "type": "code",
+          "text": "import random\nprint(\"You rolled:\", random.randint(1, 6))"
+        }
+      ],
+      "tags": [
+        "ImportBasics"
+      ],
+      "type": "initial",
+      "lessonType": "initial",
+      "updated_date": "2025-12-31",
+      "order": 3
+    },
+    {
+      "id": "python-randommodule-choice",
+      "order": 4,
+      "title": "Random Module",
+      "lessonType": "initial",
+      "tags": [
+        "RandomModule"
+      ],
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "random.randint(a, b) → random integer (like dice).",
+            "random.choice(list) → pick a random item (loot/enemy).",
+            "random.random() → float between 0 and 1 (luck chance)."
+          ]
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "python-randommodule-choice-drill-1",
+      "title": "Hero Training Drill 2 – Enemy Encounter Roll 🐉",
+      "videoId": "",
+      "content": [
+        {
+          "type": "section",
+          "title": "Hero Training Drill 2 – Enemy Encounter Roll 🐉"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Roll 1–20.",
+            "1–5 → Goblin appears.",
+            "6–10 → Skeleton rises.",
+            "11–20 → Dragon descends."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import random\n\nroll = random.randint(1, 20)\n\nif roll <= 5:\n    print(\"A Goblin appears!\")\nelif roll <= 10:\n    print(\"A Skeleton rises!\")\nelse:\n    print(\"A Dragon descends!\")"
+        }
+      ],
+      "tags": [
+        "RandomModule"
+      ],
+      "type": "initial",
+      "lessonType": "initial",
+      "updated_date": "2025-12-31",
+      "order": 5
+    },
+    {
+      "id": "python-randomadvanced-sample",
+      "order": 6,
+      "title": "Random Advanced",
+      "lessonType": "initial",
+      "tags": [
+        "RandomAdvanced"
+      ],
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "random.shuffle(list) → reorder items randomly.",
+            "random.sample(list, n) → choose n unique random items."
+          ]
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "python-randomadvanced-sample-drill-1",
+      "title": "Hero Training Drill 3 – Treasure Chest 💎",
+      "videoId": "",
+      "content": [
+        {
+          "type": "section",
+          "title": "Hero Training Drill 3 – Treasure Chest 💎"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Start with chest = [\"ruby\",\"emerald\",\"gold\",\"potion\"].",
+            "Shuffle the chest.",
+            "Randomly grab 2 treasures."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import random\n\nchest = [\"ruby\", \"emerald\", \"gold\", \"potion\"]\nrandom.shuffle(chest)\nprint(\"Chest shuffled:\", chest)\n\nprint(\"You grab:\", random.sample(chest, 2))"
+        }
+      ],
+      "tags": [
+        "RandomAdvanced"
+      ],
+      "type": "initial",
+      "lessonType": "initial",
+      "updated_date": "2025-12-31",
+      "order": 7
+    },
+    {
+      "id": "python-mathsupport-critical",
+      "order": 8,
+      "title": "Math Support",
+      "lessonType": "initial",
+      "tags": [
+        "MathSupport"
+      ],
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Combine randomness with math for RPG-style battles and critical multipliers."
+        },
+        {
+          "type": "list",
+          "items": [
+            "math.pow(x, y) → x to the power y",
+            "math.sqrt(x) → square root",
+            "math.floor(x) / math.ceil(x) → rounding"
+          ]
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "python-mathsupport-critical-drill-1",
+      "title": "Hero Training Drill 4 – Critical Hit ⚔️",
+      "videoId": "",
+      "content": [
+        {
+          "type": "section",
+          "title": "Hero Training Drill 4 – Critical Hit ⚔️"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Roll base damage (5–15).",
+            "Critical = base squared.",
+            "Print both values."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import random, math\n\ndamage = random.randint(5, 15)\ncritical = math.pow(damage, 2)\n\nprint(\"Normal damage:\", damage)\nprint(\"Critical damage:\", critical)"
+        }
+      ],
+      "tags": [
+        "MathSupport"
+      ],
+      "type": "initial",
+      "lessonType": "initial",
+      "updated_date": "2025-12-31",
+      "order": 9
+    },
+    {
+      "id": "python-timesupport-sleep",
+      "order": 10,
+      "title": "Time Support",
+      "lessonType": "initial",
+      "tags": [
+        "TimeSupport"
+      ],
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "time.sleep(x) pauses the program for x seconds.",
+            "Use it to build suspense before revealing results."
+          ]
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "python-timesupport-sleep-drill-1",
+      "title": "Hero Training Drill 5 – Suspenseful Dice Roll 🎲",
+      "videoId": "",
+      "content": [
+        {
+          "type": "section",
+          "title": "Hero Training Drill 5 – Suspenseful Dice Roll 🎲"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Print “Rolling the D20…”.",
+            "Pause for 3 seconds.",
+            "Reveal the dice result."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import random, time\n\nprint(\"Rolling the D20...\")\ntime.sleep(3)\nprint(\"You rolled:\", random.randint(1, 20))"
+        }
+      ],
+      "tags": [
+        "TimeSupport"
+      ],
+      "type": "initial",
+      "lessonType": "initial",
+      "updated_date": "2025-12-31",
+      "order": 11
+    },
+    {
+      "id": "python-modulealias-as",
+      "order": 12,
+      "title": "Module Alias",
+      "lessonType": "initial",
+      "tags": [
+        "ModuleAlias"
+      ],
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "import random as r gives a module a nickname.",
+            "Use r.function() to cast spells faster."
+          ]
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "python-modulealias-as-drill-1",
+      "title": "Hero Training Drill 6 – Fast Fate 🎲",
+      "videoId": "",
+      "content": [
+        {
+          "type": "section",
+          "title": "Hero Training Drill 6 – Fast Fate 🎲"
+        },
+        {
+          "type": "code",
+          "text": "import random as r\nprint(\"Fast roll:\", r.randint(1, 6))"
+        }
+      ],
+      "tags": [
+        "ModuleAlias"
+      ],
+      "type": "initial",
+      "lessonType": "initial",
+      "updated_date": "2025-12-31",
+      "order": 13
+    },
+    {
+      "id": "python-importbasics-challenge",
+      "order": 14,
+      "title": "Challenge Quest",
+      "lessonType": "initial",
+      "tags": [
+        "ImportBasics",
+        "RandomModule",
+        "RandomAdvanced",
+        "MathSupport",
+        "TimeSupport",
+        "ModuleAlias"
+      ],
+      "content": [
+        {
+          "type": "story",
+          "text": "The three-headed Guardian demands you combine chance, numbers, and time in one battle trial."
+        },
+        {
+          "type": "challenge",
+          "instructions": [
+            "Import random, math, and time.",
+            "Roll a D20.",
+            "< 10 → miss.",
+            "10–19 → normal hit (random damage 5–12).",
+            "20 → critical hit (base damage squared).",
+            "Pause 2 seconds before revealing the damage.",
+            "After the fight, randomly pick loot from [\"potion\",\"sword\",\"shield\"]."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import random, math, time\n\nprint(\"Rolling to hit...\")\nroll = random.randint(1, 20)\nprint(\"You rolled:\", roll)\n\nif roll < 10:\n    print(\"You missed!\")\nelse:\n    if roll == 20:\n        base = random.randint(5, 12)\n        damage = math.pow(base, 2)\n        print(\"CRITICAL HIT!\")\n    else:\n        damage = random.randint(5, 12)\n        print(\"Hit!\")\n\n    time.sleep(2)\n    print(\"You deal\", damage, \"damage!\")\n\nloot = random.choice([\"potion\",\"sword\",\"shield\"])\nprint(\"Loot found:\", loot)"
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "python-importbasics-recap",
+      "order": 15,
+      "title": "Recap",
+      "lessonType": "initial",
+      "tags": [
+        "ImportBasics",
+        "RandomModule",
+        "RandomAdvanced",
+        "MathSupport",
+        "TimeSupport",
+        "ModuleAlias"
+      ],
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Import modules to access new powers (random, math, time).",
+            "Use randint/choice/random for RPG-style randomness.",
+            "Use shuffle/sample for loot tables and unique picks.",
+            "Combine random + math for critical damage formulas.",
+            "Use time.sleep to build suspense.",
+            "Use module aliases (as) for faster code."
+          ]
+        }
+      ],
+      "type": "initial",
+      "videoId": "",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "week-12-remedial",
+      "order": 23,
+      "title": "Import Basics",
+      "lessonType": "remedial",
+      "tags": [
+        "ImportBasics",
+        "RandomModule",
+        "RandomAdvanced",
+        "MathSupport",
+        "TimeSupport",
+        "ModuleAlias"
+      ],
+      "content": [
+        {
+          "type": "story",
+          "text": "📚 Tome Summoning — import brings a module’s spells into your code."
+        },
+        {
+          "type": "list",
+          "items": [
+            "import random makes random available.",
+            "Call functions like random.randint(...)."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import random\nprint(random.randint(1, 6))"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Import math and print math.sqrt(16).",
+            "✅ Solution:\nimport math\nprint(math.sqrt(16))"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Random Module"
+        },
+        {
+          "type": "story",
+          "text": "🎲 Fate Practice — roll, pick loot, and test luck."
+        },
+        {
+          "type": "list",
+          "items": [
+            "randint(a,b) → random integer.",
+            "choice(list) → random pick.",
+            "random() → luck value 0–1."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import random\nprint(random.randint(1, 20))\nprint(random.choice([\"potion\",\"sword\"]))"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Pick random enemy from [\"Goblin\",\"Slime\"].",
+            "✅ Solution:\nimport random\nprint(random.choice([\"Goblin\",\"Slime\"]))"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Random Advanced"
+        },
+        {
+          "type": "story",
+          "text": "💎 Loot Table Lab — shuffle and sample for unique treasure."
+        },
+        {
+          "type": "list",
+          "items": [
+            "shuffle(list) reorders the list.",
+            "sample(list, n) picks n unique items."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import random\nchest=[\"ruby\",\"emerald\",\"gold\",\"potion\"]\nrandom.shuffle(chest)\nprint(chest)\nprint(random.sample(chest, 2))"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Sample 1 item from [\"a\",\"b\",\"c\"].",
+            "✅ Solution:\nimport random\nprint(random.sample([\"a\",\"b\",\"c\"], 1))"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Math Support"
+        },
+        {
+          "type": "story",
+          "text": "🧮 Number Tome Practice — use math for spell formulas."
+        },
+        {
+          "type": "list",
+          "items": [
+            "math.pow(base, exp) raises to a power.",
+            "math.sqrt(x) finds square root."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import math\nprint(math.pow(5, 2))\nprint(math.sqrt(81))"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) If base=7, print base squared using pow.",
+            "✅ Solution:\nimport math\nbase=7\nprint(math.pow(base, 2))"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Time Support"
+        },
+        {
+          "type": "story",
+          "text": "⏳ Suspense Casting — pauses make battles feel dramatic."
+        },
+        {
+          "type": "list",
+          "items": [
+            "time.sleep(seconds) pauses the program."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import time\nprint(\"Charging...\")\ntime.sleep(2)\nprint(\"Strike!\")"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Print \"Rolling...\", sleep 1 second, then print \"Done\".",
+            "✅ Solution:\nimport time\nprint(\"Rolling...\")\ntime.sleep(1)\nprint(\"Done\")"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Module Alias"
+        },
+        {
+          "type": "story",
+          "text": "🪄 Short Chanting — give a module a nickname with as."
+        },
+        {
+          "type": "list",
+          "items": [
+            "import random as r creates an alias.",
+            "Now use r.randint(...) instead of random.randint(...)."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import random as r\nprint(r.randint(1, 6))"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) import math as m; print m.sqrt(25).",
+            "✅ Solution:\nimport math as m\nprint(m.sqrt(25))"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Boss Challenge"
+        },
+        {
+          "type": "story",
+          "text": "🗝️ Boss Challenge — Guardian of Fate (Modules)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Import random, math, time (and try an alias).",
+            "Roll to hit with a D20.",
+            "Miss / normal hit / critical hit using math.pow.",
+            "Pause before revealing damage.",
+            "Pick random loot at the end."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "import random as r\nimport math, time\n\nprint(\"Rolling to hit...\")\nroll = r.randint(1, 20)\nprint(\"You rolled:\", roll)\n\nif roll < 10:\n    print(\"You missed!\")\nelse:\n    base = r.randint(5, 12)\n    if roll == 20:\n        damage = math.pow(base, 2)\n        print(\"CRITICAL HIT!\")\n    else:\n        damage = base\n        print(\"Hit!\")\n\n    time.sleep(2)\n    print(\"You deal\", damage, \"damage!\")\n\nloot = r.choice([\"potion\",\"sword\",\"shield\"])\nprint(\"Loot found:\", loot)"
+        }
+      ],
+      "type": "remedial",
+      "videoId": "",
+      "updated_date": "2026-01-09"
+    }
+  ]
+}

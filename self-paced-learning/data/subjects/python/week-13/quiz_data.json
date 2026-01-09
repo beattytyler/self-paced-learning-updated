@@ -1,0 +1,137 @@
+{
+  "title": "Week 13 Quiz",
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Which module draws shapes?",
+      "options": [
+        "math",
+        "random",
+        "turtle",
+        "draw"
+      ],
+      "answer_index": 2,
+      "tags": [
+        "TurtleBasics"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What shape is drawn?",
+      "expected_answer": "Square",
+      "tags": [
+        "DrawShapes"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "for _ in range(4):\n    t.forward(50)\n    t.right(90)"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Change the turtle pen color to red.",
+      "expected_answer": "t.pencolor('red')",
+      "tags": [
+        "Colors"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which fills a shape?",
+      "options": [
+        "t.fill()",
+        "t.begin_fill()",
+        "t.color()",
+        "t.paint()"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "Colors"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Why combine shapes in a crest?",
+      "expected_answer": "To create symbols",
+      "tags": [
+        "Crests"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What does turtle.done() do?",
+      "expected_answer": "Keeps the window open",
+      "tags": [
+        "TurtleBasics"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which module draws shapes?",
+      "options": [
+        "math",
+        "random",
+        "turtle",
+        "draw"
+      ],
+      "answer_index": 2,
+      "tags": [
+        "TurtleBasics"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What shape is drawn?",
+      "expected_answer": "Square",
+      "tags": [
+        "DrawShapes"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "for _ in range(4):\n    t.forward(50)\n    t.right(90)"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Change the turtle pen color to red.",
+      "expected_answer": "t.pencolor('red')",
+      "tags": [
+        "Colors"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which fills a shape?",
+      "options": [
+        "t.fill()",
+        "t.begin_fill()",
+        "t.color()",
+        "t.paint()"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "Colors"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Why combine shapes in a crest?",
+      "expected_answer": "To create symbols",
+      "tags": [
+        "Crests"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What does turtle.done() do?",
+      "expected_answer": "Keeps the window open",
+      "tags": [
+        "TurtleBasics"
+      ]
+    }
+  ]
+}

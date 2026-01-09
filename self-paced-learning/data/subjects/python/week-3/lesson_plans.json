@@ -1,4 +1,527 @@
 {
-  "lessons": [],
-  "updated_date": "2025-10-15"
+  "lessons": [
+    {
+      "id": "python-input-intro",
+      "title": "Week 3 Intro – Speak with the Villagers",
+      "order": 1,
+      "tags": [
+        "Input",
+        "Casting",
+        "Print (f-strings)"
+      ],
+      "type": "initial",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "🌟 Story Setup\n\nYour hero has stats now, but the villagers are not impressed. They shout:\n\"Traveler, tell us your name! How many coins do you carry? How strong are you?\"\n\nTo answer them, your hero needs to listen and respond. This is where we use input() and friendly output."
+        },
+        {
+          "type": "paragraph",
+          "text": "Tags Introduced"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Input",
+            "Casting (convert input into numbers)",
+            "Print (f-strings)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "python-input",
+      "title": "Input",
+      "order": 2,
+      "tags": [
+        "Input"
+      ],
+      "type": "initial",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The input() function is your hero’s ears 👂.\nIt lets the player type something in, and the hero remembers it."
+        },
+        {
+          "type": "code",
+          "text": "hero_name = input(\"What is your hero's name? \")\nprint(\"Welcome,\", hero_name)"
+        },
+        {
+          "type": "paragraph",
+          "text": "If the player types Luna, the output will be:\n\nWhat is your hero's name? Luna\nWelcome, Luna"
+        },
+        {
+          "type": "paragraph",
+          "text": "👉 Important: Everything typed in with input() is stored as text (a string), even if it looks like a number."
+        }
+      ]
+    },
+    {
+      "id": "python-week-3-drill-1",
+      "title": "Hero Training Drill 1 – Coins from the Villagers",
+      "order": 3,
+      "tags": [
+        "Input"
+      ],
+      "type": "initial",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Mission: A villager asks: “How many coins do you carry?”\n\n- Use input() to ask the player.\n- Print: \"You have X coins.\" (replace X with the answer)."
+        },
+        {
+          "type": "paragraph",
+          "text": "✅ Solution:"
+        },
+        {
+          "type": "code",
+          "text": "hero_coins = input(\"How many coins do you carry? \")\nprint(\"You have\", hero_coins, \"coins.\")"
+        }
+      ]
+    },
+    {
+      "id": "python-casting",
+      "title": "Casting",
+      "order": 4,
+      "tags": [
+        "Casting (convert input into numbers)"
+      ],
+      "type": "initial",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Sometimes the villagers give you numbers, but they arrive as text scrolls 📜.\nTo use them for math, you must turn them into numbers. This is called casting.\n\n- int() → makes an integer (whole number)\n- float() → makes a decimal number"
+        },
+        {
+          "type": "code",
+          "text": "coins = int(input(\"How many coins do you carry? \"))\nattack = float(input(\"What is your attack power? \"))\n\n# Now you can do math\ncoins += 5\nprint(\"After treasure, you have\", coins, \"coins.\")"
+        }
+      ]
+    },
+    {
+      "id": "python-week-3-drill-2",
+      "title": "Hero Training Drill 2 – Strength Check",
+      "order": 5,
+      "tags": [
+        "Casting (convert input into numbers)"
+      ],
+      "type": "initial",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Mission: The guild master asks: “What is your hero’s attack power?”\n\n- Use float(input()) to ask the player.\n- Add 2.5 to the attack power (magic boost).\n- Print the boosted power."
+        },
+        {
+          "type": "paragraph",
+          "text": "✅ Solution:"
+        },
+        {
+          "type": "code",
+          "text": "hero_attack = float(input(\"What is your attack power? \"))\nhero_attack += 2.5\nprint(\"With a magic boost, your attack is now\", hero_attack)"
+        }
+      ]
+    },
+    {
+      "id": "python-print",
+      "title": "Print (F-Strings)",
+      "order": 6,
+      "tags": [
+        "Print (f-strings)"
+      ],
+      "type": "initial",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Using commas with print() works fine, but Python also has a magic shortcut called f-strings.\nIt’s like inserting variables directly into your sentence."
+        },
+        {
+          "type": "code",
+          "text": "hero_name = \"Kai\"\nhero_hp = 100\nprint(f\"Welcome {hero_name}! You start with {hero_hp} HP.\")"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output:\n\nWelcome Kai! You start with 100 HP."
+        },
+        {
+          "type": "paragraph",
+          "text": "👉 F-strings make your game output look cleaner and easier to write."
+        }
+      ]
+    },
+    {
+      "id": "python-week-3-drill-3",
+      "title": "Hero Training Drill 3 – Fancy Greeting",
+      "order": 7,
+      "tags": [
+        "Print (f-strings)",
+        "Input"
+      ],
+      "type": "initial",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Mission: The villagers want a proper introduction.\n\n- Ask for hero’s name with input().\n- Give them 100 HP automatically.\n- Print: \"Welcome Kai! You have 100 HP.\" using an f-string."
+        },
+        {
+          "type": "paragraph",
+          "text": "✅ Solution:"
+        },
+        {
+          "type": "code",
+          "text": "hero_name = input(\"What is your hero's name? \")\nhero_hp = 100\nprint(f\"Welcome {hero_name}! You have {hero_hp} HP.\")"
+        }
+      ]
+    },
+    {
+      "id": "python-week-3-challenge-quest",
+      "title": "Challenge Quest – The Hero’s Introduction",
+      "order": 8,
+      "tags": [
+        "Input",
+        "Casting (convert input into numbers)",
+        "Print (f-strings)"
+      ],
+      "type": "initial",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "✨ Story:\nThe villagers surround you and ask three questions:\n\n- “What is your name?”\n- “How many coins do you carry?”\n- “What is your attack power?”\n\n🔑 Your Mission:\nWrite a program that asks for all three, then prints a full hero introduction using f-strings."
+        },
+        {
+          "type": "paragraph",
+          "text": "✅ Example Solution:"
+        },
+        {
+          "type": "code",
+          "text": "hero_name = input(\"What is your hero's name? \")\nhero_coins = int(input(\"How many coins do you carry? \"))\nhero_attack = float(input(\"What is your attack power? \"))\n\nprint(f\"Welcome {hero_name}!\")\nprint(f\"You have {hero_coins} coins and {hero_attack} attack power.\")"
+        }
+      ]
+    },
+    {
+      "id": "python-week-3-recap",
+      "title": "Week 3 Recap",
+      "order": 9,
+      "tags": [
+        "Input",
+        "Casting (convert input into numbers)",
+        "Print (f-strings)"
+      ],
+      "type": "initial",
+      "content": [
+        {
+          "type": "header",
+          "text": "🎉 By the end of Week 3:"
+        },
+        {
+          "type": "list",
+          "items": [
+            " Kids know how to use input() to let the hero listen to players.",
+            "They can cast input to numbers with int() and float().",
+            "They can print clear sentences using f-strings."
+          ]
+        }
+      ],
+      "videoId": "",
+      "updated_date": "2025-10-02"
+    },
+    {
+      "id": "python-week-3-remedial",
+      "order": 10,
+      "title": "Week 3 Remedial – Speak with the Villagers (Input & Friendly Output)",
+      "lessonType": "remedial",
+      "tags": [
+        "Input",
+        "Casting",
+        "Print (f-strings)",
+        "Input + Casting + Print (f-strings)"
+      ],
+      "type": "remedial",
+      "videoId": "",
+      "updated_date": "2025-10-02",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "🏰 Week 3 Remedial Lesson – Speak with the Villagers (Input & Friendly Output)\n\nThis remedial lesson is for heroes who need more practice listening and speaking with villagers. Each section is standalone, so you can focus only on the tags you need help with. Short RPG narrations are included to keep your adventure fun!"
+        },
+        {
+          "type": "story",
+          "text": "[Tag: Input]\n🧙‍♂️ The elder villager approaches your hero and says: “Young one, a true hero listens before they speak.”"
+        },
+        {
+          "type": "list",
+          "items": [
+            "💡 Concept Review:",
+            "• input() lets the player type information for the hero.",
+            "• Everything from input() is stored as text (a string)."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Examples"
+        },
+        {
+          "type": "code",
+          "text": "hero_name = input(\"What is your hero's name? \")\nprint(\"Greetings,\", hero_name)"
+        },
+        {
+          "type": "paragraph",
+          "text": "If you type Elin, the program says:\nWhat is your hero's name? Elin\nGreetings, Elin"
+        },
+        {
+          "type": "section",
+          "title": "Practice Drills for Input (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Drill I1 – The Greeting Scroll\n- Task: Ask for the player’s name and print “Welcome <name>!”"
+          ]
+        },
+        {
+          "type": "code",
+          "text": "hero_name = input(\"What is your name? \")\nprint(\"Welcome\", hero_name + \"!\")"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output:\nWhat is your name? Kai\nWelcome Kai!"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Drill I2 – The Village Question\n- Task: Ask which village the hero is from.\n- Print: “Ah, you come from <village>.”"
+          ]
+        },
+        {
+          "type": "code",
+          "text": "village = input(\"Which village are you from? \")\nprint(\"Ah, you come from\", village + \".\")"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output:\nWhich village are you from? Windfall\nAh, you come from Windfall."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Drill I3 – The Coin Inquiry\n- Task: Ask: “How many coins do you carry?”\n- Print the same number back with a short message."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "coins = input(\"How many coins do you carry? \")\nprint(\"You carry\", coins, \"coins in your pouch.\")"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output:\nHow many coins do you carry? 20\nYou carry 20 coins in your pouch."
+        },
+        {
+          "type": "story",
+          "text": "[Tag: Casting]\n🧝 The guild scribe explains: “Words can’t be added to numbers! You must turn scrolls into real values.”"
+        },
+        {
+          "type": "list",
+          "items": [
+            "💡 Concept Review:",
+            "• input() always returns a string.",
+            "• Use int() for whole numbers and float() for decimals so you can do math."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Examples"
+        },
+        {
+          "type": "code",
+          "text": "gold = int(input(\"How much gold do you have? \"))\ngold += 10\nprint(\"After trading, you now have\", gold, \"gold.\")"
+        },
+        {
+          "type": "paragraph",
+          "text": "If the player types 25:\nAfter trading, you now have 35 gold."
+        },
+        {
+          "type": "section",
+          "title": "Practice Drills for Casting (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Drill C1 – Double the Coins\n- Task: Ask for the number of coins (as int), then double it and print the result."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "coins = int(input(\"How many coins do you carry? \"))\ncoins *= 2\nprint(\"After magic, you now have\", coins, \"coins!\")"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output:\nHow many coins do you carry? 15\nAfter magic, you now have 30 coins!"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Drill C2 – Power Boost\n- Task: Ask for hero_attack (float), add 2.5 to it, and print the new power."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "hero_attack = float(input(\"Enter your attack power: \"))\nhero_attack += 2.5\nprint(\"Your boosted attack is\", hero_attack)"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output:\nEnter your attack power: 7.5\nYour boosted attack is 10.0"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Drill C3 – Market Math\n- Task: Ask for coin_count and item_cost. Subtract cost from coins and print how many remain."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "coin_count = int(input(\"How many coins do you have? \"))\nitem_cost = int(input(\"What is the item cost? \"))\ncoins_left = coin_count - item_cost\nprint(\"After shopping, you have\", coins_left, \"coins left.\")"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output:\nHow many coins do you have? 50\nWhat is the item cost? 20\nAfter shopping, you have 30 coins left."
+        },
+        {
+          "type": "story",
+          "text": "[Tag: Print (f-strings)]\n🐢 The painter turtle says: “Your messages should sparkle! Use f-strings to make them shine.”"
+        },
+        {
+          "type": "list",
+          "items": [
+            "💡 Concept Review:",
+            "• An f-string starts with f\"...\" (or f'...').",
+            "• Put variables inside { } to insert their values into the text."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Examples"
+        },
+        {
+          "type": "code",
+          "text": "hero_name = \"Lira\"\nhero_hp = 90\nprint(f\"{hero_name} has {hero_hp} HP left!\")"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output:\nLira has 90 HP left!"
+        },
+        {
+          "type": "section",
+          "title": "Practice Drills for Print (f-strings) (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Drill F1 – Greeting Message\n- Task: Ask for hero_name, then print: “Welcome, <name> the Brave!”"
+          ]
+        },
+        {
+          "type": "code",
+          "text": "hero_name = input(\"What is your hero's name? \")\nprint(f\"Welcome, {hero_name} the Brave!\")"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output:\nWhat is your hero's name? Nira\nWelcome, Nira the Brave!"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Drill F2 – Stat Display\n- Task: Ask for HP and coins, then print a single f-string showing both stats."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "hero_hp = int(input(\"Enter HP: \"))\nhero_coins = int(input(\"Enter coins: \"))\nprint(f\"HP: {hero_hp} | Coins: {hero_coins}\")"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output:\nEnter HP: 80\nEnter coins: 25\nHP: 80 | Coins: 25"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Drill F3 – Weapon Announcement\n- Task: Ask for a weapon name and print: “You wield the <weapon> with pride!”"
+          ]
+        },
+        {
+          "type": "code",
+          "text": "weapon = input(\"Name your weapon: \")\nprint(f\"You wield the {weapon} with pride!\")"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output:\nName your weapon: Iron Sword\nYou wield the Iron Sword with pride!"
+        },
+        {
+          "type": "story",
+          "text": "[Tag: Input + Casting + Print (f-strings)]\n🧙‍♀️ The Guardian of Voices returns: “Now you must speak like a true hero. Combine your power to listen, convert, and speak clearly.”"
+        },
+        {
+          "type": "list",
+          "items": [
+            "💡 Concept Review:",
+            "• Use input() to listen.",
+            "• Cast coins/HP/attack into numbers with int() or float().",
+            "• Use f-strings to speak clearly."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Example"
+        },
+        {
+          "type": "code",
+          "text": "hero_name = input(\"What is your hero's name? \")\nhero_coins = int(input(\"How many coins? \"))\nhero_attack = float(input(\"Attack power? \"))\nprint(f\"Welcome {hero_name}! You have {hero_coins} coins and {hero_attack} attack power.\")"
+        },
+        {
+          "type": "section",
+          "title": "Practice Drills for Input + Casting + Print (f-strings) (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Drill IC1 – Full Introduction\n- Task: Ask for hero_name (string), coins (int), and attack (float). Print a multi-line introduction using f-strings."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "hero_name = input(\"Name: \")\ncoins = int(input(\"Coins: \"))\nattack = float(input(\"Attack: \"))\nprint(f\"Welcome {hero_name}!\")\nprint(f\"You have {coins} coins and {attack} attack power.\")"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output:\nName: Arin\nCoins: 10\nAttack: 6.5\nWelcome Arin!\nYou have 10 coins and 6.5 attack power."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Drill IC2 – The Power Boost\n- Task: Ask for attack (float), increase by 2.5, and print the boosted value."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "attack = float(input(\"Enter attack power: \"))\nattack += 2.5\nprint(f\"After boost, your attack is {attack}!\")"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output:\nEnter attack power: 5.0\nAfter boost, your attack is 7.5!"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Drill IC3 – Hero Introduction Reforged\n- Task: Create a hero intro asking for name, HP, coins, and attack. Print them all using one f-string line."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "hero_name = input(\"Hero name: \")\nhero_hp = int(input(\"HP: \"))\nhero_coins = int(input(\"Coins: \"))\nhero_attack = float(input(\"Attack: \"))\nprint(f\"{hero_name}: HP={hero_hp}, Coins={hero_coins}, Attack={hero_attack}\")"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output:\nHero name: Luna\nHP: 100\nCoins: 15\nAttack: 7.5\nLuna: HP=100, Coins=15, Attack=7.5"
+        }
+      ]
+    }
+  ],
+  "updated_date": "2025-10-02"
 }

@@ -1,65 +1,181 @@
 {
-  "quiz_title": "Python - Week-5 Quiz",
+  "quiz_title": "Week 5 Quiz – Battle Math (Operators & Expressions)",
   "questions": [
     {
-      "answer_index": 1,
-      "content": [],
+      "type": "multiple_choice",
+      "question": "Which operator would you use to heal your hero by 20 HP?",
+      "tags": [
+        "Arithmetic Operators"
+      ],
       "options": [
         "-",
         "+",
         "*",
         "//"
       ],
-      "question": "Which operator would you use to heal your hero by 20 HP?",
-      "tags": [],
-      "type": "multiple_choice"
+      "answer_index": 1
     },
     {
-      "answer_index": 1,
-      "content": [
-        {
-          "text": "hp = 100 \nhp = hp - 30 \nprint(hp)",
-          "type": "code"
-        }
-      ],
-      "options": [
-        "100",
-        "70",
-        "30",
-        "Error"
-      ],
+      "type": "short_answer",
       "question": "What will this code print?",
-      "tags": [],
-      "type": "multiple_choice"
-    },
-    {
-      "content": [],
-      "question": "Write code to start with hero_hp = 60, heal the hero by 15 HP, and print the new total.",
-      "sample_solution": "hero_hp = 60 \nhero_hp += 15 \nprint('Hero HP:', hero_hp)",
-      "starter_code": "",
-      "tags": [],
-      "type": "coding"
-    },
-    {
+      "tags": [
+        "Arithmetic Operators",
+        "FloorDivision",
+        "Modulus",
+        "Exponent",
+        "Precedence"
+      ],
+      "expected_answer": "68",
       "content": [
         {
-          "text": "damage = 10 * 3 - 5 \nprint(damage)",
-          "type": "code"
+          "type": "code",
+          "text": "hp = 100 - (5 + 3) * 4\nprint(hp)"
         }
-      ],
-      "expected_answer": "25",
-      "question": "What is the output?",
-      "tags": [],
-      "type": "short_answer"
+      ]
     },
     {
       "type": "coding",
-      "question": "A monster attack reduces HP by 40. Start with hero_hp = 120 and print remaining HP.",
-      "tags": [],
-      "content": [],
-      "starter_code": "",
-      "sample_solution": "hero_hp = 120 \nhero_hp -= 40 \nprint(hero_hp)"
+      "question": "Hero’s Heal 🧪\nStart with hero_hp = 60, heal the hero by 15 HP, and print the new total.",
+      "tags": [
+        "Arithmetic Operators"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hero_hp = 60\nhero_hp += 15\nprint('Hero HP:', hero_hp)"
+        }
+      ],
+      "expected_answer": "hero_hp = 60\nhero_hp += 15\nprint('Hero HP:', hero_hp)"
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does // do in Python?",
+      "tags": [
+        "FloorDivision"
+      ],
+      "options": [
+        "Divides and rounds up",
+        "Divides and gives remainder",
+        "Divides and gives whole number part only",
+        "Splits strings"
+      ],
+      "answer_index": 2
+    },
+    {
+      "type": "multiple_choice",
+      "question": "If coins = 25 and players = 4, what is coins // players?",
+      "tags": [
+        "FloorDivision"
+      ],
+      "options": [
+        "6",
+        "6.25",
+        "7",
+        "1"
+      ],
+      "answer_index": 0
+    },
+    {
+      "type": "short_answer",
+      "question": "Predict the output.",
+      "tags": [
+        "Exponent"
+      ],
+      "expected_answer": "512",
+      "content": [
+        {
+          "type": "code",
+          "text": "print(2 ** 3 ** 2)"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does % return?",
+      "tags": [
+        "Modulus"
+      ],
+      "options": [
+        "The whole number part",
+        "The remainder",
+        "The quotient",
+        "The power"
+      ],
+      "answer_index": 1
+    },
+    {
+      "type": "coding",
+      "question": "Write code to find how many apples remain after dividing 23 apples among 4 villagers.",
+      "tags": [
+        "Modulus"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "apples = 23\nvillagers = 4\nprint(apples % villagers)"
+        }
+      ],
+      "expected_answer": "apples = 23\nvillagers = 4\nprint(apples % villagers)"
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does ** do in Python?",
+      "tags": [
+        "Exponent"
+      ],
+      "options": [
+        "Adds numbers",
+        "Divides numbers",
+        "Raises one number to the power of another",
+        "Finds remainder"
+      ],
+      "answer_index": 2
+    },
+    {
+      "type": "short_answer",
+      "question": "What is printed?",
+      "tags": [
+        "Exponent"
+      ],
+      "expected_answer": "16",
+      "content": [
+        {
+          "type": "code",
+          "text": "attack = 4\ncritical = attack ** 2\nprint(critical)"
+        }
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What is the output?",
+      "tags": [
+        "Arithmetic Operators"
+      ],
+      "expected_answer": "25",
+      "content": [
+        {
+          "type": "code",
+          "text": "damage = 10 * 3 - 5\nprint(damage)"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Hero Battle Simulation 🧙‍♂️\n- Start with hp = 120\n- Subtract (8 + 4) * 2 damage\n- Heal 10 HP\n- Print final HP",
+      "tags": [
+        "Arithmetic Operators",
+        "FloorDivision",
+        "Modulus",
+        "Exponent",
+        "Precedence"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hp = 120\nhp -= (8 + 4) * 2\nhp += 10\nprint(hp)"
+        }
+      ],
+      "expected_answer": "hp = 120\nhp -= (8 + 4) * 2\nhp += 10\nprint(hp)"
     }
-  ],
-  "updated_date": "2025-01-01"
+  ]
 }

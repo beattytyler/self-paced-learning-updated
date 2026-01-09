@@ -138,6 +138,17 @@
                                        autocomplete="off">
                                 <div class="tag-suggestions" id="lessonTagSuggestions"></div>
                             </div>
+                            <div class="tag-actions">
+                                <div class="tag-add-row">
+                                    <input type="text" id="newTagInput" class="new-tag-input" placeholder="Add a new tag to the pool..." autocomplete="off">
+                                    <button type="button" class="add-tag-btn" id="addNewTagBtn">
+                                        <i class="fas fa-plus"></i> Add to pool
+                                    </button>
+                                </div>
+                                <button type="button" class="remove-tag-btn" id="removeTagModeBtn" title="Toggle remove mode, then double-click a tag chip to remove it from the pool">
+                                    <i class="fas fa-eraser"></i> Remove mode: Off
+                                </button>
+                            </div>
                             <small id="tagsHelpText">Optional: Select from available tags or type to search. Tags help match lessons to student needs</small>
                             <div class="tags-preview" id="lessonTagsPreview"></div>
                             <div class="available-tags" id="lessonAvailableTags"></div>
@@ -418,6 +429,13 @@
             display: inline-flex;
             align-items: center;
             gap: 5px;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .tag-preview:hover {
+            background: #cbd5e1;
+            color: #1f2937;
         }
 
         .tag-preview .remove-tag {
@@ -433,6 +451,98 @@
         /* New tag input styles */
         .tag-input-container {
             position: relative;
+        }
+
+        .tag-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin: 10px 0;
+            gap: 10px;
+        }
+
+        .tag-add-row {
+            display: flex;
+            flex: 1;
+            gap: 8px;
+            min-width: 260px;
+        }
+
+        .new-tag-input {
+            flex: 1;
+            padding: 8px 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .new-tag-input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+            outline: none;
+        }
+
+        .add-tag-btn {
+            min-height: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 12px;
+            border: 1px solid #2563eb;
+            background: #2563eb;
+            color: #fff;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .add-tag-btn:hover:not(:disabled) {
+            background: #1d4ed8;
+            border-color: #1d4ed8;
+            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.25);
+        }
+
+        .add-tag-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .remove-tag-btn {
+            min-height: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 12px;
+            border: 1px solid #e11d48;
+            background: #fff;
+            color: #e11d48;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .remove-tag-btn.active {
+            background: #e11d48;
+            color: #fff;
+            box-shadow: 0 6px 18px rgba(225, 29, 72, 0.25);
+        }
+
+        .remove-tag-btn:hover:not(:disabled) {
+            background: #fce7f3;
+            border-color: #be123c;
+            color: #be123c;
+        }
+
+        .remove-tag-btn.active:hover {
+            background: #be123c;
+            border-color: #be123c;
         }
 
         .tag-suggestions {
@@ -476,6 +586,11 @@
             background: #f8f9fa;
             border-radius: 8px;
             border: 1px solid #e9ecef;
+        }
+
+        .available-tags.remove-mode-active {
+            border-color: #fecdd3;
+            background: #fff5f5;
         }
 
         .available-tags h4 {
@@ -930,6 +1045,10 @@
             // Tag API integration variables
             let availableTags = [];
             let selectedTags = [];
+            const addTagBtn = document.getElementById('addNewTagBtn');
+            const newTagInput = document.getElementById('newTagInput');
+            const removeTagModeBtn = document.getElementById('removeTagModeBtn');
+            let removeMode = false;
             
             // Load available tags from API
             async function loadAvailableTags() {
@@ -966,6 +1085,129 @@
                 }
             }
 
+            // Add a new tag to the pool for the selected subject
+            async function handleAddNewTag() {
+                const subjectSelect = document.getElementById('subject');
+                const currentSubject = subjectSelect.value;
+
+                if (!currentSubject) {
+                    showNotification('Please select a subject before adding tags', 'error');
+                    return;
+                }
+
+                const cleanedTag = (newTagInput.value || '').trim();
+                if (!cleanedTag) {
+                    showNotification('Tag cannot be empty', 'error');
+                    return;
+                }
+
+                const duplicate = availableTags.some(
+                    tag => tag.toLowerCase() === cleanedTag.toLowerCase()
+                );
+                if (duplicate) {
+                    showNotification('That tag already exists for this subject', 'info');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/api/subjects/${currentSubject}/tags`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ tag: cleanedTag }),
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok || data.error) {
+                        showNotification(data.error || 'Failed to add tag', 'error');
+                        return;
+                    }
+
+                    availableTags = data.tags || availableTags;
+
+                    // Add the new tag to the current selection for convenience
+                    const savedTag = data.tag || cleanedTag;
+                    if (!selectedTags.some(tag => tag.toLowerCase() === savedTag.toLowerCase())) {
+                        selectedTags.push(savedTag);
+                    }
+
+                    updateTagInput();
+                    updateTagsPreview();
+                    displayAvailableTags();
+                    updateTagChipsDisplay();
+                    hideSuggestions();
+
+                    newTagInput.value = '';
+                    showNotification('Tag added to this subject', 'success');
+                } catch (error) {
+                    console.error('Error adding tag:', error);
+                    showNotification('Error adding tag. Please try again.', 'error');
+                }
+            }
+
+            async function handleRemoveTag(tag) {
+                const subjectSelect = document.getElementById('subject');
+                const currentSubject = subjectSelect.value;
+
+                if (!currentSubject) {
+                    showNotification('Please select a subject before removing tags', 'error');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/api/subjects/${currentSubject}/tags/${encodeURIComponent(tag)}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
+                    const data = await response.json();
+                    if (!response.ok || data.error) {
+                        showNotification(data.error || 'Failed to remove tag', 'error');
+                        return;
+                    }
+
+                    availableTags = data.tags || availableTags.filter(
+                        existing => existing.toLowerCase() !== tag.toLowerCase()
+                    );
+
+                    selectedTags = selectedTags.filter(
+                        selected => selected.toLowerCase() !== tag.toLowerCase()
+                    );
+
+                    updateTagInput();
+                    updateTagsPreview();
+                    displayAvailableTags();
+                    updateTagChipsDisplay();
+                    hideSuggestions();
+
+                    showNotification('Tag removed from this subject', 'success');
+                } catch (error) {
+                    console.error('Error removing tag:', error);
+                    showNotification('Error removing tag. Please try again.', 'error');
+                }
+            }
+
+            function toggleRemoveMode() {
+                removeMode = !removeMode;
+
+                if (removeTagModeBtn) {
+                    removeTagModeBtn.classList.toggle('active', removeMode);
+                    removeTagModeBtn.innerHTML = `<i class="fas fa-eraser"></i> Remove mode: ${removeMode ? 'On' : 'Off'}`;
+                }
+
+                const availableContainer = document.getElementById('lessonAvailableTags');
+                if (availableContainer) {
+                    availableContainer.classList.toggle('remove-mode-active', removeMode);
+                }
+
+                attachTagChipHandlers();
+                updateTagChipsDisplay();
+            }
+
             // Update lesson type help text based on selected type
             function updateLessonTypeHelp() {
                 const lessonType = document.getElementById('lessonType').value;
@@ -986,14 +1228,16 @@
                     return;
                 }
 
+                const removeNote = removeMode ? ' — Remove mode ON (double-click a tag to remove from pool)' : '';
                 container.innerHTML = `
-                    <h4>Available Tags (${availableTags.length})</h4>
+                    <h4>Available Tags (${availableTags.length})${removeNote}</h4>
                     <div class="tag-chips">
                         ${availableTags.map(tag => `
-                            <span class="tag-chip" onclick="addTagFromChip('${tag}')" title="Click to add">${tag}</span>
+                            <span class="tag-chip" data-tag="${tag.replace(/"/g, '&quot;')}">${tag}</span>
                         `).join('')}
                     </div>
                 `;
+                attachTagChipHandlers();
                 updateTagChipsDisplay();
             }
 
@@ -1002,21 +1246,51 @@
                     const tagText = chip.textContent;
                     if (selectedTags.includes(tagText)) {
                         chip.classList.add('used');
-                        chip.title = 'Already selected';
+                        chip.title = removeMode ? 'Double-click to remove from pool' : 'Click to remove from lesson';
                     } else {
                         chip.classList.remove('used');
-                        chip.title = 'Click to add';
+                        chip.title = removeMode ? 'Double-click to remove from pool' : 'Click to add';
                     }
                 });
             }
 
             function addTagFromChip(tag) {
-                if (!selectedTags.includes(tag)) {
-                    selectedTags.push(tag);
-                    updateTagInput();
-                    updateTagsPreview();
-                    updateTagChipsDisplay();
+                if (removeMode) {
+                    return;
                 }
+                if (selectedTags.includes(tag)) {
+                    removeTag(tag);
+                    return;
+                }
+                selectedTags.push(tag);
+                updateTagInput();
+                updateTagsPreview();
+                updateTagChipsDisplay();
+            }
+
+            function attachTagChipHandlers() {
+                const container = document.getElementById('lessonAvailableTags');
+                if (!container) return;
+
+                container.querySelectorAll('.tag-chip').forEach(chip => {
+                    const tagText = chip.dataset.tag || chip.textContent;
+
+                    chip.onclick = () => {
+                        if (removeMode) return;
+                        if (selectedTags.includes(tagText)) {
+                            removeTag(tagText);
+                        } else {
+                            addTagFromChip(tagText);
+                        }
+                    };
+
+                    chip.ondblclick = () => {
+                        if (!removeMode) return;
+                        handleRemoveTag(tagText);
+                    };
+
+                    chip.title = removeMode ? 'Double-click to remove from pool' : 'Click to add';
+                });
             }
 
             function updateTagInput() {
@@ -1026,9 +1300,9 @@
             function updateTagsPreview() {
                 const preview = document.getElementById('lessonTagsPreview');
                 preview.innerHTML = selectedTags.map(tag => `
-                    <span class="tag-preview">
+                    <span class="tag-preview" onclick="removeTag('${tag}')">
                         ${tag}
-                        <span class="remove-tag" onclick="removeTag('${tag}')">&times;</span>
+                        <span class="remove-tag" onclick="removeTag('${tag}'); event.stopPropagation();">&times;</span>
                     </span>
                 `).join('');
             }
@@ -1157,6 +1431,24 @@
             
             subjectSelect.addEventListener('change', function() {
                 const selectedSubject = this.value;
+
+                if (removeMode) {
+                    removeMode = false;
+                    if (removeTagModeBtn) {
+                        removeTagModeBtn.classList.remove('active');
+                        removeTagModeBtn.innerHTML = '<i class="fas fa-eraser"></i> Remove mode: Off';
+                    }
+                }
+
+                if (addTagBtn) {
+                    addTagBtn.disabled = !selectedSubject;
+                }
+                if (newTagInput) {
+                    newTagInput.disabled = !selectedSubject;
+                }
+                if (removeTagModeBtn) {
+                    removeTagModeBtn.disabled = !selectedSubject;
+                }
                 
                 // Clear subtopic dropdown
                 subtopicSelect.innerHTML = '<option value="">Select Subtopic</option>';
@@ -1201,6 +1493,15 @@
             {% if not edit_mode %}
                 if (!subjectSelect.value) {
                     subtopicSelect.disabled = true;
+                    if (addTagBtn) {
+                        addTagBtn.disabled = true;
+                    }
+                    if (newTagInput) {
+                        newTagInput.disabled = true;
+                    }
+                    if (removeTagModeBtn) {
+                        removeTagModeBtn.disabled = true;
+                    }
                 }
             {% endif %}
             
@@ -1218,8 +1519,33 @@
             {% if not edit_mode %}
                 if (subjectSelect.value) {
                     loadAvailableTags();
+                } else {
+                    if (addTagBtn) {
+                        addTagBtn.disabled = true;
+                    }
+                    if (newTagInput) {
+                        newTagInput.disabled = true;
+                    }
+                    if (removeTagModeBtn) {
+                        removeTagModeBtn.disabled = true;
+                    }
                 }
             {% endif %}
+
+            if (addTagBtn) {
+                addTagBtn.addEventListener('click', handleAddNewTag);
+            }
+            if (newTagInput) {
+                newTagInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleAddNewTag();
+                    }
+                });
+            }
+            if (removeTagModeBtn) {
+                removeTagModeBtn.addEventListener('click', toggleRemoveMode);
+            }
         });
 
         // Add event listeners for content type buttons
@@ -1425,7 +1751,7 @@
 
             // Submit form
             const url = {% if edit_mode %}
-                `/admin/lessons/{{ subject }}/{{ subtopic }}/{{ lesson_id }}/edit`
+                `/admin/lessons/${encodeURIComponent({{ subject|tojson }})}/${encodeURIComponent({{ subtopic|tojson }})}/${encodeURIComponent({{ lesson_id|tojson }})}/edit`
             {% else %}
                 '/admin/lessons/create'
             {% endif %};
@@ -1444,7 +1770,9 @@
                     setTimeout(() => {
                         {% if edit_mode %}
                             // Redirect back to lessons page with subject and subtopic filters
-                            window.location.href = '/admin/lessons?subject={{ subject }}&subtopic={{ subtopic }}';
+                            const redirectSubject = encodeURIComponent({{ subject|tojson }});
+                            const redirectSubtopic = encodeURIComponent({{ subtopic|tojson }});
+                            window.location.href = `/admin/lessons?subject=${redirectSubject}&subtopic=${redirectSubtopic}`;
                         {% else %}
                             window.location.href = '/admin/lessons/select-subject';
                         {% endif %}

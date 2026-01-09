@@ -1,0 +1,596 @@
+{
+  "lessons": [
+    {
+      "subject": "python",
+      "subtopic": "week-8",
+      "lesson_id": "python-list-intro",
+      "id": "python-list-intro",
+      "title": "Python List Intro",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [],
+      "order": 1,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The Magic Door creaks open, and you stumble into a glittering dungeon chamber."
+        },
+        {
+          "type": "paragraph",
+          "text": "Piles of coins glimmer, potions bubble in glass bottles, and… socks? Lots of socks. Who even brings socks into a dungeon?! 🧦"
+        },
+        {
+          "type": "paragraph",
+          "text": "The guild master claps your shoulder:"
+        },
+        {
+          "type": "paragraph",
+          "text": "\"Hero, no one survives on a single sword and a smelly goblin tooth. You must learn the magic of the Loot Bag. With it, you can collect, sort, and manage treasures. For the road ahead, even the weirdest junk may save your life… or at least fetch a good price at the marketplace.”"
+        },
+        {
+          "type": "paragraph",
+          "text": "This week, you’ll master lists:"
+        },
+        {
+          "type": "paragraph",
+          "text": "Packing loot into your bag. Picking items out. Adding shiny things, tossing broken junk. Showing off your entire haul to jealous villagers."
+        },
+        {
+          "type": "paragraph",
+          "text": "Tags Introduced:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "ListBasics → creating and printing lists.",
+            "ListIndexSlice → grabbing and cutting loot.",
+            "ListMutate → changing, appending, inserting, removing.",
+            "ListIterate → looping through inventory."
+          ]
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-02"
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-8",
+      "lesson_id": "python-list-basics",
+      "id": "python-list-basics",
+      "title": "Python List Basics",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "ListBasics"
+      ],
+      "order": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "A list is like your hero’s magical inventory bag."
+        },
+        {
+          "type": "paragraph",
+          "text": "It doesn’t hold just one thing — it can hold many treasures together."
+        },
+        {
+          "type": "header",
+          "text": "Example:"
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "inventory = [\"sword\", \"potion\", \"shield\"] \n\nprint(inventory) ",
+          "expected_output": "",
+          "hints": [],
+          "solution": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "Square brackets [] are like the straps of your bag. Each item inside is tucked safely away."
+        },
+        {
+          "type": "header",
+          "text": "Hero Training Drill 1 – Starter Loot Bag 🎒"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Mission Briefing:",
+            "You wake up at the dungeon entrance with only your underwear. Embarrassing.",
+            "The guild kindly hands you three survival items: \"dagger\", \"potion\", \"map\".",
+            "Your task is to pack them into your new Loot Bag."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Steps:"
+        },
+        {
+          "type": "paragraph",
+          "text": "Create a list called inventory. Put the 3 starter items inside. Print the inventory to prove you packed them."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your Python code here\nprint(\"Hello, World!\")",
+          "expected_output": "['dagger', 'potion', 'map'] ",
+          "hints": [],
+          "solution": "inventory = [\"dagger\", \"potion\", \"map\"] \nprint(inventory) "
+        },
+        {
+          "type": "paragraph",
+          "text": "Villager: “Good job. Now you don’t look like a tourist anymore.”"
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-02"
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-8",
+      "lesson_id": "python-list-index-slice",
+      "id": "python-list-index-slice",
+      "title": "Python List Index Slice",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "ListIndexSlice"
+      ],
+      "order": 3,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Every list item has a position (index), starting from 0."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Think of your loot bag having numbered pockets:",
+            "0 = first pocket",
+            "1 = second pocket",
+            "-1 = last pocket (back pocket)"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Example:"
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "inventory = [\"sword\", \"potion\", \"shield\"] \nprint(inventory[0])   # sword \nprint(inventory[-1])  # shield \nprint(inventory[0:2]) # ['sword', 'potion'] ",
+          "expected_output": "potion\nmap",
+          "hints": [],
+          "solution": "inventory = [\"dagger\", \"potion\", \"map\"] \nprint(inventory[1])   # potion\nprint(inventory[-1])  # map "
+        },
+        {
+          "type": "paragraph",
+          "text": "It’s like saying: “Reach into the first pocket for your sword” or “Grab the last pocket item for your shield.”"
+        },
+        {
+          "type": "header",
+          "text": "Hero Training Drill 2 – Grab the Potion 💊 "
+        },
+        {
+          "type": "list",
+          "items": [
+            "Mission Briefing:",
+            "You’ve been poisoned by a sneaky trap. The healer yells:",
+            "\"Quick! Drink your potion before you turn green and smell worse than a goblin’s armpit!”"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Steps:",
+            "Make inventory = [\"dagger\", \"potion\", \"map\"].",
+            "Print only the potion (index 1).",
+            "Print the last item (map) using negative indexing."
+          ]
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your Python code here\nprint(\"Hello, World!\")",
+          "expected_output": "",
+          "hints": [],
+          "solution": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "Healer: “Whew! That was close. You almost became zombie furniture.”"
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-02"
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-8",
+      "lesson_id": "python-list-mutate",
+      "id": "python-list-mutate",
+      "title": "Python List Mutate",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "ListMutate"
+      ],
+      "order": 4,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Lists are magical — you can change them at will."
+        },
+        {
+          "type": "list",
+          "items": [
+            "append(item) → toss an item into the bag’s bottom.",
+            "insert(position, item) → slip an item into a specific pocket.",
+            "remove(item) → throw away junk.",
+            "pop() → pull something out (default = last item)."
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Example:"
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "inventory = [\"sword\", \"potion\"] \n# add at end\ninventory.append(\"shield\")\n\n# insert at position 1 \ninventory.insert(1, \"boots\") \n\n# remove by name \ninventory.remove(\"potion\")    \n\nprint(inventory) ",
+          "expected_output": "['sword', 'boots', 'shield'] ",
+          "hints": [],
+          "solution": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "Like stuffing more junk in, or finally throwing away that smelly sock."
+        },
+        {
+          "type": "header",
+          "text": "Hero Training Drill 3 – Add and Drop Loot 🗡️ "
+        },
+        {
+          "type": "paragraph",
+          "text": "Mission Briefing:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "On your way through the dungeon:",
+            "You discover \"gold\" and \"helmet\".",
+            "But your \"dagger\" snaps in half during a fight. Sad trombone 🎺.",
+            "Update your inventory!"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Steps:",
+            "Start with [\"dagger\", \"potion\", \"map\"].",
+            "Add \"gold\" at the end.",
+            "Insert \"helmet\" at the front.",
+            "Remove \"dagger\".",
+            "Print your updated inventory."
+          ]
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your Python code here\nprint(\"Hello, World!\")",
+          "expected_output": "['helmet', 'potion', 'map', 'gold'] ",
+          "hints": [],
+          "solution": "inventory = [\"dagger\", \"potion\", \"map\"] \ninventory.append(\"gold\") \ninventory.insert(0, \"helmet\") \ninventory.remove(\"dagger\") \nprint(inventory) "
+        },
+        {
+          "type": "paragraph",
+          "text": "Blacksmith: “Dagger broke? Told you not to buy from GoblinMart.”"
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-02"
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-8",
+      "lesson_id": "python-list-iterate",
+      "id": "python-list-iterate",
+      "title": "Python List Iterate",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "ListIterate"
+      ],
+      "order": 5,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "You can march through your entire loot bag item by item using a loop. It’s like dumping everything on the floor and naming them one by one."
+        },
+        {
+          "type": "header",
+          "text": "Example:"
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "inventory = [\"sword\", \"potion\", \"shield\"] \nfor item in inventory: \n    print(\"You have:\", item) ",
+          "expected_output": "",
+          "hints": [],
+          "solution": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "Merchants love this — they always want to know everything you’re carrying before they overcharge you."
+        },
+        {
+          "type": "header",
+          "text": "Hero Training Drill 4 – Inventory Check 🧾"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Mission Briefing:",
+            "A suspicious guild guard stops you at the city gate:",
+            "\"Show me your items! No smelly cheese wheels or cursed ferret tails allowed!”"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Steps:",
+            "Start with [\"helmet\", \"potion\", \"map\", \"gold\"].",
+            "Loop through each item.",
+            "Print \"You carry: X\" for each."
+          ]
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your Python code here\nprint(\"Hello, World!\")",
+          "expected_output": "You carry: helmet \nYou carry: potion \nYou carry: map \nYou carry: gold ",
+          "hints": [],
+          "solution": "inventory = [\"helmet\", \"potion\", \"map\", \"gold\"] \n\nfor item in inventory: \n    print(\"You carry:\", item) "
+        },
+        {
+          "type": "paragraph",
+          "text": "Guard: “Hmm. Clean inventory. You may pass… but keep your socks hidden.”"
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-02"
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-8",
+      "lesson_id": "python-list-challenge-quest",
+      "id": "python-list-challenge-quest",
+      "title": "Challenge Quest – The Treasure Hoard",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "ListBasics",
+        "List",
+        "ListIndexSlice",
+        "ListIterate",
+        "ListMutate"
+      ],
+      "order": 6,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "✨ Story:",
+            "At the deepest part of the dungeon, you discover a massive treasure chest.",
+            "When you open it, the chest burps (don’t ask why), revealing:"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "[\"gold\", \"sword\", \"potion\", \"socks\", \"shield\"]"
+        },
+        {
+          "type": "paragraph",
+          "text": "The Chest Spirit growls:\n\"You may only keep treasures if you manage them wisely. Fail, and I’ll curse you with 1,000 socks.”"
+        },
+        {
+          "type": "paragraph",
+          "text": "Tasks (Step by Step) Print the entire chest (to admire the loot). Grab only the potion (indexing). Slice out the first 3 items (coins, sword, potion). Add \"helmet\" to the chest. Remove \"socks\" (before the smell infects everything). Loop through the final chest and proudly display each item."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "chest = [\"gold\", \"sword\", \"potion\", \"socks\", \"shield\"] \n\n# 1 \nprint(chest)               \n# 2 -> potion \nprint(chest[2])\n# 3 ->['gold','sword','potion']            \nprint(chest[0:3]) \n# 4 \nchest.append(\"helmet\")\n# 5       \nchest.remove(\"socks\")\n# 6     \nfor item in chest:           \n    print(\"Loot item:\", item) ",
+          "expected_output": "['gold', 'sword', 'potion', 'socks', 'shield'] \npotion \n['gold', 'sword', 'potion'] \nLoot item: gold \nLoot item: sword \nLoot item: potion \nLoot item: shield \nLoot item: helmet ",
+          "hints": [],
+          "solution": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "\"Fine… take the shiny things. But leave my socks alone! Do you heroes know how hard it is to find matching pairs underground?!\""
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-02"
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-8",
+      "lesson_id": "python-list-summary",
+      "id": "python-list-summary",
+      "title": "Python List Summary",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "List"
+      ],
+      "order": 7,
+      "content": [
+        {
+          "type": "summary",
+          "text": "Heroes know how to create inventories with lists. \nThey can grab specific loot with indexing and slicing.\nThey can add treasures, remove junk, and rearrange their bags.\nThey can loop through loot like a real merchant. \nTheir hero now has a real loot bag system — the adventure feels alive with items to track and manage. "
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-02"
+    },
+    {
+      "id": "week-8-remedial",
+      "order": 14,
+      "title": "List Basics",
+      "lessonType": "remedial",
+      "tags": [
+        "ListBasics",
+        "ListIndexSlice",
+        "ListMutate",
+        "ListIterate",
+        "List"
+      ],
+      "content": [
+        {
+          "type": "story",
+          "text": "📜 Pack-Building Camp — Pip learns to store items in a hero backpack."
+        },
+        {
+          "type": "list",
+          "items": [
+            "A list stores multiple items in one variable using [ ].",
+            "Lists can hold strings, numbers, or a mix.",
+            "Use print() to see the whole list."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "bag = [\"potion\", \"rope\", \"torch\"]\nprint(bag)\n# Output: ['potion', 'rope', 'torch']"
+        },
+        {
+          "type": "section",
+          "title": "More Examples"
+        },
+        {
+          "type": "code",
+          "text": "nums = [1, 2, 3]\nprint(nums)\n\nmixed = [\"gold\", 10, True]\nprint(mixed)"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Make spells = [\"zap\", \"heal\"] and print it.",
+            "✅ Solution:\nspells = [\"zap\", \"heal\"]\nprint(spells)",
+            "2) Make empty = [] then print it.",
+            "✅ Solution:\nempty = []\nprint(empty)"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: List Index Slice"
+        },
+        {
+          "type": "story",
+          "text": "Remedial practice for this tag."
+        },
+        {
+          "type": "paragraph",
+          "text": "More examples and practice will go here."
+        },
+        {
+          "type": "header",
+          "text": "Section: List Mutate"
+        },
+        {
+          "type": "story",
+          "text": "✍️ Backpack Editing Station — Pip adds, swaps, and removes items safely."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Add: bag.append(item)",
+            "Insert at position: bag.insert(i, item)",
+            "Change an item: bag[i] = new_value",
+            "Remove by value: bag.remove(value)",
+            "Remove by index: bag.pop(i)"
+          ]
+        },
+        {
+          "type": "code",
+          "text": "bag = [\"potion\", \"rope\"]\nbag.append(\"torch\")\nprint(bag)  # ['potion','rope','torch']\n\nbag[0] = \"super potion\"\nprint(bag)  # ['super potion','rope','torch']\n\nbag.remove(\"rope\")\nprint(bag)  # ['super potion','torch']"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Start pets=[\"cat\",\"dog\"]. Append \"owl\".",
+            "✅ Solution:\npets=[\"cat\",\"dog\"]\npets.append(\"owl\")\nprint(pets)",
+            "2) Start nums=[1,2,3]. Change the 2 into 99.",
+            "✅ Solution:\nnums=[1,2,3]\nnums[1]=99\nprint(nums)"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: List Iterate"
+        },
+        {
+          "type": "story",
+          "text": "📣 Roll Call Parade — the guild reads every item in the hero’s pack."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Use a for-loop to visit each item in a list.",
+            "You can also loop with indices using range(len(list))."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "bag = [\"potion\", \"rope\", \"torch\"]\nfor item in bag:\n    print(\"Item:\", item)"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) monsters=[\"goblin\",\"slime\"] → print each with 'Defeat:'",
+            "✅ Solution:\nmonsters=[\"goblin\",\"slime\"]\nfor m in monsters:\n    print(\"Defeat:\", m)"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: List"
+        },
+        {
+          "type": "story",
+          "text": "Remedial practice for this tag."
+        },
+        {
+          "type": "paragraph",
+          "text": "More examples and practice will go here."
+        },
+        {
+          "type": "header",
+          "text": "Section: Boss Challenge"
+        },
+        {
+          "type": "story",
+          "text": "🗝️ Boss Challenge — Pack & Battle Planner"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Create a list of items.",
+            "Access items by index and slice.",
+            "Mutate the list by adding/removing.",
+            "Loop through the final list to print a pack report."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "pack = [\"sword\", \"potion\", \"rope\"]\n\n# access\nprint(\"First item:\", pack[0])\nprint(\"Last item:\", pack[-1])\nprint(\"Middle slice:\", pack[1:3])\n\n# mutate\npack.append(\"torch\")\npack[1] = \"mega potion\"\npack.pop(2)  # remove rope\n\n# iterate\nfor item in pack:\n    print(\"Pack contains:\", item)"
+        }
+      ],
+      "type": "remedial",
+      "videoId": "",
+      "updated_date": "2026-01-09"
+    }
+  ],
+  "updated_date": "2025-10-02"
+}

@@ -13,7 +13,32 @@
       "content": [
         {
           "type": "paragraph",
-          "text": " \nThe Library of Whispering Scrolls welcomes you. Candles flicker, dusty tomes float around, and a hooded wizard mutters: \n\"Words are not just words here. They are weapons. Shout them, twist them, slice them — and reality bends to your will.\" \n \nThis week you learn String Magic: the art of controlling text in Python. \n \nEvery word is a spell. \nEvery letter is a rune. \nEvery method is a magic incantation. \n \nOnly those who master words can open locked doors, confuse goblins, or rename slimes into… toast. \n\nTags Introduced \n \nStringBasics → what strings are and how to store them. \nStringIndexSlice → extracting runes and scroll fragments. \nStringMethods → powerful word spells like .upper(), .lower(), .replace(), .find(). \nStringFormatting → status scrolls (mixing variables into text). "
+          "text": "The Library of Whispering Scrolls welcomes you. Candles flicker, dusty tomes float around, and a hooded wizard mutters:\n\"Words are not just words here. They are weapons. Shout them, twist them, slice them — and reality bends to your will.\""
+        },
+        {
+          "type": "paragraph",
+          "text": "This week you learn String Magic: the art of controlling text in Python."
+        },
+        {
+          "type": "paragraph",
+          "text": "Every word is a spell. Every letter is a rune. Every method is a magic incantation."
+        },
+        {
+          "type": "paragraph",
+          "text": "Only those who master words can open locked doors, confuse goblins, or rename slimes into… toast."
+        },
+        {
+          "type": "paragraph",
+          "text": "Tags Introduced"
+        },
+        {
+          "type": "list",
+          "items": [
+            "StringBasics → what strings are and how to store them.",
+            "StringIndexSlice → extracting runes and scroll fragments.",
+            "StringMethods → powerful word spells like .upper(), .lower(), .replace(), .find().",
+            "StringFormatting → status scrolls (mixing variables into text)."
+          ]
         }
       ],
       "type": "initial",
@@ -34,7 +59,11 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "A string is text inside quotes. It could be one word, a whole sentence, or even “AHHHHHHHHHHHH!!!!” (battle cry). \n \nIn Python, strings are like magic scrolls. Whatever you write can be read, shouted, or transformed. "
+          "text": "A string is text inside quotes. It could be one word, a whole sentence, or even “AHHHHHHHHHHHH!!!!” (battle cry)."
+        },
+        {
+          "type": "paragraph",
+          "text": "In Python, strings are like magic scrolls. Whatever you write can be read, shouted, or transformed."
         },
         {
           "type": "code_runner",
@@ -45,7 +74,11 @@
         },
         {
           "type": "paragraph",
-          "text": "👉 This prints the spell onto your screen — as if your hero just shouted “Fireball!” into the dungeon. \n\nRune Apprentice Pip 💫: “Oops! I forgot the quotes once and my spell fizzled. Always wrap text in quotes!” "
+          "text": "👉 This prints the spell onto your screen — as if your hero just shouted “Fireball!” into the dungeon."
+        },
+        {
+          "type": "paragraph",
+          "text": "Rune Apprentice Pip 💫: “Oops! I forgot the quotes once and my spell fizzled. Always wrap text in quotes!”"
         },
         {
           "type": "header",
@@ -53,7 +86,16 @@
         },
         {
           "type": "paragraph",
-          "text": "Mission Briefing: \nThe librarian says: “Before casting spells, a hero must declare their true name. Record it on a scroll, then speak it aloud.” \n \nSteps: \n• Create a variable called hero_name. \n• Store your hero’s name as a string (quotes required). \n• Print it out using print(hero_name)."
+          "text": "Mission Briefing: The librarian says: “Before casting spells, a hero must declare their true name. Record it on a scroll, then speak it aloud.”"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Steps:",
+            "Create a variable called hero_name.",
+            "Store your hero’s name as a string (quotes required).",
+            "Print it out using print(hero_name)."
+          ]
         },
         {
           "type": "code_runner",
@@ -64,7 +106,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Professor Glyph 🪶: “Splendid! Names have power. Even my quill bows to a properly quoted string.” "
+          "text": "Professor Glyph 🪶: “Splendid! Names have power. Even my quill bows to a properly quoted string.”"
         }
       ],
       "type": "initial",
@@ -85,7 +127,11 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Strings are made of characters — each character has a position (index). \n \nIndexing lets you grab a single rune (like the 1st letter). \nSlicing lets you tear out a piece of the scroll. "
+          "text": "Strings are made of characters — each character has a position (index)."
+        },
+        {
+          "type": "paragraph",
+          "text": "Indexing lets you grab a single rune (like the 1st letter). Slicing lets you tear out a piece of the scroll."
         },
         {
           "type": "code_runner",
@@ -95,8 +141,12 @@
           "solution": ""
         },
         {
-          "type": "paragraph",
-          "text": "In RPG terms: \n• spell[0] is like pointing to the first glowing rune. \n• spell[1:4] is tearing a section of the scroll that says \"ire\" — maybe useful for “inspire” or “tire” spells. "
+          "type": "list",
+          "items": [
+            "In RPG terms:",
+            "spell[0] is like pointing to the first glowing rune.",
+            "spell[1:4] is tearing a section of the scroll that says \"ire\" — maybe useful for “inspire” or “tire” spells."
+          ]
         },
         {
           "type": "header",
@@ -104,7 +154,14 @@
         },
         {
           "type": "paragraph",
-          "text": "Mission Briefing: \nYou discover a scroll labeled \"DRAGON\". The wizard demands proof of your rune-reading skills: \n \n• Print the first rune (should be \"D\"). \n• Slice out \"RAG\" (the middle of the scroll)."
+          "text": "Mission Briefing: You discover a scroll labeled \"DRAGON\". The wizard demands proof of your rune-reading skills:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Print the first rune (should be \"D\").",
+            "Slice out \"RAG\" (the middle of the scroll)."
+          ]
         },
         {
           "type": "code_runner",
@@ -115,7 +172,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Rune Apprentice Pip 💫: “I sliced [1:3] at first and only got ‘RA’. Details matter!” "
+          "text": "Rune Apprentice Pip 💫: “I sliced [1:3] at first and only got ‘RA’. Details matter!”"
         }
       ],
       "type": "initial",
@@ -136,15 +193,38 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Strings come with methods — magical tools built into Python. \n \n.upper() → Makes text ALL CAPS (shouting spell). \n.lower() → Makes text all lowercase (whisper spell). \n.replace(\"a\",\"b\") → Swaps words (turn slime into toast). \n.find(\"word\") → Finds where a secret rune begins. \n\ncurse = \"slime monster\" \nprint(curse.upper())                  # SLIME MONSTER \nprint(curse.replace(\"slime\",\"toast\")) # toast monster \n\nThink of these like incantations you chant to twist the words on your scroll. "
+          "text": "Strings come with methods — magical tools built into Python."
+        },
+        {
+          "type": "list",
+          "items": [
+            ".upper() → Makes text ALL CAPS (shouting spell).",
+            ".lower() → Makes text all lowercase (whisper spell).",
+            ".replace(\"a\",\"b\") → Swaps words (turn slime into toast).",
+            ".find(\"word\") → Finds where a secret rune begins."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "curse = \"slime monster\" print(curse.upper())                  # SLIME MONSTER print(curse.replace(\"slime\",\"toast\")) # toast monster"
+        },
+        {
+          "type": "paragraph",
+          "text": "Think of these like incantations you chant to twist the words on your scroll."
         },
         {
           "type": "header",
           "text": "Hero Training Drill 3 – Insult Spell"
         },
         {
-          "type": "paragraph",
-          "text": "Mission Briefing: \nA goblin mocks you with bad jokes. Time to reply with magic words: \n• Store \"smelly goblin\" in a variable. \n• Cast .upper() to SHOUT the insult. \n• Cast .replace(\"smelly\",\"handsome\") to confuse the goblin."
+          "type": "list",
+          "items": [
+            "Mission Briefing:",
+            "A goblin mocks you with bad jokes. Time to reply with magic words:",
+            "Store \"smelly goblin\" in a variable.",
+            "Cast .upper() to SHOUT the insult.",
+            "Cast .replace(\"smelly\",\"handsome\") to confuse the goblin."
+          ]
         },
         {
           "type": "code_runner",
@@ -155,7 +235,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Professor Glyph 🪶: “Marvelous replacement! Always pronounce it re-PLACE-ment. The emphasis adds potency.” "
+          "text": "Professor Glyph 🪶: “Marvelous replacement! Always pronounce it re-PLACE-ment. The emphasis adds potency.”"
         }
       ],
       "type": "initial",
@@ -176,7 +256,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Sometimes you need to mix hero stats into a message. This is where f-strings come in. "
+          "text": "Sometimes you need to mix hero stats into a message. This is where f-strings come in."
         },
         {
           "type": "code_runner",
@@ -187,15 +267,21 @@
         },
         {
           "type": "paragraph",
-          "text": " In RPG terms: this is a status scroll — it always updates to show your current HP or coin count."
+          "text": "In RPG terms: this is a status scroll — it always updates to show your current HP or coin count."
         },
         {
           "type": "header",
           "text": "Hero Training Drill 4 – Status Scroll 📜 "
         },
         {
-          "type": "paragraph",
-          "text": "Mission Briefing: \nThe healer insists on an updated scroll of your stats. \n• Create hero = \"Codealot\". \n• Set hp = 75. \n• Use f-string formatting to print: \"Codealot has 75 HP left!\"."
+          "type": "list",
+          "items": [
+            "Mission Briefing:",
+            "The healer insists on an updated scroll of your stats.",
+            "Create hero = \"Codealot\".",
+            "Set hp = 75.",
+            "Use f-string formatting to print: \"Codealot has 75 HP left!\"."
+          ]
         },
         {
           "type": "code_runner",
@@ -206,7 +292,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Rune Apprentice Pip 💫: “F-strings are like stickers for numbers and names. They just snap into place!” "
+          "text": "Rune Apprentice Pip 💫: “F-strings are like stickers for numbers and names. They just snap into place!”"
         }
       ],
       "type": "initial",
@@ -226,11 +312,62 @@
         "StringIndexSlice",
         "StringMethods"
       ],
-      "order": 7,
+      "order": 6,
       "content": [
         {
+          "type": "list",
+          "items": [
+            "✨ Story:",
+            "You stand before a towering magic door in the Library of Whispering Scrolls.",
+            "Glowing runes swirl across its surface:"
+          ]
+        },
+        {
           "type": "paragraph",
-          "text": "✨ Story: \nYou stand before a towering magic door in the Library of Whispering Scrolls. \nGlowing runes swirl across its surface: \n \nsword of light \n \nThe door hums: \n\"To pass, prove your mastery of word sorcery. Fail… and be turned into a library bookmark forever.\" 📚😱 \n\nTasks (Step by Step) \n \nAwaken the Door (Shouting Spell) \n• Print the inscription in ALL CAPS with .upper(). The runes will glow when you shout them. \n \nRewrite Destiny (Replacement Spell) \n• Replace \"light\" with \"destiny\". Print the new inscription: \"sword of destiny\". \n \nReveal the Weapon (Rune Slicing) \n• Slice out the word \"sword\". This reveals the weapon hidden in the door. \n \nSecret Whisper (Lowering Spell) \n• Print the inscription in lowercase with .lower(). The door chuckles when you whisper the runes. \n \nFind the Rune (Detect Spell) \n• Use .find(\"light\") to locate where \"light\" begins in the string. This tells you where the magic word is carved on the door. "
+          "text": "sword of light"
+        },
+        {
+          "type": "paragraph",
+          "text": "The door hums:\n\"To pass, prove your mastery of word sorcery. Fail… and be turned into a library bookmark forever.\" 📚😱"
+        },
+        {
+          "type": "paragraph",
+          "text": "Tasks (Step by Step)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Awaken the Door (Shouting Spell)",
+            "Print the inscription in ALL CAPS with .upper(). The runes will glow when you shout them."
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Rewrite Destiny (Replacement Spell)",
+            "Replace \"light\" with \"destiny\". Print the new inscription: \"sword of destiny\"."
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Reveal the Weapon (Rune Slicing)",
+            "Slice out the word \"sword\". This reveals the weapon hidden in the door."
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Secret Whisper (Lowering Spell)",
+            "Print the inscription in lowercase with .lower(). The door chuckles when you whisper the runes."
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Find the Rune (Detect Spell)",
+            "Use .find(\"light\") to locate where \"light\" begins in the string. This tells you where the magic word is carved on the door."
+          ]
         },
         {
           "type": "code_runner",
@@ -241,7 +378,7 @@
         },
         {
           "type": "paragraph",
-          "text": "The runes flash in rainbow colors 🌈. The door creaks open with a laugh: \n\"You have shouted, whispered, twisted, and revealed my secrets. Enter, Wordcaster… but beware — deeper inside, monsters hoard more than words. They hoard… treasure.\""
+          "text": "The runes flash in rainbow colors 🌈. The door creaks open with a laugh:\n\"You have shouted, whispered, twisted, and revealed my secrets. Enter, Wordcaster… but beware — deeper inside, monsters hoard more than words. They hoard… treasure.\""
         }
       ],
       "type": "initial",
@@ -251,18 +388,25 @@
       "subject": "python",
       "subtopic": "week-7",
       "lesson_id": "remedial-python-string-basics",
-      "id": "remedial-python-string-basics",
+      "id": "week-7-remedial",
       "title": "Remedial Python String Basics",
-      "lessonType": "remedial",
+      "lessonType": "initial",
       "videoId": "",
       "tags": [
-        "StringBasics"
+        "StringBasics",
+        "StringIndexSlice",
+        "StringMethods",
+        "StringFormatting"
       ],
-      "order": 1,
+      "order": 12,
       "content": [
         {
           "type": "paragraph",
-          "text": "📜 Scroll Copying Chamber — Pip practices writing names on glowing scrolls. \n\nConcept: Strings are text between quotes. Use print() to speak the scroll aloud. "
+          "text": "📜 Scroll Copying Chamber — Pip practices writing names on glowing scrolls."
+        },
+        {
+          "type": "paragraph",
+          "text": "Concept: Strings are text between quotes. Use print() to speak the scroll aloud."
         },
         {
           "type": "code",
@@ -301,27 +445,18 @@
           "expected_output": "Hi Wizard",
           "hints": [],
           "solution": "hello='Hi'; world='Wizard' \nprint(hello + ' ' + world)"
-        }
-      ],
-      "type": "remedial",
-      "updated_date": "2025-10-02"
-    },
-    {
-      "subject": "python",
-      "subtopic": "week-7",
-      "lesson_id": "remedial-python-string-index-slice",
-      "id": "remedial-python-string-index-slice",
-      "title": "Remedial Python String Index Slice",
-      "lessonType": "remedial",
-      "videoId": "",
-      "tags": [
-        "StringIndexSlice"
-      ],
-      "order": 2,
-      "content": [
+        },
+        {
+          "type": "header",
+          "text": "Section: Remedial Python String Index Slice"
+        },
         {
           "type": "paragraph",
-          "text": "🗝️ Rune Reading Exam — Professor Glyph tests precise slicing. \n\nConcept: Use indices to select letters; slices to select ranges (start inclusive, stop exclusive). "
+          "text": "🗝️ Rune Reading Exam — Professor Glyph tests precise slicing."
+        },
+        {
+          "type": "paragraph",
+          "text": "Concept: Use indices to select letters; slices to select ranges (start inclusive, stop exclusive)."
         },
         {
           "type": "code",
@@ -363,27 +498,18 @@
           "expected_output": "srl",
           "hints": [],
           "solution": "msg=\"scroll\" \nprint(msg[0], msg[2], msg[-1])"
-        }
-      ],
-      "type": "remedial",
-      "updated_date": "2025-10-02"
-    },
-    {
-      "subject": "python",
-      "subtopic": "week-7",
-      "lesson_id": "remedial-python-string-methods",
-      "id": "remedial-python-string-methods",
-      "title": "Remedial Python String Methods",
-      "lessonType": "remedial",
-      "videoId": "",
-      "tags": [
-        "StringMethods"
-      ],
-      "order": 3,
-      "content": [
+        },
+        {
+          "type": "header",
+          "text": "Section: Remedial Python String Methods"
+        },
         {
           "type": "paragraph",
-          "text": "🔮 The Goblin Translator — turn rude words into polite ones and discover positions of secret runes. \n\nConcept: .upper(), .lower(), .replace(old,new), .find(substr) → -1 if not found. "
+          "text": "🔮 The Goblin Translator — turn rude words into polite ones and discover positions of secret runes."
+        },
+        {
+          "type": "paragraph",
+          "text": "Concept: .upper(), .lower(), .replace(old,new), .find(substr) → -1 if not found."
         },
         {
           "type": "code",
@@ -421,27 +547,18 @@
           "expected_output": "0",
           "hints": [],
           "solution": "print(\"toast monster\".find(\"toast\"))  # 0"
-        }
-      ],
-      "type": "remedial",
-      "updated_date": "2025-10-02"
-    },
-    {
-      "subject": "python",
-      "subtopic": "week-7",
-      "lesson_id": "remedial-python-string-formatting",
-      "id": "remedial-python-string-formatting",
-      "title": "Remedial Python String Formatting",
-      "lessonType": "remedial",
-      "videoId": "",
-      "tags": [
-        "StringFormatting"
-      ],
-      "order": 4,
-      "content": [
+        },
+        {
+          "type": "header",
+          "text": "Section: Remedial Python String Formatting"
+        },
         {
           "type": "paragraph",
-          "text": "📊 Status Scroll Workshop — build readable reports with f-strings. \n\nConcept: Embed variables with f\"{var}\"; types are auto-converted to text. "
+          "text": "📊 Status Scroll Workshop — build readable reports with f-strings."
+        },
+        {
+          "type": "paragraph",
+          "text": "Concept: Embed variables with f\"{var}\"; types are auto-converted to text."
         },
         {
           "type": "code",
@@ -475,7 +592,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Mix text and slices: \nword=\"DRAGON\""
+          "text": "Mix text and slices: word=\"DRAGON\""
         },
         {
           "type": "code_runner",
@@ -483,30 +600,18 @@
           "expected_output": "DGON",
           "hints": [],
           "solution": "print(f\"First:{word[0]} Last3:{word[-3:]}\")"
-        }
-      ],
-      "type": "remedial",
-      "updated_date": "2025-10-02"
-    },
-    {
-      "subject": "python",
-      "subtopic": "week-7",
-      "lesson_id": "remedial-python-string-basics-index-slice-methods-formatting",
-      "id": "remedial-python-string-basics-index-slice-methods-formatting",
-      "title": "Python Review All",
-      "lessonType": "remedial",
-      "videoId": "",
-      "tags": [
-        "StringBasics",
-        "StringFormatting",
-        "StringIndexSlice",
-        "StringMethods"
-      ],
-      "order": 5,
-      "content": [
+        },
+        {
+          "type": "header",
+          "text": "Section: Python Review All"
+        },
         {
           "type": "paragraph",
-          "text": "🗝️ Boss Challenge – The Whispering Door Test \n\nUse all skills: uppercase, replace, slice, find, and f-strings to compose a final status message. "
+          "text": "🗝️ Boss Challenge – The Whispering Door Test"
+        },
+        {
+          "type": "paragraph",
+          "text": "Use all skills: uppercase, replace, slice, find, and f-strings to compose a final status message."
         },
         {
           "type": "code_runner",
@@ -517,7 +622,7 @@
         }
       ],
       "type": "remedial",
-      "updated_date": "2025-10-02"
+      "updated_date": "2026-01-09"
     }
   ],
   "updated_date": "2025-10-02"

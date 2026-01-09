@@ -1,27 +1,149 @@
 {
-  "quiz_title": "Python - Week-3 Quiz",
+  "quiz_title": "Week 3 Quiz – Speak with the Villagers",
   "questions": [
     {
-      "answer_index": 1,
+      "question": "What does the input() function do in Python?",
+      "type": "multiple_choice",
       "options": [
         "Displays a message on the screen",
         "Reads user input as text",
         "Converts text to numbers",
         "Ends the program"
       ],
-      "question": "What does the input() function do in Python?",
-      "tags": [],
-      "type": "multiple_choice"
+      "answer_index": 1,
+      "tags": [
+        "Input"
+      ]
     },
     {
-      "question": "Ask the player for their village name using input() and print: \u201cYou come from <village>.\u201d",
-      "sample_solution": "village = input(\"What village are you from? \")\n\nprint(\"You come from\", village + \".\")\n",
-      "starter_code": "",
+      "question": "What is printed if the player types 'Luna'?",
+      "type": "short_answer",
       "tags": [
-        "input"
+        "Input"
       ],
-      "type": "coding"
+      "content": [
+        {
+          "type": "code",
+          "text": "hero_name = input(\"What is your name? \")\nprint(\"Welcome,\", hero_name)"
+        }
+      ],
+      "expected_answer": "What is your name? Luna\nWelcome, Luna"
+    },
+    {
+      "question": "Ask the player for their village name using input() and print: “You come from <village>.”",
+      "type": "coding",
+      "tags": [
+        "Input"
+      ],
+      "expected_answer": "village = input(\"What village are you from? \")\nprint(\"You come from\", village + \".\")"
+    },
+    {
+      "question": "Why do we use int() or float() when reading numbers from input?",
+      "type": "multiple_choice",
+      "options": [
+        "To store them as text",
+        "To convert text into numbers for math",
+        "To print them automatically",
+        "To delete old values"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "Casting"
+      ]
+    },
+    {
+      "question": "What will be printed if the player enters 10?",
+      "type": "short_answer",
+      "tags": [
+        "Casting"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "coins = int(input(\"How many coins? \"))\ncoins += 5\nprint(\"Now you have\", coins, \"coins.\")"
+        }
+      ],
+      "expected_answer": "How many coins? 10\nNow you have 15 coins."
+    },
+    {
+      "question": "Ask for hero’s attack (float), add 1.5 (training bonus), then print the result.",
+      "type": "coding",
+      "tags": [
+        "Casting"
+      ],
+      "expected_answer": "hero_attack = float(input(\"Enter hero attack: \"))\nhero_attack += 1.5\nprint(\"After training, attack is\", hero_attack)"
+    },
+    {
+      "question": "Which option correctly prints a message using an f-string?",
+      "type": "multiple_choice",
+      "options": [
+        "print('Hero:', hero_name)",
+        "print(f'Hero: {hero_name}')",
+        "print('f Hero: {hero_name}')",
+        "print(hero_name f)"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "Print"
+      ]
+    },
+    {
+      "question": "What will this program display?",
+      "type": "short_answer",
+      "tags": [
+        "Print"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hero_name = \"Kai\"\nhero_hp = 100\nprint(f\"Welcome {hero_name}! You have {hero_hp} HP.\")"
+        }
+      ],
+      "expected_answer": "Welcome Kai! You have 100 HP."
+    },
+    {
+      "question": "Ask for the hero’s name, then print a message: “{name} is ready for battle!” using an f-string.",
+      "type": "coding",
+      "tags": [
+        "Print"
+      ],
+      "expected_answer": "hero_name = input(\"What is your hero's name? \")\nprint(f\"{hero_name} is ready for battle!\")"
+    },
+    {
+      "question": "What will be displayed if the player types: Arin, 12, 7.5?",
+      "type": "short_answer",
+      "tags": [
+        "Input",
+        "Casting",
+        "Print"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hero_name = input(\"Name: \")\nhero_coins = int(input(\"Coins: \"))\nhero_attack = float(input(\"Attack: \"))\nprint(f\"Welcome {hero_name}! You have {hero_coins} coins and {hero_attack} attack power.\")"
+        }
+      ],
+      "expected_answer": "Name: Arin\nCoins: 12\nAttack: 7.5\nWelcome Arin! You have 12 coins and 7.5 attack power."
+    },
+    {
+      "question": "Create a short interactive hero intro:\n- Ask for hero_name (str), hero_coins (int), and hero_attack (float).\n- Print all three stats neatly using f-strings.",
+      "type": "coding",
+      "tags": [
+        "Input",
+        "Casting",
+        "Print"
+      ],
+      "expected_answer": "hero_name = input(\"Hero name: \")\nhero_coins = int(input(\"Coins: \"))\nhero_attack = float(input(\"Attack power: \"))\nprint(f\"Welcome {hero_name}! Coins: {hero_coins}, Attack: {hero_attack}\")"
+    },
+    {
+      "question": "Add a bonus: after the player enters attack, increase it by 2.5 and print the new value using f-strings.",
+      "type": "coding",
+      "tags": [
+        "Input",
+        "Casting",
+        "Print"
+      ],
+      "expected_answer": "hero_attack = float(input(\"Enter hero attack: \"))\nhero_attack += 2.5\nprint(f\"Your boosted attack power is {hero_attack}\")"
     }
-  ],
-  "updated_date": "2025-01-01"
+  ]
 }

@@ -1,0 +1,448 @@
+{
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Which line correctly creates a string in Python?",
+      "tags": [
+        "StringBasics"
+      ],
+      "options": [
+        "name = Sir Codealot",
+        "name = 'Sir Codealot'",
+        "print(Sir Codealot)",
+        "name = 123"
+      ],
+      "answer_index": 1
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is printed?",
+      "tags": [
+        "StringBasics"
+      ],
+      "options": [
+        "'Fireball'",
+        "Fireball",
+        "spell",
+        "Error"
+      ],
+      "answer_index": 1,
+      "content": [
+        {
+          "type": "code",
+          "text": "spell = 'Fireball'\nprint(spell)"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Create hero_name = 'Luna' and print it.",
+      "tags": [
+        "StringBasics"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hero_name = 'Luna'\nprint(hero_name)"
+        }
+      ],
+      "expected_answer": "hero_name = 'Luna'\nprint(hero_name)"
+    },
+    {
+      "type": "short_answer",
+      "question": "What is the output?",
+      "tags": [
+        "StringBasics"
+      ],
+      "expected_answer": "hi! hi!",
+      "content": [
+        {
+          "type": "code",
+          "text": "msg = 'hi!'\nprint(msg + ' hi!')"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Strings must be inside…",
+      "tags": [
+        "StringBasics"
+      ],
+      "options": [
+        "Brackets []",
+        "Quotes '' or \"\"",
+        "Parentheses ()",
+        "Curly braces {}"
+      ],
+      "answer_index": 1
+    },
+    {
+      "type": "coding",
+      "question": "Make cry = 'AHHH!' and print it twice using +.",
+      "tags": [
+        "StringBasics"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "cry = 'AHHH!'\nprint(cry + cry)"
+        }
+      ],
+      "expected_answer": "cry = 'AHHH!'\nprint(cry + cry)"
+    },
+    {
+      "type": "multiple_choice",
+      "question": "For word='DRAGON', what is word[0]?",
+      "tags": [
+        "StringIndexSlice"
+      ],
+      "options": [
+        "D",
+        "R",
+        "N",
+        "Error"
+      ],
+      "answer_index": 0
+    },
+    {
+      "type": "multiple_choice",
+      "question": "For s='Fireball', what is s[1:4]?",
+      "tags": [
+        "StringIndexSlice"
+      ],
+      "options": [
+        "Fir",
+        "ire",
+        "reb",
+        "eba"
+      ],
+      "answer_index": 1
+    },
+    {
+      "type": "coding",
+      "question": "Print the last letter of 'Wizard'.",
+      "tags": [
+        "StringIndexSlice"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "s = 'Wizard'\nprint(s[-1])"
+        }
+      ],
+      "expected_answer": "s = 'Wizard'\nprint(s[-1])"
+    },
+    {
+      "type": "short_answer",
+      "question": "What is the output?",
+      "tags": [
+        "StringIndexSlice"
+      ],
+      "expected_answer": "s r l",
+      "content": [
+        {
+          "type": "code",
+          "text": "s = 'scroll'\nprint(s[0], s[2], s[-1])"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Slice 'potion'[2:5] gives…",
+      "tags": [
+        "StringIndexSlice"
+      ],
+      "options": [
+        "pot",
+        "oti",
+        "tio",
+        "ion"
+      ],
+      "answer_index": 2
+    },
+    {
+      "type": "coding",
+      "question": "Given title='Spellbook', print title[:5] and title[5:].",
+      "tags": [
+        "StringIndexSlice"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "title = 'Spellbook'\nprint(title[:5])\nprint(title[5:])"
+        }
+      ],
+      "expected_answer": "title = 'Spellbook'\nprint(title[:5])\nprint(title[5:])"
+    },
+    {
+      "type": "multiple_choice",
+      "question": "'hello'.upper() returns…",
+      "tags": [
+        "StringMethods"
+      ],
+      "options": [
+        "Hello",
+        "HELLO",
+        "hello",
+        "error"
+      ],
+      "answer_index": 1
+    },
+    {
+      "type": "multiple_choice",
+      "question": "'slime'.replace('sl','br') returns…",
+      "tags": [
+        "StringMethods"
+      ],
+      "options": [
+        "brime",
+        "slime",
+        "brslime",
+        "lime"
+      ],
+      "answer_index": 0
+    },
+    {
+      "type": "coding",
+      "question": "Use .lower() on 'LOUD NOISE'.",
+      "tags": [
+        "StringMethods"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "print('LOUD NOISE'.lower())"
+        }
+      ],
+      "expected_answer": "print('LOUD NOISE'.lower())"
+    },
+    {
+      "type": "short_answer",
+      "question": "What is the output?",
+      "tags": [
+        "StringMethods"
+      ],
+      "expected_answer": "0",
+      "content": [
+        {
+          "type": "code",
+          "text": "s = 'toast monster'\nprint(s.find('toast'))"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does .find('x') return if 'x' is not found?",
+      "tags": [
+        "StringMethods"
+      ],
+      "options": [
+        "0",
+        "-1",
+        "True",
+        "error"
+      ],
+      "answer_index": 1
+    },
+    {
+      "type": "coding",
+      "question": "Replace 'bad goblin' with 'good goblin'.",
+      "tags": [
+        "StringMethods"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "s = 'bad goblin'\nprint(s.replace('bad','good'))"
+        }
+      ],
+      "expected_answer": "s = 'bad goblin'\nprint(s.replace('bad','good'))"
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which is a valid f-string?",
+      "tags": [
+        "StringFormatting"
+      ],
+      "options": [
+        "f('HP: {hp}')",
+        "'HP: {hp}'",
+        "f\"HP: {hp}\"",
+        "format('HP: {hp}')"
+      ],
+      "answer_index": 2
+    },
+    {
+      "type": "multiple_choice",
+      "question": "If hero='Luna' and hp=85, what does print(f\"{hero} has {hp} HP\") show?",
+      "tags": [
+        "StringFormatting"
+      ],
+      "options": [
+        "{hero} has {hp} HP",
+        "Luna has 85 HP",
+        "hero has hp HP",
+        "Error"
+      ],
+      "answer_index": 1
+    },
+    {
+      "type": "coding",
+      "question": "name='Kai', coins=12 → print: Kai carries 12 coins.",
+      "tags": [
+        "StringFormatting"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "name = 'Kai'\ncoins = 12\nprint(f\"{name} carries {coins} coins.\")"
+        }
+      ],
+      "expected_answer": "name = 'Kai'\ncoins = 12\nprint(f\"{name} carries {coins} coins.\")"
+    },
+    {
+      "type": "short_answer",
+      "question": "What is the output?",
+      "tags": [
+        "StringFormatting"
+      ],
+      "expected_answer": "Aria:7.5",
+      "content": [
+        {
+          "type": "code",
+          "text": "h = 'Aria'\np = 7.5\nprint(f\"{h}:{p}\")"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "f-strings are best described as…",
+      "tags": [
+        "StringFormatting"
+      ],
+      "options": [
+        "Loops",
+        "Conditionals",
+        "String interpolation",
+        "Sorting"
+      ],
+      "answer_index": 2
+    },
+    {
+      "type": "coding",
+      "question": "hero='Codealot', hp=75 → 'Codealot has 75 HP left!'",
+      "tags": [
+        "StringFormatting"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hero = 'Codealot'\nhp = 75\nprint(f\"{hero} has {hp} HP left!\")"
+        }
+      ],
+      "expected_answer": "hero = 'Codealot'\nhp = 75\nprint(f\"{hero} has {hp} HP left!\")"
+    },
+    {
+      "type": "coding",
+      "question": "inscription='sword of light' → print uppercased, then replace light→destiny.",
+      "tags": [
+        "StringBasics",
+        "StringIndexSlice",
+        "StringMethods",
+        "StringFormatting"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "s = 'sword of light'\nprint(s.upper())\nprint(s.replace('light','destiny'))"
+        }
+      ],
+      "expected_answer": "s = 'sword of light'\nprint(s.upper())\nprint(s.replace('light','destiny'))"
+    },
+    {
+      "type": "short_answer",
+      "question": "What is the output?",
+      "tags": [
+        "StringBasics",
+        "StringIndexSlice",
+        "StringMethods",
+        "StringFormatting"
+      ],
+      "expected_answer": "Dragon 6",
+      "content": [
+        {
+          "type": "code",
+          "text": "s = 'Dragonborn'\nprint(s[0:6], s.find('born'))"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "hero='Luna', title='Whisper' → print: Luna casts Whisper! (use f-string)",
+      "tags": [
+        "StringBasics",
+        "StringIndexSlice",
+        "StringMethods",
+        "StringFormatting"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hero = 'Luna'\ntitle = 'Whisper'\nprint(f\"{hero} casts {title}!\")"
+        }
+      ],
+      "expected_answer": "hero = 'Luna'\ntitle = 'Whisper'\nprint(f\"{hero} casts {title}!\")"
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which line slices the first 5 letters?",
+      "tags": [
+        "StringBasics",
+        "StringIndexSlice",
+        "StringMethods",
+        "StringFormatting"
+      ],
+      "options": [
+        "s[:5]",
+        "s[5:]",
+        "s[-5:]",
+        "s[::5]"
+      ],
+      "answer_index": 0
+    },
+    {
+      "type": "short_answer",
+      "question": "What is the output?",
+      "tags": [
+        "StringBasics",
+        "StringIndexSlice",
+        "StringMethods",
+        "StringFormatting"
+      ],
+      "expected_answer": "POLITE GOBLIN",
+      "content": [
+        {
+          "type": "code",
+          "text": "msg = 'smelly goblin'\nmsg = msg.replace('smelly','polite')\nprint(msg.upper())"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Take word='DRAGON', print first rune and last three letters using slice.",
+      "tags": [
+        "StringBasics",
+        "StringIndexSlice",
+        "StringMethods",
+        "StringFormatting"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "word = 'DRAGON'\nprint(word[0])\nprint(word[-3:])"
+        }
+      ],
+      "expected_answer": "word = 'DRAGON'\nprint(word[0])\nprint(word[-3:])"
+    }
+  ]
+}

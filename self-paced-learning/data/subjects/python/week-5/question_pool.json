@@ -1,23 +1,380 @@
 {
-  "pool_title": "Python - Week-5 Question Pool",
   "questions": [
     {
+      "type": "multiple_choice",
+      "question": "If coins = 12 / 4, what type of number is the result?",
+      "tags": [
+        "Arithmetic Operators"
+      ],
+      "options": [
+        "Integer",
+        "Float",
+        "String",
+        "Boolean"
+      ],
+      "answer_index": 1
+    },
+    {
+      "type": "short_answer",
+      "question": "What is the output?",
+      "tags": [
+        "Arithmetic Operators"
+      ],
+      "expected_answer": "25",
+      "content": [
+        {
+          "type": "code",
+          "text": "damage = 10 * 3 - 5\nprint(damage)"
+        }
+      ]
+    },
+    {
       "type": "coding",
-      "question": "monster attack reduces HP by 40. Start with hero_hp = 120 and print remaining HP.",
-      "tags": [],
-      "content": [],
-      "starter_code": "",
-      "sample_solution": "hero_hp = 120 \nhero_hp -= 40 \nprint(hero_hp)"
+      "question": "A monster attack reduces HP by 40. Start with hero_hp = 120 and print remaining HP.",
+      "tags": [
+        "Arithmetic Operators"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hero_hp = 120\nhero_hp -= 40\nprint(hero_hp)"
+        }
+      ],
+      "expected_answer": "hero_hp = 120\nhero_hp -= 40\nprint(hero_hp)"
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is the result of 10 // 3?",
+      "tags": [
+        "FloorDivision"
+      ],
+      "options": [
+        "3.333",
+        "3",
+        "4",
+        "Error"
+      ],
+      "answer_index": 1
+    },
+    {
+      "type": "coding",
+      "question": "Write code to split 55 coins among 6 heroes using //.",
+      "tags": [
+        "FloorDivision"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "coins = 55\nheroes = 6\nprint('Each hero gets', coins // heroes, 'coins')"
+        }
+      ],
+      "expected_answer": "coins = 55\nheroes = 6\nprint('Each hero gets', coins // heroes, 'coins')"
+    },
+    {
+      "type": "coding",
+      "question": "Goblin Loot Math 💰\nYou have 73 gold and 5 adventurers. Show how much each gets using //.",
+      "tags": [
+        "FloorDivision"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "gold = 73\nplayers = 5\nprint(gold // players)"
+        }
+      ],
+      "expected_answer": "gold = 73\nplayers = 5\nprint(gold // players)"
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is 17 % 3?",
+      "tags": [
+        "Modulus"
+      ],
+      "options": [
+        "2",
+        "5",
+        "3",
+        "1"
+      ],
+      "answer_index": 0
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which statement correctly prints the leftover coins if 47 coins are divided among 5 heroes?",
+      "tags": [
+        "Modulus"
+      ],
+      "options": [
+        "print(47 // 5)",
+        "print(47 % 5)",
+        "print(47 / 5)",
+        "print(47 * 5)"
+      ],
+      "answer_index": 1
+    },
+    {
+      "type": "short_answer",
+      "question": "What will this print?",
+      "tags": [
+        "Modulus"
+      ],
+      "expected_answer": "0\n1",
+      "content": [
+        {
+          "type": "code",
+          "text": "print(15 % 5)\nprint(16 % 5)"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "The Goblin has 52 socks and packs them 7 per bag. How many socks remain?",
+      "tags": [
+        "Modulus"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "socks = 52\nbags = 7\nprint(socks % bags)"
+        }
+      ],
+      "expected_answer": "socks = 52\nbags = 7\nprint(socks % bags)"
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is 2 ** 3?",
+      "tags": [
+        "Exponent"
+      ],
+      "options": [
+        "5",
+        "6",
+        "8",
+        "9"
+      ],
+      "answer_index": 2
+    },
+    {
+      "type": "coding",
+      "question": "Write code to show the result of 3 raised to the power of 4.",
+      "tags": [
+        "Exponent"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "print(3 ** 4)"
+        }
+      ],
+      "expected_answer": "print(3 ** 4)"
+    },
+    {
+      "type": "short_answer",
+      "question": "Predict the output.",
+      "tags": [
+        "Exponent"
+      ],
+      "expected_answer": "512",
+      "content": [
+        {
+          "type": "code",
+          "text": "print(2 ** 3 ** 2)"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Power-Up Spell: Hero’s attack = 5. Critical hit = attack ** 3. Print result.",
+      "tags": [
+        "Exponent"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "attack = 5\nprint(attack ** 3)"
+        }
+      ],
+      "expected_answer": "attack = 5\nprint(attack ** 3)"
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is the correct order of operations in Python?",
+      "tags": [
+        "Precedence"
+      ],
+      "options": [
+        "PEMDAS",
+        "SADMEP",
+        "Random order",
+        "None"
+      ],
+      "answer_index": 0
+    },
+    {
+      "type": "short_answer",
+      "question": "What is the output of (10 + 5) * 2?",
+      "tags": [
+        "Precedence"
+      ],
+      "expected_answer": "30",
+      "content": [
+        {
+          "type": "code",
+          "text": "print((10 + 5) * 2)"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Write code to show that parentheses change the result in 8 + 3 * 2.",
+      "tags": [
+        "Precedence"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "print(8 + 3 * 2)   # 14\nprint((8 + 3) * 2) # 22"
+        }
+      ],
+      "expected_answer": "print(8 + 3 * 2)   # 14\nprint((8 + 3) * 2) # 22"
+    },
+    {
+      "type": "short_answer",
+      "question": "Predict the output.",
+      "tags": [
+        "Precedence"
+      ],
+      "expected_answer": "50",
+      "content": [
+        {
+          "type": "code",
+          "text": "print(2 + 3 * 4 ** 2)"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Combo Spell 💥\nCompute (2 + 3) ** 2 * 2 and print result.",
+      "tags": [
+        "Precedence"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "print((2 + 3) ** 2 * 2)"
+        }
+      ],
+      "expected_answer": "print((2 + 3) ** 2 * 2)"
+    },
+    {
+      "type": "short_answer",
+      "question": "The hero attacks with base = 6 and power = base ** 2. What is power?",
+      "tags": [
+        "Arithmetic Operators",
+        "FloorDivision",
+        "Modulus",
+        "Exponent",
+        "Precedence"
+      ],
+      "expected_answer": "36",
+      "content": [
+        {
+          "type": "code",
+          "text": "base = 6\npower = base ** 2\nprint(power)"
+        }
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "If total_coins = 47 and heroes = 4, how many coins does each hero get (//) and how many remain (%)?",
+      "tags": [
+        "Arithmetic Operators",
+        "FloorDivision",
+        "Modulus",
+        "Exponent",
+        "Precedence"
+      ],
+      "expected_answer": "Each = 11\nLeftover = 3",
+      "content": [
+        {
+          "type": "code",
+          "text": "total_coins = 47\nheroes = 4\nprint('Each =', total_coins // heroes)\nprint('Leftover =', total_coins % heroes)"
+        }
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What will this code print?",
+      "tags": [
+        "Arithmetic Operators",
+        "FloorDivision",
+        "Modulus",
+        "Exponent",
+        "Precedence"
+      ],
+      "expected_answer": "68",
+      "content": [
+        {
+          "type": "code",
+          "text": "hp = 100 - (5 + 3) * 4\nprint(hp)"
+        }
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What is the result of this?",
+      "tags": [
+        "Arithmetic Operators",
+        "FloorDivision",
+        "Modulus",
+        "Exponent",
+        "Precedence"
+      ],
+      "expected_answer": "8",
+      "content": [
+        {
+          "type": "code",
+          "text": "result = (3 + 2) ** 2 // 3\nprint(result)"
+        }
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Combo Challenge – The Math Wizard Duel 🧮\nWhat is the output?",
+      "tags": [
+        "Arithmetic Operators",
+        "FloorDivision",
+        "Modulus",
+        "Exponent",
+        "Precedence"
+      ],
+      "expected_answer": "Each ally gets 11 coins, leftover: 3\nPower damage: 125",
+      "content": [
+        {
+          "type": "code",
+          "text": "hero_attack = 5\npower = hero_attack ** 3\ncoins = 47\nallies = 4\nprint('Each ally gets', coins // allies, 'coins, leftover:', coins % allies)\nprint('Power damage:', power)"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which operator would you use to heal your hero by 20 HP?",
+      "tags": [
+        "Arithmetic Operators"
+      ],
+      "options": [
+        "-",
+        "+",
+        "*",
+        "//"
+      ],
+      "answer_index": 1
     },
     {
       "type": "multiple_choice",
       "question": "What will this code print?",
-      "tags": [],
-      "content": [
-        {
-          "type": "code",
-          "text": "hp = 100 \nhp = hp - 30 \nprint(hp)"
-        }
+      "tags": [
+        "Arithmetic Operators"
       ],
       "options": [
         "100",
@@ -25,8 +382,157 @@
         "30",
         "Error"
       ],
+      "answer_index": 1,
+      "content": [
+        {
+          "type": "code",
+          "text": "hp = 100\nhp = hp - 30\nprint(hp)"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Hero’s Heal 🧪\nStart with hero_hp = 60, heal the hero by 15 HP, and print the new total.",
+      "tags": [
+        "Arithmetic Operators"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hero_hp = 60\nhero_hp += 15\nprint('Hero HP:', hero_hp)"
+        }
+      ],
+      "expected_answer": "hero_hp = 60\nhero_hp += 15\nprint('Hero HP:', hero_hp)"
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does // do in Python?",
+      "tags": [
+        "FloorDivision"
+      ],
+      "options": [
+        "Divides and rounds up",
+        "Divides and gives remainder",
+        "Divides and gives whole number part only",
+        "Splits strings"
+      ],
+      "answer_index": 2
+    },
+    {
+      "type": "multiple_choice",
+      "question": "If coins = 25 and players = 4, what is coins // players?",
+      "tags": [
+        "FloorDivision"
+      ],
+      "options": [
+        "6",
+        "6.25",
+        "7",
+        "1"
+      ],
+      "answer_index": 0
+    },
+    {
+      "type": "short_answer",
+      "question": "Predict the output.",
+      "tags": [
+        "FloorDivision"
+      ],
+      "expected_answer": "4\n4.4",
+      "content": [
+        {
+          "type": "code",
+          "text": "print(22 // 5)\nprint(22 / 5)"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does % return?",
+      "tags": [
+        "Modulus"
+      ],
+      "options": [
+        "The whole number part",
+        "The remainder",
+        "The quotient",
+        "The power"
+      ],
       "answer_index": 1
+    },
+    {
+      "type": "coding",
+      "question": "Write code to find how many apples remain after dividing 23 apples among 4 villagers.",
+      "tags": [
+        "Modulus"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "apples = 23\nvillagers = 4\nprint(apples % villagers)"
+        }
+      ],
+      "expected_answer": "apples = 23\nvillagers = 4\nprint(apples % villagers)"
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What does ** do in Python?",
+      "tags": [
+        "Exponent"
+      ],
+      "options": [
+        "Adds numbers",
+        "Divides numbers",
+        "Raises one number to the power of another",
+        "Finds remainder"
+      ],
+      "answer_index": 2
+    },
+    {
+      "type": "short_answer",
+      "question": "What is printed?",
+      "tags": [
+        "Exponent"
+      ],
+      "expected_answer": "16",
+      "content": [
+        {
+          "type": "code",
+          "text": "attack = 4\ncritical = attack ** 2\nprint(critical)"
+        }
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What is the output?",
+      "tags": [
+        "Precedence"
+      ],
+      "expected_answer": "20",
+      "content": [
+        {
+          "type": "code",
+          "text": "print(10 + 5 * 2)"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Hero Battle Simulation 🧙‍♂️\n- Start with hp = 120\n- Subtract (8 + 4) * 2 damage\n- Heal 10 HP\n- Print final HP",
+      "tags": [
+        "Arithmetic Operators",
+        "FloorDivision",
+        "Modulus",
+        "Exponent",
+        "Precedence"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hp = 120\nhp -= (8 + 4) * 2\nhp += 10\nprint(hp)"
+        }
+      ],
+      "expected_answer": "hp = 120\nhp -= (8 + 4) * 2\nhp += 10\nprint(hp)"
     }
-  ],
-  "updated_date": "2025-01-01"
+  ]
 }

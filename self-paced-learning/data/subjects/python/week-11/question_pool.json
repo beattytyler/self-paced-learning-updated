@@ -1,0 +1,364 @@
+{
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Which structure cannot be changed?",
+      "options": [
+        "list",
+        "tuple",
+        "set",
+        "dict"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "TupleBasics"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Why does this error occur?",
+      "expected_answer": "Tuples are immutable",
+      "tags": [
+        "Immutability"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "relic=(1,2,3)\nrelic[0]=9"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Create a set of three unique gems and print it.",
+      "expected_answer": "gems={'ruby','emerald','sapphire'}\nprint(gems)",
+      "tags": [
+        "SetBasics"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What happens if you add a duplicate to a set?",
+      "options": [
+        "Error",
+        "Duplicate added",
+        "Ignored",
+        "Replaces value"
+      ],
+      "answer_index": 2,
+      "tags": [
+        "Uniqueness"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "How many items are in this set?",
+      "expected_answer": "2",
+      "tags": [
+        "SetBasics"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "s={'a','a','b'}\nprint(len(s))"
+        }
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Why are sets useful for inventory?",
+      "expected_answer": "They prevent duplicates",
+      "tags": [
+        "Uniqueness"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which structure cannot be changed?",
+      "options": [
+        "list",
+        "tuple",
+        "set",
+        "dict"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "TupleBasics"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Why does this error occur?",
+      "expected_answer": "Tuples are immutable",
+      "tags": [
+        "Immutability"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "relic=(1,2,3)\nrelic[0]=9"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Create a set of three unique gems and print it.",
+      "expected_answer": "gems={'ruby','emerald','sapphire'}\nprint(gems)",
+      "tags": [
+        "SetBasics"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What happens if you add a duplicate to a set?",
+      "options": [
+        "Error",
+        "Duplicate added",
+        "Ignored",
+        "Replaces value"
+      ],
+      "answer_index": 2,
+      "tags": [
+        "Uniqueness"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "How many items are in this set?",
+      "expected_answer": "2",
+      "tags": [
+        "SetBasics"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "s={'a','a','b'}\nprint(len(s))"
+        }
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Why are sets useful for inventory?",
+      "expected_answer": "They prevent duplicates",
+      "tags": [
+        "Uniqueness"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which structure cannot be changed?",
+      "options": [
+        "list",
+        "tuple",
+        "set",
+        "dict"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "TupleBasics"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Why does this error occur?",
+      "expected_answer": "Tuples are immutable",
+      "tags": [
+        "Immutability"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "relic=(1,2,3)\nrelic[0]=9"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Create a set of three unique gems and print it.",
+      "expected_answer": "gems={'ruby','emerald','sapphire'}\nprint(gems)",
+      "tags": [
+        "SetBasics"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What happens if you add a duplicate to a set?",
+      "options": [
+        "Error",
+        "Duplicate added",
+        "Ignored",
+        "Replaces value"
+      ],
+      "answer_index": 2,
+      "tags": [
+        "Uniqueness"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "How many items are in this set?",
+      "expected_answer": "2",
+      "tags": [
+        "SetBasics"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "s={'a','a','b'}\nprint(len(s))"
+        }
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Why are sets useful for inventory?",
+      "expected_answer": "They prevent duplicates",
+      "tags": [
+        "Uniqueness"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which structure cannot be changed?",
+      "options": [
+        "list",
+        "tuple",
+        "set",
+        "dict"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "TupleBasics"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Why does this error occur?",
+      "expected_answer": "Tuples are immutable",
+      "tags": [
+        "Immutability"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "relic=(1,2,3)\nrelic[0]=9"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Create a set of three unique gems and print it.",
+      "expected_answer": "gems={'ruby','emerald','sapphire'}\nprint(gems)",
+      "tags": [
+        "SetBasics"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What happens if you add a duplicate to a set?",
+      "options": [
+        "Error",
+        "Duplicate added",
+        "Ignored",
+        "Replaces value"
+      ],
+      "answer_index": 2,
+      "tags": [
+        "Uniqueness"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "How many items are in this set?",
+      "expected_answer": "2",
+      "tags": [
+        "SetBasics"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "s={'a','a','b'}\nprint(len(s))"
+        }
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Why are sets useful for inventory?",
+      "expected_answer": "They prevent duplicates",
+      "tags": [
+        "Uniqueness"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which structure cannot be changed?",
+      "options": [
+        "list",
+        "tuple",
+        "set",
+        "dict"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "TupleBasics"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Why does this error occur?",
+      "expected_answer": "Tuples are immutable",
+      "tags": [
+        "Immutability"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "relic=(1,2,3)\nrelic[0]=9"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Create a set of three unique gems and print it.",
+      "expected_answer": "gems={'ruby','emerald','sapphire'}\nprint(gems)",
+      "tags": [
+        "SetBasics"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What happens if you add a duplicate to a set?",
+      "options": [
+        "Error",
+        "Duplicate added",
+        "Ignored",
+        "Replaces value"
+      ],
+      "answer_index": 2,
+      "tags": [
+        "Uniqueness"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "How many items are in this set?",
+      "expected_answer": "2",
+      "tags": [
+        "SetBasics"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "s={'a','a','b'}\nprint(len(s))"
+        }
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Why are sets useful for inventory?",
+      "expected_answer": "They prevent duplicates",
+      "tags": [
+        "Uniqueness"
+      ]
+    }
+  ]
+}

@@ -322,6 +322,7 @@
           </div>
           <form id="subtopicForm" class="modal-body">
             <input type="hidden" id="subtopicFormMode" value="create" />
+            <input type="hidden" id="originalSubtopicId" value="" />
 
             <div class="form-group">
               <label for="modalSubtopicId">Subtopic ID *</label>
@@ -1268,6 +1269,7 @@
         const subject = list.dataset.subject;
         const cards = list.querySelectorAll('.draggable');
         const orderedIds = [];
+        const reorderedState = {};
 
         cards.forEach((card, index) => {
           const newOrder = index + 1;
@@ -1276,8 +1278,22 @@
             badge.textContent = newOrder;
           }
           card.dataset.order = newOrder;
-          orderedIds.push(card.dataset.subtopicId);
+          const subtopicId = card.dataset.subtopicId;
+          orderedIds.push(subtopicId);
+          if (subtopicId) {
+            const existingEntry =
+              subtopicState && subtopicState[subtopicId]
+                ? { ...subtopicState[subtopicId] }
+                : {};
+            existingEntry.order = newOrder;
+            reorderedState[subtopicId] = existingEntry;
+          }
         });
+
+        const previousState = subtopicState;
+        if (Object.keys(reorderedState).length) {
+          subtopicState = reorderedState;
+        }
 
         fetch(`/admin/subtopics/${subject}/reorder`, {
           method: 'POST',
@@ -1291,11 +1307,13 @@
             if (data.success) {
               showNotification('Subtopic order updated successfully', 'success');
             } else {
+              subtopicState = previousState;
               showNotification(data.error || 'Failed to update subtopic order', 'error');
             }
           })
           .catch((error) => {
             console.error('Error updating subtopic order:', error);
+            subtopicState = previousState;
             showNotification('An error occurred while saving the new order', 'error');
           });
       }
@@ -1358,6 +1376,7 @@
         const estimatedInput = document.getElementById('modalSubtopicEstimatedTime');
         const tagsInput = document.getElementById('modalSubtopicTags');
         const idHelpText = document.getElementById('subtopicIdHelp');
+        const originalIdInput = document.getElementById('originalSubtopicId');
 
         subtopicModeInput.value = mode;
 
@@ -1370,10 +1389,13 @@
             subtopicModalSubmitText.textContent = 'Update Subtopic';
           }
           idInput.value = subtopicId;
-          idInput.disabled = true;
+          idInput.disabled = false;
           if (idHelpText) {
-            idHelpText.textContent = 'ID cannot be changed after creation (used in URLs and file paths).';
-            idHelpText.style.color = '#718096';
+            idHelpText.textContent = 'You can rename this ID; all data and prerequisites will move to the new ID.';
+            idHelpText.style.color = '#3182ce';
+          }
+          if (originalIdInput) {
+            originalIdInput.value = subtopicId;
           }
           nameInput.value = data.name || '';
           descriptionInput.value = data.description || '';
@@ -1431,6 +1453,9 @@
               option.disabled = false;
             });
           }
+          if (originalIdInput) {
+            originalIdInput.value = '';
+          }
         }
 
         subtopicModal.classList.add('show');
@@ -1481,6 +1506,7 @@
         const statusSelect = document.getElementById('modalSubtopicStatus');
         const estimatedInput = document.getElementById('modalSubtopicEstimatedTime');
         const tagsInput = document.getElementById('modalSubtopicTags');
+        const originalIdInput = document.getElementById('originalSubtopicId');
         const prerequisitesSelect = subtopicPrereqSelect;
 
         let subtopicId = (idInput?.value || '').trim();
@@ -1511,6 +1537,7 @@
           .filter(Boolean);
 
         const updatedSubtopics = JSON.parse(JSON.stringify(subtopicState || {}));
+        const originalSubtopicId = (originalIdInput?.value || subtopicId).trim();
 
         if (mode === 'create' && updatedSubtopics[subtopicId]) {
           showNotification('A subtopic with that ID already exists.', 'error');
@@ -1520,7 +1547,7 @@
           return;
         }
 
-        const entry = updatedSubtopics[subtopicId] || {};
+        const entry = updatedSubtopics[subtopicId] || updatedSubtopics[originalSubtopicId] || {};
 
         if (mode === 'create' && !entry.order) {
           const existingOrders = Object.values(updatedSubtopics)
@@ -1574,12 +1601,30 @@
 
         updatedSubtopics[subtopicId] = entry;
 
+        // If the ID changed, remove the old key and update prerequisites to point to the new ID
+        if (mode === 'edit' && originalSubtopicId && originalSubtopicId !== subtopicId) {
+          delete updatedSubtopics[originalSubtopicId];
+          Object.values(updatedSubtopics).forEach((item) => {
+            if (item && Array.isArray(item.prerequisites)) {
+              item.prerequisites = item.prerequisites.map((value) =>
+                value === originalSubtopicId ? subtopicId : value
+              );
+            }
+          });
+        }
+
         fetch(`/admin/subjects/${subjectId}/update`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ subtopics: updatedSubtopics }),
+          body: JSON.stringify({
+            subtopics: updatedSubtopics,
+            rename_subtopic:
+              mode === 'edit' && originalSubtopicId && originalSubtopicId !== subtopicId
+                ? { from: originalSubtopicId, to: subtopicId }
+                : null,
+          }),
         })
           .then((response) => response.json().then((data) => ({ ok: response.ok, data })))
           .then((result) => {

@@ -1,0 +1,298 @@
+{
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What does the following code print?",
+      "tags": [
+        "ForLoop"
+      ],
+      "options": [
+        "Hit the dummy!",
+        "Hit the dummy! repeated 3 times",
+        "Error",
+        "Nothing printed"
+      ],
+      "answer_index": 1,
+      "content": [
+        {
+          "type": "code",
+          "text": "for i in range(3):\n    print('Hit the dummy!')"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Write a for loop that prints 'Attack!' five times.",
+      "tags": [
+        "ForLoop"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "for i in range(5):\n    print('Attack!')"
+        }
+      ],
+      "expected_answer": "for i in range(5):\n    print('Attack!')"
+    },
+    {
+      "type": "short_answer",
+      "question": "Predict the output.",
+      "tags": [
+        "ForLoop"
+      ],
+      "expected_answer": "Slash!\nSlash!\nRest!",
+      "content": [
+        {
+          "type": "code",
+          "text": "for i in range(2):\n    print('Slash!')\nprint('Rest!')"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "How many lines are printed?",
+      "tags": [
+        "Range"
+      ],
+      "options": [
+        "2",
+        "3",
+        "4",
+        "Error"
+      ],
+      "answer_index": 1,
+      "content": [
+        {
+          "type": "code",
+          "text": "for turn in range(1, 4):\n    print('Turn', turn)"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Write code that prints:\nTurn 1\nTurn 2\nTurn 3\nTurn 4",
+      "tags": [
+        "Range"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "for t in range(1, 5):\n    print('Turn', t)"
+        }
+      ],
+      "expected_answer": "for t in range(1, 5):\n    print('Turn', t)"
+    },
+    {
+      "type": "short_answer",
+      "question": "Predict the output.",
+      "tags": [
+        "Range"
+      ],
+      "expected_answer": "2\n5\n8",
+      "content": [
+        {
+          "type": "code",
+          "text": "for i in range(2, 10, 3):\n    print(i)"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "How many 'Hit!' lines are printed?",
+      "tags": [
+        "WhileLoop"
+      ],
+      "options": [
+        "2",
+        "3",
+        "4",
+        "Infinite loop"
+      ],
+      "answer_index": 1,
+      "content": [
+        {
+          "type": "code",
+          "text": "monster_hp = 10\nwhile monster_hp > 0:\n    print('Hit!')\n    monster_hp -= 4"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Create a while loop that counts down from 3 to 1 and prints each number.",
+      "tags": [
+        "WhileLoop"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "num = 3\nwhile num > 0:\n    print(num)\n    num -= 1"
+        }
+      ],
+      "expected_answer": "num = 3\nwhile num > 0:\n    print(num)\n    num -= 1"
+    },
+    {
+      "type": "short_answer",
+      "question": "Predict the output.",
+      "tags": [
+        "WhileLoop"
+      ],
+      "expected_answer": "15\n20",
+      "content": [
+        {
+          "type": "code",
+          "text": "hp = 10\nwhile hp < 20:\n    hp += 5\n    print(hp)"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is printed at the end?",
+      "tags": [
+        "Break"
+      ],
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "answer_index": 1,
+      "content": [
+        {
+          "type": "code",
+          "text": "for t in range(1, 6):\n    if t == 3:\n        break\nprint(t)"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Write a for loop from 1–5 but break at turn 4.",
+      "tags": [
+        "Break"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "for t in range(1, 6):\n    if t == 4:\n        break\n    print('Turn', t)"
+        }
+      ],
+      "expected_answer": "for t in range(1, 6):\n    if t == 4:\n        break\n    print('Turn', t)"
+    },
+    {
+      "type": "short_answer",
+      "question": "Predict the output.",
+      "tags": [
+        "Break"
+      ],
+      "expected_answer": "Attack!\nRat flees!",
+      "content": [
+        {
+          "type": "code",
+          "text": "for i in range(1, 6):\n    if i == 2:\n        print('Rat flees!')\n        break\n    print('Attack!')"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is the output?",
+      "tags": [
+        "Continue"
+      ],
+      "options": [
+        "1 2 3 4",
+        "1 3 4",
+        "2 3 4",
+        "1 2 4"
+      ],
+      "answer_index": 1,
+      "content": [
+        {
+          "type": "code",
+          "text": "for i in range(1, 5):\n    if i == 2:\n        continue\n    print(i)"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Write a loop for turns 1–4 that skips turn 2.",
+      "tags": [
+        "Continue"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "for turn in range(1, 5):\n    if turn == 2:\n        continue\n    print('Turn', turn)"
+        }
+      ],
+      "expected_answer": "for turn in range(1, 5):\n    if turn == 2:\n        continue\n    print('Turn', turn)"
+    },
+    {
+      "type": "short_answer",
+      "question": "Predict the output.",
+      "tags": [
+        "Continue"
+      ],
+      "expected_answer": "Greg fights turn 1\nGreg fights turn 2\nGreg fights turn 3\nGreg fights turn 5",
+      "content": [
+        {
+          "type": "code",
+          "text": "for t in range(1, 6):\n    if t == 4:\n        continue\n    print('Greg fights turn', t)"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which statement best describes 'break' and 'continue'?",
+      "tags": [
+        "ForLoop",
+        "Range",
+        "WhileLoop",
+        "Break",
+        "Continue"
+      ],
+      "options": [
+        "break stops all loops, continue repeats the same step",
+        "break stops the current loop, continue skips the rest of current iteration",
+        "break restarts the loop, continue exits program",
+        "both do the same thing"
+      ],
+      "answer_index": 1
+    },
+    {
+      "type": "coding",
+      "question": "Create a while loop with orc_hp = 30. Subtract 9 each turn. Stop if orc_hp < 10 using break.",
+      "tags": [
+        "ForLoop",
+        "Range",
+        "WhileLoop",
+        "Break",
+        "Continue"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "orc_hp = 30\nwhile orc_hp > 0:\n    print('Orc HP:', orc_hp)\n    orc_hp -= 9\n    if orc_hp < 10:\n        break\nprint('Orc flees!')"
+        }
+      ],
+      "expected_answer": "orc_hp = 30\nwhile orc_hp > 0:\n    print('Orc HP:', orc_hp)\n    orc_hp -= 9\n    if orc_hp < 10:\n        break\nprint('Orc flees!')"
+    },
+    {
+      "type": "short_answer",
+      "question": "Predict the output.",
+      "tags": [
+        "ForLoop",
+        "Range",
+        "WhileLoop",
+        "Break",
+        "Continue"
+      ],
+      "expected_answer": "Turn 1\nDrink potion!\nTurn 3\nMonster surrenders!",
+      "content": [
+        {
+          "type": "code",
+          "text": "for turn in range(1, 5):\n    if turn == 2:\n        print('Drink potion!')\n        continue\n    if turn == 4:\n        print('Monster surrenders!')\n        break\n    print('Turn', turn)"
+        }
+      ]
+    }
+  ]
+}

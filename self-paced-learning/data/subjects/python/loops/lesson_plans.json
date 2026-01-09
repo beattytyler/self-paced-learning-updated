@@ -36,7 +36,12 @@
           ]
         }
       ],
-      "tags": ["loops", "while", "syntax", "conditions"],
+      "tags": [
+        "loops",
+        "while",
+        "syntax",
+        "conditions"
+      ],
       "type": "initial",
       "order": 1,
       "created_date": "2025-01-01"
@@ -84,7 +89,11 @@
           ]
         }
       ],
-      "tags": ["loops", "while", "practice"],
+      "tags": [
+        "loops",
+        "while",
+        "practice"
+      ],
       "type": "initial",
       "order": 2,
       "created_date": "2025-01-01"
@@ -140,7 +149,12 @@
           ]
         }
       ],
-      "tags": ["loops", "while", "infinite", "break"],
+      "tags": [
+        "loops",
+        "while",
+        "infinite",
+        "break"
+      ],
       "type": "initial",
       "order": 3,
       "created_date": "2025-01-01"
@@ -188,7 +202,12 @@
           ]
         }
       ],
-      "tags": ["loops", "break", "control", "exit"],
+      "tags": [
+        "loops",
+        "break",
+        "control",
+        "exit"
+      ],
       "type": "initial",
       "order": 4,
       "created_date": "2025-01-01"
@@ -243,7 +262,12 @@
           ]
         }
       ],
-      "tags": ["loops", "continue", "skip", "control"],
+      "tags": [
+        "loops",
+        "continue",
+        "skip",
+        "control"
+      ],
       "type": "initial",
       "order": 5,
       "created_date": "2025-01-01"
@@ -299,7 +323,12 @@
           ]
         }
       ],
-      "tags": ["loops", "for", "iteration", "sequences"],
+      "tags": [
+        "loops",
+        "for",
+        "iteration",
+        "sequences"
+      ],
       "type": "initial",
       "order": 6,
       "created_date": "2025-01-01"
@@ -376,7 +405,12 @@
           ]
         }
       ],
-      "tags": ["loops", "range", "numbers", "iteration"],
+      "tags": [
+        "loops",
+        "range",
+        "numbers",
+        "iteration"
+      ],
       "type": "initial",
       "order": 7,
       "created_date": "2025-01-01"

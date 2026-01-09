@@ -21,7 +21,8 @@
       "type": "initial",
       "updated_date": "2025-09-25",
       "order": 1,
-      "id": "python-functions-intro"
+      "id": "python-functions-intro",
+      "lessonType": "initial"
     },
     {
       "title": "The 'def' Keyword",
@@ -95,7 +96,8 @@
       "type": "initial",
       "updated_date": "2025-09-25",
       "order": 2,
-      "id": "def-keyword"
+      "id": "def-keyword",
+      "lessonType": "initial"
     },
     {
       "title": "Function Parameters",
@@ -227,7 +229,8 @@
       "type": "initial",
       "updated_date": "2025-09-25",
       "order": 3,
-      "id": "function-parameters"
+      "id": "function-parameters",
+      "lessonType": "initial"
     },
     {
       "title": "Arbitrary Arguments (*args & **kwargs)",
@@ -334,7 +337,8 @@
       "type": "initial",
       "updated_date": "2025-09-25",
       "order": 4,
-      "id": "arbitrary-arguments"
+      "id": "arbitrary-arguments",
+      "lessonType": "initial"
     },
     {
       "title": "Return Values",
@@ -362,7 +366,11 @@
         },
         {
           "type": "paragraph",
-          "text": "Write a function multiply(a, b) that:\n\nReturns the product of a and b."
+          "text": "Write a function multiply(a, b) that:"
+        },
+        {
+          "type": "paragraph",
+          "text": "Returns the product of a and b."
         },
         {
           "type": "code_runner",
@@ -384,7 +392,8 @@
       "type": "initial",
       "updated_date": "2025-09-25",
       "order": 5,
-      "id": "return-values"
+      "id": "return-values",
+      "lessonType": "initial"
     },
     {
       "title": "Python Functions – Summary",
@@ -446,7 +455,8 @@
       "type": "initial",
       "updated_date": "2025-09-25",
       "order": 7,
-      "id": "python-functions-summary"
+      "id": "python-functions-summary",
+      "lessonType": "initial"
     },
     {
       "title": "Recursion",
@@ -470,7 +480,11 @@
         },
         {
           "type": "paragraph",
-          "text": "Write a recursive function sum_n(n) that:\n\nReturns the sum of numbers from 1 to n."
+          "text": "Write a recursive function sum_n(n) that:"
+        },
+        {
+          "type": "paragraph",
+          "text": "Returns the sum of numbers from 1 to n."
         },
         {
           "type": "code_runner",
@@ -492,7 +506,8 @@
       "type": "initial",
       "updated_date": "2025-01-01",
       "order": 8,
-      "id": "recursion"
+      "id": "recursion",
+      "lessonType": "initial"
     }
   ],
   "updated_date": "2025-10-02"

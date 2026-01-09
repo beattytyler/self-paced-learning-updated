@@ -692,17 +692,18 @@ Keep the response concise and student-friendly.
         original_questions: List[Dict],
         wrong_answers: List[int],
         question_pool: List[Dict],
+        weak_topics: Optional[List[str]] = None,
     ) -> List[Dict]:
         """Generate a remedial quiz focusing on areas where student struggled.
 
-        Extracts tags from the questions that were answered incorrectly and uses
-        them to select the most relevant remedial questions from the pool.
+        Extracts tags from incorrect questions (and optional weak topics) to
+        select the most relevant remedial questions from the pool.
         """
         if not question_pool:
             return []
 
-        weak_topics = set()
-        for wrong_index in wrong_answers:
+        target_topics = set()
+        for wrong_index in wrong_answers or []:
             if wrong_index < len(original_questions):
                 question = original_questions[wrong_index]
 
@@ -711,18 +712,31 @@ Keep the response concise and student-friendly.
                 if isinstance(tags, list):
                     for tag in tags:
                         if tag and isinstance(tag, str):
-                            weak_topics.add(tag.strip().lower())
+                            target_topics.add(tag.strip().lower())
                 elif isinstance(tags, str) and tags.strip():
                     # Single tag as string
-                    weak_topics.add(tags.strip().lower())
+                    target_topics.add(tags.strip().lower())
 
                 # Fallback to legacy 'topic' field if it exists
                 topic = question.get("topic", "")
                 if topic and isinstance(topic, str):
-                    weak_topics.add(topic.strip().lower())
+                    target_topics.add(topic.strip().lower())
 
-        print(f"DEBUG: generate_remedial_quiz extracted weak_topics: {weak_topics}")
-        return self.select_remedial_questions(question_pool, list(weak_topics))
+        for topic in weak_topics or []:
+            if not isinstance(topic, str):
+                continue
+            cleaned = topic.strip().lower()
+            if cleaned:
+                target_topics.add(cleaned)
+
+        if not target_topics:
+            print("DEBUG: generate_remedial_quiz found no target topics")
+            return []
+
+        print(
+            f"DEBUG: generate_remedial_quiz extracted target_topics: {target_topics}"
+        )
+        return self.select_remedial_questions(question_pool, list(target_topics))
 
     def select_remedial_questions(
         self,
@@ -758,18 +772,21 @@ Keep the response concise and student-friendly.
             print(f"DEBUG: questions_list is empty after conversion")
             return []
 
-        # AI is REQUIRED - hard fail if not available
-        if not self.is_available():
-            print(
-                f"ERROR: AI service not available. Cannot select remedial questions without OpenAI API."
-            )
-            return []
-
         if not target_tags:
             print(
                 f"ERROR: No target tags provided. Cannot select questions without weak topics."
             )
+            self._last_selection_feedback = None
             return []
+
+        if not self.is_available():
+            print(
+                "WARNING: AI service not available. Falling back to tag-based selection."
+            )
+            self._last_selection_feedback = None
+            return self._tag_based_selection(
+                questions_list, list(target_tags), min_questions, max_questions
+            )
 
         print(f"DEBUG: Using AI for question selection")
         try:
@@ -779,11 +796,13 @@ Keep the response concise and student-friendly.
             if selected:
                 print(f"DEBUG: AI selected {len(selected)} questions")
                 return selected
-            print(f"ERROR: AI selection returned empty list")
-            return []
+            print("ERROR: AI selection returned empty list")
         except Exception as e:
             print(f"ERROR: AI selection failed with error: {e}")
-            return []
+        self._last_selection_feedback = None
+        return self._tag_based_selection(
+            questions_list, list(target_tags), min_questions, max_questions
+        )
 
     def _ai_select_questions(
         self,

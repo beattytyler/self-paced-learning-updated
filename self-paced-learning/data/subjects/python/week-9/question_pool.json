@@ -1,0 +1,394 @@
+{
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What keyword defines a new spell (function)?",
+      "options": [
+        "spell",
+        "def",
+        "func",
+        "define"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "FunctionDefine"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What is printed when this spell is cast?",
+      "expected_answer": "Fireball!",
+      "tags": [
+        "FunctionCall"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "def fire():\n    print('Fireball!')\nfire()"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Write a function heal() that prints 'Healing spell cast!'",
+      "expected_answer": "def heal():\n    print('Healing spell cast!')",
+      "tags": [
+        "FunctionDefine"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What value is returned?",
+      "expected_answer": "20",
+      "tags": [
+        "FunctionReturn"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "def double(x):\n    return x*2\nprint(double(10))"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Parameters allow a function to…",
+      "options": [
+        "Run faster",
+        "Accept input",
+        "Return values",
+        "Loop"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "FunctionParameters"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Why is hero_hp unchanged outside this function?",
+      "expected_answer": "Because the variable is local to the function",
+      "tags": [
+        "FunctionScope"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hero_hp = 50\ndef heal():\n    hero_hp = 100\nheal()\nprint(hero_hp)"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What keyword defines a new spell (function)?",
+      "options": [
+        "spell",
+        "def",
+        "func",
+        "define"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "FunctionDefine"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What is printed when this spell is cast?",
+      "expected_answer": "Fireball!",
+      "tags": [
+        "FunctionCall"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "def fire():\n    print('Fireball!')\nfire()"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Write a function heal() that prints 'Healing spell cast!'",
+      "expected_answer": "def heal():\n    print('Healing spell cast!')",
+      "tags": [
+        "FunctionDefine"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What value is returned?",
+      "expected_answer": "20",
+      "tags": [
+        "FunctionReturn"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "def double(x):\n    return x*2\nprint(double(10))"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Parameters allow a function to…",
+      "options": [
+        "Run faster",
+        "Accept input",
+        "Return values",
+        "Loop"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "FunctionParameters"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Why is hero_hp unchanged outside this function?",
+      "expected_answer": "Because the variable is local to the function",
+      "tags": [
+        "FunctionScope"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hero_hp = 50\ndef heal():\n    hero_hp = 100\nheal()\nprint(hero_hp)"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What keyword defines a new spell (function)?",
+      "options": [
+        "spell",
+        "def",
+        "func",
+        "define"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "FunctionDefine"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What is printed when this spell is cast?",
+      "expected_answer": "Fireball!",
+      "tags": [
+        "FunctionCall"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "def fire():\n    print('Fireball!')\nfire()"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Write a function heal() that prints 'Healing spell cast!'",
+      "expected_answer": "def heal():\n    print('Healing spell cast!')",
+      "tags": [
+        "FunctionDefine"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What value is returned?",
+      "expected_answer": "20",
+      "tags": [
+        "FunctionReturn"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "def double(x):\n    return x*2\nprint(double(10))"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Parameters allow a function to…",
+      "options": [
+        "Run faster",
+        "Accept input",
+        "Return values",
+        "Loop"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "FunctionParameters"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Why is hero_hp unchanged outside this function?",
+      "expected_answer": "Because the variable is local to the function",
+      "tags": [
+        "FunctionScope"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hero_hp = 50\ndef heal():\n    hero_hp = 100\nheal()\nprint(hero_hp)"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What keyword defines a new spell (function)?",
+      "options": [
+        "spell",
+        "def",
+        "func",
+        "define"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "FunctionDefine"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What is printed when this spell is cast?",
+      "expected_answer": "Fireball!",
+      "tags": [
+        "FunctionCall"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "def fire():\n    print('Fireball!')\nfire()"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Write a function heal() that prints 'Healing spell cast!'",
+      "expected_answer": "def heal():\n    print('Healing spell cast!')",
+      "tags": [
+        "FunctionDefine"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What value is returned?",
+      "expected_answer": "20",
+      "tags": [
+        "FunctionReturn"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "def double(x):\n    return x*2\nprint(double(10))"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Parameters allow a function to…",
+      "options": [
+        "Run faster",
+        "Accept input",
+        "Return values",
+        "Loop"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "FunctionParameters"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Why is hero_hp unchanged outside this function?",
+      "expected_answer": "Because the variable is local to the function",
+      "tags": [
+        "FunctionScope"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hero_hp = 50\ndef heal():\n    hero_hp = 100\nheal()\nprint(hero_hp)"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What keyword defines a new spell (function)?",
+      "options": [
+        "spell",
+        "def",
+        "func",
+        "define"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "FunctionDefine"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What is printed when this spell is cast?",
+      "expected_answer": "Fireball!",
+      "tags": [
+        "FunctionCall"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "def fire():\n    print('Fireball!')\nfire()"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Write a function heal() that prints 'Healing spell cast!'",
+      "expected_answer": "def heal():\n    print('Healing spell cast!')",
+      "tags": [
+        "FunctionDefine"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What value is returned?",
+      "expected_answer": "20",
+      "tags": [
+        "FunctionReturn"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "def double(x):\n    return x*2\nprint(double(10))"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Parameters allow a function to…",
+      "options": [
+        "Run faster",
+        "Accept input",
+        "Return values",
+        "Loop"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "FunctionParameters"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Why is hero_hp unchanged outside this function?",
+      "expected_answer": "Because the variable is local to the function",
+      "tags": [
+        "FunctionScope"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hero_hp = 50\ndef heal():\n    hero_hp = 100\nheal()\nprint(hero_hp)"
+        }
+      ]
+    }
+  ]
+}

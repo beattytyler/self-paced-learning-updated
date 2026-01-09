@@ -198,7 +198,7 @@
                 </div>
                 <div class="lesson-actions-inline">
                   <a
-                    href="/admin/lessons/{{ subject }}/{{ subtopic }}/{{ lesson_id }}/edit"
+                    href="/admin/lessons/{{ subject|urlencode }}/{{ subtopic|urlencode }}/{{ lesson_id|urlencode }}/edit"
                     class="btn-action btn-edit"
                     title="Edit Lesson"
                   >
@@ -207,13 +207,13 @@
                   <button
                     type="button"
                     class="btn-action btn-delete"
-                    onclick="deleteLesson('{{ subject }}', '{{ subtopic }}', '{{ lesson_id }}')"
+                    onclick="deleteLesson({{ subject|tojson }}, {{ subtopic|tojson }}, {{ lesson_id|tojson }})"
                     title="Delete Lesson"
                   >
                     <i class="fas fa-trash"></i>
                   </button>
                   <a
-                    href="/subjects/{{ subject }}?subtopic={{ subtopic }}&lesson={{ lesson_id }}"
+                    href="/subjects/{{ subject|urlencode }}?subtopic={{ subtopic|urlencode }}&lesson={{ lesson_id|urlencode }}"
                     target="_blank"
                     rel="noopener"
                     class="btn-action btn-view"
@@ -292,7 +292,7 @@
                 </div>
                 <div class="lesson-actions-inline">
                   <a
-                    href="/admin/lessons/{{ subject }}/{{ subtopic }}/{{ lesson_id }}/edit"
+                    href="/admin/lessons/{{ subject|urlencode }}/{{ subtopic|urlencode }}/{{ lesson_id|urlencode }}/edit"
                     class="btn-action btn-edit"
                     title="Edit Lesson"
                   >
@@ -301,13 +301,13 @@
                   <button
                     type="button"
                     class="btn-action btn-delete"
-                    onclick="deleteLesson('{{ subject }}', '{{ subtopic }}', '{{ lesson_id }}')"
+                    onclick="deleteLesson({{ subject|tojson }}, {{ subtopic|tojson }}, {{ lesson_id|tojson }})"
                     title="Delete Lesson"
                   >
                     <i class="fas fa-trash"></i>
                   </button>
                   <a
-                    href="/subjects/{{ subject }}?subtopic={{ subtopic }}&lesson={{ lesson_id }}"
+                    href="/subjects/{{ subject|urlencode }}?subtopic={{ subtopic|urlencode }}&lesson={{ lesson_id|urlencode }}"
                     target="_blank"
                     rel="noopener"
                     class="btn-action btn-view"
@@ -377,7 +377,11 @@
           return;
         }
 
-        fetch(`/admin/lessons/${subject}/${subtopic}/${lessonId}/delete`, {
+        const encodedSubject = encodeURIComponent(subject);
+        const encodedSubtopic = encodeURIComponent(subtopic);
+        const encodedLessonId = encodeURIComponent(lessonId);
+
+        fetch(`/admin/lessons/${encodedSubject}/${encodedSubtopic}/${encodedLessonId}/delete`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -479,21 +483,24 @@
 
         function persistLessonOrder() {
           const container = document.querySelector(".lessons-grid");
-          if (!container) return;
-          const subject = container.dataset.subject;
-          const subtopic = container.dataset.subtopic;
-          if (!subject || !subtopic) return;
+        if (!container) return;
+        const subject = container.dataset.subject;
+        const subtopic = container.dataset.subtopic;
+        if (!subject || !subtopic) return;
 
-          const orderedIds = Array.from(
-            document.querySelectorAll(".lessons-list .lesson-card")
-          ).map((card) => card.dataset.lessonId);
+        const orderedIds = Array.from(
+          document.querySelectorAll(".lessons-list .lesson-card")
+        ).map((card) => card.dataset.lessonId);
 
-          fetch(`/admin/lessons/${subject}/${subtopic}/reorder`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(orderedIds),
+        const encodedSubject = encodeURIComponent(subject);
+        const encodedSubtopic = encodeURIComponent(subtopic);
+
+        fetch(`/admin/lessons/${encodedSubject}/${encodedSubtopic}/reorder`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(orderedIds),
           })
             .then((response) => response.json())
             .then((data) => {

@@ -1,0 +1,800 @@
+{
+  "lessons": [
+    {
+      "title": "Story Setup - Hero Stats",
+      "videoId": "",
+      "content": [
+        {
+          "type": "header",
+          "text": "Story Setup"
+        },
+        {
+          "type": "paragraph",
+          "text": "Your hero has awakened, but the villagers are whispering:\n\"Who is this traveler? How strong are they? Do they even have any coins?\""
+        },
+        {
+          "type": "paragraph",
+          "text": "Every hero needs stats to prove themselves:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Name",
+            "Health Points (HP)",
+            "Attack Power",
+            "Coins",
+            "Alive or Dead status"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "In Python, we use variables to keep track of these stats."
+        },
+        {
+          "type": "header",
+          "text": "Tags Introduced"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Variable",
+            "DataType (int, float, str, bool)",
+            "Print (printing different types)"
+          ]
+        }
+      ],
+      "tags": [],
+      "type": "initial",
+      "updated_date": "2025-10-08",
+      "order": 1,
+      "id": "story-setup-hero-stats",
+      "lessonType": "initial"
+    },
+    {
+      "title": "Introduction to Variables",
+      "videoId": "",
+      "content": [
+        {
+          "type": "header",
+          "text": "What is a Variable?"
+        },
+        {
+          "type": "paragraph",
+          "text": "A variable is like a labeled chest where you store information."
+        },
+        {
+          "type": "code",
+          "text": "hero_name = \"Aria\"\nhero_hp = 100"
+        },
+        {
+          "type": "paragraph",
+          "text": "hero_name -> holds the hero's name (string of text) hero_hp -> holds the hero's health points (number)"
+        },
+        {
+          "type": "paragraph",
+          "text": "Variables can change during the adventure."
+        },
+        {
+          "type": "code",
+          "text": "hero_hp = 100\nprint(hero_hp)   # 100\n\nhero_hp = 80     # hero takes damage\nprint(hero_hp)   # 80"
+        },
+        {
+          "type": "paragraph",
+          "text": "Just like your HP bar in a video game - it updates as you take damage or heal."
+        }
+      ],
+      "tags": [
+        "Variable"
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-08",
+      "order": 2,
+      "id": "intro-to-variables",
+      "lessonType": "initial"
+    },
+    {
+      "title": "Hero Training Drill 1 - Count Your Coins",
+      "videoId": "",
+      "content": [
+        {
+          "type": "header",
+          "text": "Hero Training Drill 1 - Count Your Coins"
+        },
+        {
+          "type": "paragraph",
+          "text": "The guild asks: \"How rich is your hero?\""
+        },
+        {
+          "type": "paragraph",
+          "text": "Create a variable hero_coins = 20. Print: \"Your hero jingles 20 shiny coins.\""
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your code here\n",
+          "expected_output": "Your hero jingles 20 shiny coins.",
+          "solution": "hero_coins = 20\nprint(\"Your hero jingles\", hero_coins, \"shiny coins.\")",
+          "hints": [
+            "Create a variable: hero_coins = 20",
+            "Use print() with commas to combine text and numbers",
+            "Format: print(\"text\", variable, \"text\")"
+          ]
+        }
+      ],
+      "tags": [
+        "Variable",
+        "Print"
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-08",
+      "order": 3,
+      "id": "training-drill-1-coins",
+      "lessonType": "initial"
+    },
+    {
+      "title": "Introduction to Data Types",
+      "videoId": "",
+      "content": [
+        {
+          "type": "header",
+          "text": "Data Types"
+        },
+        {
+          "type": "paragraph",
+          "text": "Not all variables are the same kind. Heroes have many types of stats."
+        },
+        {
+          "type": "list",
+          "items": [
+            "int -> whole numbers (HP, coins, level)",
+            "float -> decimals (attack power, speed)",
+            "str -> strings of text (name, weapon)",
+            "bool -> True/False (alive or dead, door open or shut)"
+          ]
+        },
+        {
+          "type": "code",
+          "text": "hero_level = 3        # int\nhero_attack = 12.5    # float\nhero_name = \"Kai\"     # str\nhero_alive = True     # bool"
+        }
+      ],
+      "tags": [
+        "DataType"
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-08",
+      "order": 4,
+      "id": "intro-to-data-types",
+      "lessonType": "initial"
+    },
+    {
+      "title": "Checking Data Types",
+      "videoId": "",
+      "content": [
+        {
+          "type": "header",
+          "text": "Advanced Note - Checking Types"
+        },
+        {
+          "type": "code",
+          "text": "print(type(hero_attack))   # <class 'float'>\nprint(type(hero_name))     # <class 'str'>"
+        },
+        {
+          "type": "paragraph",
+          "text": "This is like asking the guild scribe: \"What kind of stat is written here?\""
+        }
+      ],
+      "tags": [
+        "DataType"
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-08",
+      "order": 5,
+      "id": "checking-data-types",
+      "lessonType": "initial"
+    },
+    {
+      "title": "Hero Training Drill 2 - Show Your Stats",
+      "videoId": "",
+      "content": [
+        {
+          "type": "header",
+          "text": "Hero Training Drill 2 - Show Your Stats"
+        },
+        {
+          "type": "paragraph",
+          "text": "The guild master demands: \"Tell me your level and your magic power!\""
+        },
+        {
+          "type": "paragraph",
+          "text": "Create hero_level = 3 (int). Create hero_magic = 5.5 (float). Print both stats in one line."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your code here\n",
+          "expected_output": "Hero Level: 3 | Hero Magic: 5.5",
+          "solution": "hero_level = 3\nhero_magic = 5.5\nprint(\"Hero Level:\", hero_level, \"| Hero Magic:\", hero_magic)",
+          "hints": [
+            "Create two variables with different types",
+            "Use print() with multiple commas",
+            "Separate stats with | symbol"
+          ]
+        }
+      ],
+      "tags": [
+        "Variable",
+        "DataType",
+        "Print"
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-08",
+      "order": 6,
+      "id": "training-drill-2-stats",
+      "lessonType": "initial"
+    },
+    {
+      "title": "Hero Training Drill 3 - Alive or Dead",
+      "videoId": "",
+      "content": [
+        {
+          "type": "header",
+          "text": "Hero Training Drill 3 - Alive or Dead"
+        },
+        {
+          "type": "paragraph",
+          "text": "The guild healer asks: \"Is the hero alive?\""
+        },
+        {
+          "type": "paragraph",
+          "text": "Create a variable hero_alive = True. Print: \"Is the hero alive? True\""
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your code here\n",
+          "expected_output": "Is the hero alive? True",
+          "solution": "hero_alive = True\nprint(\"Is the hero alive?\", hero_alive)",
+          "hints": [
+            "Create a boolean variable: hero_alive = True",
+            "Use print() to display the question and answer",
+            "Boolean values don't need quotes"
+          ]
+        }
+      ],
+      "tags": [
+        "Variable",
+        "DataType",
+        "Print"
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-08",
+      "order": 7,
+      "id": "training-drill-3-alive",
+      "lessonType": "initial"
+    },
+    {
+      "title": "Printing Different Data Types",
+      "videoId": "",
+      "content": [
+        {
+          "type": "header",
+          "text": "Print - The Hero's Voice"
+        },
+        {
+          "type": "paragraph",
+          "text": "The print() function is your hero's voice. You can use it to shout names, numbers, or even entire profiles."
+        },
+        {
+          "type": "code",
+          "text": "hero_name = \"Kai\"\nhero_hp = 100\nprint(\"Hero:\", hero_name, \"| HP:\", hero_hp)"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output:"
+        },
+        {
+          "type": "code",
+          "text": "Hero: Kai | HP: 100"
+        },
+        {
+          "type": "header",
+          "text": "Advanced Note - Printing Different Types Together"
+        },
+        {
+          "type": "code",
+          "text": "print(\"Hero alive?\", True, \"| HP:\", 100)"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output:"
+        },
+        {
+          "type": "code",
+          "text": "Hero alive? True | HP: 100"
+        }
+      ],
+      "tags": [
+        "Print",
+        "DataType"
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-08",
+      "order": 8,
+      "id": "printing-different-types",
+      "lessonType": "initial"
+    },
+    {
+      "title": "Hero Training Drill 4 - Announce Your Weapon",
+      "videoId": "",
+      "content": [
+        {
+          "type": "header",
+          "text": "Hero Training Drill 4 - Announce Your Weapon"
+        },
+        {
+          "type": "paragraph",
+          "text": "The villagers ask: \"What weapon do you carry?\""
+        },
+        {
+          "type": "paragraph",
+          "text": "Create hero_weapon = \"Wooden Sword\". Print: \"Kai grabs a Wooden Sword!\""
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your code here\n",
+          "expected_output": "Kai grabs a Wooden Sword!",
+          "solution": "hero_weapon = \"Wooden Sword\"\nprint(\"Kai grabs a\", hero_weapon + \"!\")",
+          "hints": [
+            "Create a string variable for the weapon",
+            "Use print() with comma or + to combine text",
+            "Remember to add the exclamation mark"
+          ]
+        }
+      ],
+      "tags": [
+        "Variable",
+        "DataType",
+        "Print"
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-08",
+      "order": 9,
+      "id": "training-drill-4-weapon",
+      "lessonType": "initial"
+    },
+    {
+      "title": "Challenge Quest - The Hero Card",
+      "videoId": "",
+      "content": [
+        {
+          "type": "header",
+          "text": "Challenge Quest - The Hero Card"
+        },
+        {
+          "type": "paragraph",
+          "text": "Story: The guild refuses to admit you unless you present your official Hero Card. This card must show your hero's stats clearly."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Your Mission: Create a program that prints a hero profile card with:",
+            "Name (string)",
+            "HP (int)",
+            "Attack Power (float)",
+            "Alive status (boolean)"
+          ]
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your code here\n",
+          "expected_output": "Hero Card\n---------\nName: Kai\nHP: 100\nAttack: 7.5\nAlive: True",
+          "solution": "hero_name = \"Kai\"\nhero_hp = 100\nhero_attack = 7.5\nhero_alive = True\n\nprint(\"Hero Card\")\nprint(\"---------\")\nprint(\"Name:\", hero_name)\nprint(\"HP:\", hero_hp)\nprint(\"Attack:\", hero_attack)\nprint(\"Alive:\", hero_alive)",
+          "hints": [
+            "Create four variables with different data types",
+            "Use multiple print() statements for formatting",
+            "Include the header and separator line"
+          ]
+        }
+      ],
+      "tags": [
+        "Variable",
+        "DataType",
+        "Print"
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-08",
+      "order": 10,
+      "id": "challenge-hero-card",
+      "lessonType": "initial"
+    },
+    {
+      "title": "Week 2 Summary",
+      "videoId": "",
+      "content": [
+        {
+          "type": "header",
+          "text": "By the end of Week 2:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Kids understand what variables are and how to update them.",
+            "They know the four main data types (int, float, str, bool).",
+            "They can use print() to display stats in story format.",
+            "Their hero now has an official Hero Card to show the guild."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Next week: the villagers want to talk to your hero directly. We'll use input() and friendly output to let the player choose names, coins, and powers."
+        }
+      ],
+      "tags": [
+        "Variable",
+        "DataType",
+        "Print"
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-08",
+      "order": 11,
+      "id": "week-2-summary",
+      "lessonType": "initial"
+    },
+    {
+      "title": "Week 2 Remedial Lesson - Hero Stats Training",
+      "videoId": "",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "This remedial lesson gives extra practice for students struggling with Week 2 concepts. Each section is standalone, so you can study only the tags you need help with."
+        },
+        {
+          "type": "header",
+          "text": "Variable - Concept Review"
+        },
+        {
+          "type": "paragraph",
+          "text": "A variable is like a labeled chest where you can store information. The label is the variable name, and inside is the value. You can change the value during the game, just like your HP bar can go up and down."
+        },
+        {
+          "type": "header",
+          "text": "Examples"
+        },
+        {
+          "type": "code",
+          "text": "hero_name = \"Lira\"\nhero_hp = 150"
+        },
+        {
+          "type": "paragraph",
+          "text": "Here, hero_name holds text (a string), while hero_hp holds a number (an integer)."
+        },
+        {
+          "type": "code",
+          "text": "hero_hp = 150\nprint(hero_hp)\n\nhero_hp = 120\nprint(hero_hp)"
+        },
+        {
+          "type": "paragraph",
+          "text": "First the hero has 150 HP, then 120 after taking damage."
+        },
+        {
+          "type": "header",
+          "text": "Practice Drills for Variable"
+        },
+        {
+          "type": "header",
+          "text": "Drill V1 - The Coin Pouch"
+        },
+        {
+          "type": "paragraph",
+          "text": "Task: Create a variable hero_coins = 35. Print: The hero carries 35 coins."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your code here\n",
+          "expected_output": "The hero carries 35 coins.",
+          "hints": [
+            "Create the variable first",
+            "Use print() with commas",
+            "Combine text and variable"
+          ],
+          "solution": "hero_coins = 35\nprint(\"The hero carries\", hero_coins, \"coins.\")"
+        },
+        {
+          "type": "header",
+          "text": "Drill V2 - The Changing Torch"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Task: Create a variable torch_light = 100.",
+            "Print it.",
+            "Then set torch_light = 60 and print it again."
+          ]
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your code here\n",
+          "expected_output": "100\n60",
+          "hints": [
+            "Create the variable and print it",
+            "Reassign the variable to a new value",
+            "Print the new value"
+          ],
+          "solution": "torch_light = 100\nprint(torch_light)\ntorch_light = 60\nprint(torch_light)"
+        },
+        {
+          "type": "header",
+          "text": "Drill V3 - Your Own Chest"
+        },
+        {
+          "type": "paragraph",
+          "text": "Task: Create a variable for your hero's shield name (string). Print a sentence using that variable."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your code here\n",
+          "expected_output": "Hero equips a Iron Shield",
+          "hints": [
+            "Use quotes for string values",
+            "Create a descriptive variable name",
+            "Combine text and variable in print()"
+          ],
+          "solution": "hero_shield = \"Iron Shield\"\nprint(\"Hero equips a\", hero_shield)"
+        },
+        {
+          "type": "header",
+          "text": "DataType - Concept Review"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Not all variables are the same type. Different stats use different data types:",
+            "int -> whole numbers",
+            "float -> decimals",
+            "str -> text in quotes",
+            "bool -> True/False values"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Examples"
+        },
+        {
+          "type": "code",
+          "text": "hero_level = 4     # int\nhero_speed = 2.75  # float\nhero_name = \"Orin\"  # str\nhero_alive = False  # bool"
+        },
+        {
+          "type": "paragraph",
+          "text": "These variables show different types of hero stats."
+        },
+        {
+          "type": "code",
+          "text": "print(type(hero_speed))  # <class 'float'>"
+        },
+        {
+          "type": "header",
+          "text": "Practice Drills for DataType"
+        },
+        {
+          "type": "header",
+          "text": "Drill D1 - Levels and Magic"
+        },
+        {
+          "type": "paragraph",
+          "text": "Task: Create hero_level = 6 (int) and hero_magic = 12.5 (float). Print them together: Level and Magic."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your code here\n",
+          "expected_output": "Level: 6 | Magic: 12.5",
+          "hints": [
+            "Create one int and one float variable",
+            "Use print() with multiple commas",
+            "Include labels for clarity"
+          ],
+          "solution": "hero_level = 6\nhero_magic = 12.5\nprint(\"Level:\", hero_level, \"| Magic:\", hero_magic)"
+        },
+        {
+          "type": "header",
+          "text": "Drill D2 - Alive Check"
+        },
+        {
+          "type": "paragraph",
+          "text": "Task: Create hero_alive = True. Print: Is hero alive? True"
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your code here\n",
+          "expected_output": "Is hero alive? True",
+          "hints": [
+            "Use a boolean value (True or False)",
+            "No quotes around boolean values",
+            "Use print() with comma"
+          ],
+          "solution": "hero_alive = True\nprint(\"Is hero alive?\", hero_alive)"
+        },
+        {
+          "type": "header",
+          "text": "Drill D3 - Create Your Own Stats"
+        },
+        {
+          "type": "paragraph",
+          "text": "Task: Create one variable of each type (int, float, str, bool). Print them all in one block."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your code here\n",
+          "expected_output": "Name: Elin\nHP: 90\nSpeed: 4.3\nAlive: False",
+          "hints": [
+            "Create four different variables",
+            "Use all four data types",
+            "Print each on a separate line"
+          ],
+          "solution": "hero_name = \"Elin\"\nhero_hp = 90\nhero_speed = 4.3\nhero_alive = False\n\nprint(\"Name:\", hero_name)\nprint(\"HP:\", hero_hp)\nprint(\"Speed:\", hero_speed)\nprint(\"Alive:\", hero_alive)"
+        },
+        {
+          "type": "header",
+          "text": "Print - Concept Review"
+        },
+        {
+          "type": "paragraph",
+          "text": "The print() function is the hero's voice. It can speak words, numbers, or booleans. You can combine them with commas to form a message."
+        },
+        {
+          "type": "header",
+          "text": "Examples"
+        },
+        {
+          "type": "code",
+          "text": "hero_name = \"Taro\"\nhero_hp = 75\nprint(\"Hero:\", hero_name, \"| HP:\", hero_hp)"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output: Hero: Taro | HP: 75"
+        },
+        {
+          "type": "code",
+          "text": "print(\"Hero alive?\", False, \"| Coins:\", 10)"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output: Hero alive? False | Coins: 10"
+        },
+        {
+          "type": "header",
+          "text": "Practice Drills for Print"
+        },
+        {
+          "type": "header",
+          "text": "Drill P1 - Shout Your Weapon"
+        },
+        {
+          "type": "paragraph",
+          "text": "Task: Create hero_weapon = \"Bronze Axe\". Print: The hero swings a Bronze Axe!"
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your code here\n",
+          "expected_output": "The hero swings a Bronze Axe!",
+          "hints": [
+            "Create a string variable",
+            "Use + or comma to combine",
+            "Add the exclamation mark"
+          ],
+          "solution": "hero_weapon = \"Bronze Axe\"\nprint(\"The hero swings a\", hero_weapon + \"!\")"
+        },
+        {
+          "type": "header",
+          "text": "Drill P2 - Hero Profile"
+        },
+        {
+          "type": "paragraph",
+          "text": "Task: Create hero_name = \"Sora\", hero_hp = 60. Print both in one line: Hero: Sora | HP: 60"
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your code here\n",
+          "expected_output": "Hero: Sora | HP: 60",
+          "hints": [
+            "Create two variables",
+            "Use print() with multiple commas",
+            "Include the | separator"
+          ],
+          "solution": "hero_name = \"Sora\"\nhero_hp = 60\nprint(\"Hero:\", hero_name, \"| HP:\", hero_hp)"
+        },
+        {
+          "type": "header",
+          "text": "Drill P3 - Make Your Own Announcement"
+        },
+        {
+          "type": "paragraph",
+          "text": "Task: Create at least three variables (name, HP, item). Print them in one creative line."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your code here\n",
+          "expected_output": "Sora with 60 HP equips a Bronze Axe",
+          "hints": [
+            "Create three or more variables",
+            "Be creative with your sentence structure",
+            "Use commas to combine everything"
+          ],
+          "solution": "hero_name = \"Sora\"\nhero_hp = 60\nhero_item = \"Bronze Axe\"\nprint(hero_name, \"with\", hero_hp, \"HP equips a\", hero_item)"
+        },
+        {
+          "type": "header",
+          "text": "Variable + DataType + Print - Integrated Practice"
+        },
+        {
+          "type": "paragraph",
+          "text": "Sometimes you need to use all three together - store values in variables, give them the right type, and use print() to show them."
+        },
+        {
+          "type": "header",
+          "text": "Drill I1 - Basic Hero Card"
+        },
+        {
+          "type": "paragraph",
+          "text": "Task: Create hero_name, hero_hp, hero_attack, hero_alive. Print them in a hero card format with labels."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your code here\n",
+          "expected_output": "Hero Card\n---------\nName: Ayla\nHP: 95\nAttack: 8.2\nAlive: True",
+          "hints": [
+            "Create four variables with different types",
+            "Use multiple print() statements",
+            "Include header and separator"
+          ],
+          "solution": "hero_name = \"Ayla\"\nhero_hp = 95\nhero_attack = 8.2\nhero_alive = True\n\nprint(\"Hero Card\")\nprint(\"---------\")\nprint(\"Name:\", hero_name)\nprint(\"HP:\", hero_hp)\nprint(\"Attack:\", hero_attack)\nprint(\"Alive:\", hero_alive)"
+        },
+        {
+          "type": "header",
+          "text": "Drill I2 - Changing Stats"
+        },
+        {
+          "type": "paragraph",
+          "text": "Task: Create hero_hp = 100, then reduce it to 85. Print both before and after."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your code here\n",
+          "expected_output": "Initial HP: 100\nAfter damage HP: 85",
+          "hints": [
+            "Create the variable and print it",
+            "Reassign the variable",
+            "Print the new value"
+          ],
+          "solution": "hero_hp = 100\nprint(\"Initial HP:\", hero_hp)\nhero_hp = 85\nprint(\"After damage HP:\", hero_hp)"
+        },
+        {
+          "type": "header",
+          "text": "Drill I3 - Your Own Hero Sheet"
+        },
+        {
+          "type": "paragraph",
+          "text": "Task: Create at least four stats of different types. Print them all in one formatted block with labels."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your code here\n",
+          "expected_output": "Hero Card\n---------\nName: Arin\nHP: 90\nAttack: 5.5\nAlive: True",
+          "hints": [
+            "Use all four data types",
+            "Create a formatted output",
+            "Be creative with your hero's stats"
+          ],
+          "solution": "hero_name = \"Arin\"\nhero_hp = 90\nhero_attack = 5.5\nhero_alive = True\n\nprint(\"Hero Card\")\nprint(\"---------\")\nprint(\"Name:\", hero_name)\nprint(\"HP:\", hero_hp)\nprint(\"Attack:\", hero_attack)\nprint(\"Alive:\", hero_alive)"
+        }
+      ],
+      "tags": [
+        "Variable",
+        "DataType",
+        "Print"
+      ],
+      "type": "remedial",
+      "updated_date": "2025-10-02",
+      "order": 12,
+      "id": "week-2-remedial",
+      "lessonType": "initial"
+    }
+  ],
+  "updated_date": "2025-10-02"
+}

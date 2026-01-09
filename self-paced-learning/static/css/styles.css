@@ -1728,8 +1728,8 @@ body.quiz-page {
 .output-content {
   padding: 20px;
   margin: 0;
-  color: #e2e8f0 !important;
-  background: transparent !important;
+  color: #000 !important;
+  background: #fff !important;
   font-family: "JetBrains Mono", "Fira Code", "Consolas", "Monaco",
     "Courier New", monospace;
   font-size: 0.92rem;

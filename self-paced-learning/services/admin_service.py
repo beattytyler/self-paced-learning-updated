@@ -236,6 +236,7 @@ class AdminService:
             subject_info = update_payload.get("subject_info")
             subtopics = update_payload.get("subtopics")
             allowed_tags = update_payload.get("allowed_tags")
+            rename_subtopic = update_payload.get("rename_subtopic")
 
             if subject_info is None and subtopics is None and allowed_tags is None:
                 return {
@@ -249,6 +250,7 @@ class AdminService:
                 subject_info=subject_info,
                 subtopics=subtopics,
                 allowed_tags=allowed_tags,
+                rename_subtopic=rename_subtopic,
             )
 
             if not updated:
@@ -532,19 +534,19 @@ class AdminService:
                 or lesson_data.get("order") is None
                 or lesson_data.get("order") == ""
             ):
-                # Get existing lessons to determine next order
-                existing_lessons = self.data_service.get_lesson_plans(subject, subtopic)
-                if existing_lessons and "lessons" in existing_lessons:
-                    # Find max order value
-                    max_order = 0
-                    for lesson in existing_lessons["lessons"].values():
-                        if isinstance(lesson, dict):
-                            lesson_order = lesson.get("order", 0)
-                            if lesson_order and isinstance(lesson_order, (int, float)):
-                                max_order = max(max_order, int(lesson_order))
-                    lesson_data["order"] = max_order + 1
-                else:
-                    lesson_data["order"] = 1
+                existing_lessons = self.data_service.get_lesson_plans(subject, subtopic) or []
+                max_order = 0
+                for lesson in existing_lessons:
+                    if not isinstance(lesson, dict):
+                        continue
+                    lesson_order = lesson.get("order")
+                    if lesson_order is None or lesson_order == "":
+                        continue
+                    try:
+                        max_order = max(max_order, int(lesson_order))
+                    except Exception:
+                        continue
+                lesson_data["order"] = max_order + 1 if max_order else 1
 
             # Save the lesson
             success = self.data_service.save_lesson_to_file(
@@ -564,7 +566,12 @@ class AdminService:
             return {"success": False, "error": str(e)}
 
     def update_lesson(
-        self, subject: str, subtopic: str, lesson_id: str, lesson_data: Dict[str, Any]
+        self,
+        subject: str,
+        subtopic: str,
+        lesson_id: str,
+        lesson_data: Dict[str, Any],
+        order_provided: bool = False,
     ) -> Dict[str, Any]:
         """Update an existing lesson.
 
@@ -578,6 +585,19 @@ class AdminService:
                     "success": False,
                     "error": "Invalid subject/subtopic combination",
                 }
+
+            # Capture current lesson ordering so we can preserve drag order after updates
+            current_lessons = self.data_service.get_lesson_plans(subject, subtopic) or []
+            lesson_order: List[str] = [
+                lesson.get("id")
+                for lesson in current_lessons
+                if isinstance(lesson, dict) and lesson.get("id")
+            ]
+            existing_order = None
+            for lesson in current_lessons:
+                if isinstance(lesson, dict) and lesson.get("id") == lesson_id:
+                    existing_order = lesson.get("order")
+                    break
 
             # Check if lesson ID is being changed
             new_lesson_id = lesson_data.get("id", lesson_id)
@@ -613,6 +633,44 @@ class AdminService:
                         "success": False,
                         "error": f"Failed to migrate student progress: {migration_result.get('error')}",
                     }
+                # Keep the lesson in its original position
+                if lesson_id in lesson_order:
+                    idx = lesson_order.index(lesson_id)
+                    lesson_order[idx] = new_lesson_id
+                else:
+                    lesson_order.append(new_lesson_id)
+            else:
+                if new_lesson_id not in lesson_order:
+                    lesson_order.append(new_lesson_id)
+
+            # Respect explicit order value from the payload if provided and changed
+            explicit_order = lesson_data.get("order")
+            explicit_order_int = None
+            if explicit_order is not None:
+                try:
+                    explicit_order_int = int(explicit_order)
+                except Exception:
+                    explicit_order_int = None
+
+            existing_order_int = None
+            if existing_order is not None:
+                try:
+                    existing_order_int = int(existing_order)
+                except Exception:
+                    existing_order_int = None
+
+            order_changed = (
+                order_provided
+                and explicit_order_int is not None
+                and (existing_order_int is None or explicit_order_int != existing_order_int)
+            )
+
+            if order_changed and lesson_order and explicit_order_int is not None:
+                desired_index = max(explicit_order_int - 1, 0)
+                # Remove any existing occurrence before reinserting
+                lesson_order = [lid for lid in lesson_order if lid != new_lesson_id]
+                desired_index = min(desired_index, len(lesson_order))
+                lesson_order.insert(desired_index, new_lesson_id)
 
             # Ensure the new lesson ID is set
             lesson_data["id"] = new_lesson_id
@@ -627,6 +685,11 @@ class AdminService:
                 message = "Lesson updated successfully"
                 if id_changed:
                     message += f" (ID changed from '{lesson_id}' to '{new_lesson_id}')"
+
+                # Reapply ordering only when explicitly changed
+                if order_changed and lesson_order:
+                    self.reorder_lessons(subject, subtopic, lesson_order)
+
                 return {
                     "success": True,
                     "message": message,

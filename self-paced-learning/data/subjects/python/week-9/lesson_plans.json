@@ -1,0 +1,614 @@
+{
+  "lessons": [
+    {
+      "subject": "python",
+      "subtopic": "week-9",
+      "lesson_id": "python-functions-intro",
+      "id": "python-functions-intro",
+      "title": "Functions Intro",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "FunctionsIntro"
+      ],
+      "order": 1,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The dungeon rumbles. A Shadow Beast bursts from the abyss, its red eyes glowing. 🐉 Your sword shakes in your hands. Swinging the same attack over and over won’t save you."
+        },
+        {
+          "type": "paragraph",
+          "text": "The guild master’s voice echoes:\n\"Hero, you must unlock the Functions of Power! Define them once, and wield them forever. With each new ability, you’ll strike harder, smarter, and faster.\""
+        },
+        {
+          "type": "header",
+          "text": "Tags Introduced"
+        },
+        {
+          "type": "list",
+          "items": [
+            "FunctionDefine → defining a new ability (def).",
+            "FunctionCall → using your learned ability.",
+            "FunctionParameters → customizing moves with input.",
+            "FunctionReturn → returning results (damage, healing).",
+            "FunctionScope → knowing where your powers work."
+          ]
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-9",
+      "lesson_id": "python-function-define",
+      "id": "python-function-define",
+      "title": "Function Define",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "FunctionDefine"
+      ],
+      "order": 2,
+      "content": [
+        {
+          "type": "header",
+          "text": "Concept Notes"
+        },
+        {
+          "type": "list",
+          "items": [
+            "def is a Python keyword that means: “I’m about to teach the hero a new move.”",
+            "After def, you write the function’s name (like naming the ability: attack, heal, fireball).",
+            "Parentheses () follow (they can hold inputs/parameters later).",
+            "The colon : opens the function block.",
+            "The indented lines underneath are the ability’s effect (what it does)."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "def attack():\n    print(\"You swing your sword!\")"
+        },
+        {
+          "type": "paragraph",
+          "text": "👉 RPG Connection: This is like learning a new attack style from your guild master. You know the move now, but haven’t used it in battle."
+        },
+        {
+          "type": "header",
+          "text": "Hero Training Drill 1 – Learn Attack Ability ⚔️"
+        },
+        {
+          "type": "paragraph",
+          "text": "Mission Briefing: Define your attack() move, even if you don’t use it yet."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Steps:",
+            "Use def to define a function attack().",
+            "Inside, make it print \"You slash the beast!\".",
+            "Do NOT call it yet — you’re just learning the move."
+          ]
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Define the function attack() below\n\n",
+          "expected_output": "",
+          "solution": "def attack():\n    print(\"You slash the beast!\")",
+          "hints": [
+            "Use def attack():",
+            "Indent the print line inside the function",
+            "Don’t call attack() yet"
+          ]
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-9",
+      "lesson_id": "python-function-call",
+      "id": "python-function-call",
+      "title": "Function Call",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "FunctionCall"
+      ],
+      "order": 3,
+      "content": [
+        {
+          "type": "header",
+          "text": "Concept Notes"
+        },
+        {
+          "type": "paragraph",
+          "text": "Defining an ability = learning it. Calling a function with () = using the ability in combat. Without (), the function is just sitting there, unused."
+        },
+        {
+          "type": "code",
+          "text": "def attack():\n    print(\"You slash the beast!\")\n\nattack()   # function call\n\n# Output:\n# You slash the beast!"
+        },
+        {
+          "type": "paragraph",
+          "text": "👉 RPG Connection: It’s like shouting your attack’s name in battle: “SLASH STRIKE!!”"
+        },
+        {
+          "type": "header",
+          "text": "Hero Training Drill 2 – First Strike ⚔️"
+        },
+        {
+          "type": "paragraph",
+          "text": "Mission Briefing: Call your attack() move three times in a row to unleash a combo."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "def attack():\n    print(\"You slash the beast!\")\n\n# Call attack() three times\n",
+          "expected_output": "You slash the beast!\nYou slash the beast!\nYou slash the beast!",
+          "solution": "def attack():\n    print(\"You slash the beast!\")\n\nattack()\nattack()\nattack()",
+          "hints": [
+            "Call the function by writing attack() on its own line",
+            "Do it three times"
+          ]
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-9",
+      "lesson_id": "python-function-parameters",
+      "id": "python-function-parameters",
+      "title": "Function Parameters",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "FunctionParameters"
+      ],
+      "order": 4,
+      "content": [
+        {
+          "type": "header",
+          "text": "Concept Notes"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Parameters = inputs you write inside the parentheses when defining a function.",
+            "They are placeholders: the hero doesn’t know the enemy or damage until you pass them in.",
+            "When you call the function, you give real arguments (values)."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "def attack(enemy, damage):\n    print(f\"You strike {enemy} for {damage} damage!\")\n\nattack(\"Shadow Beast\", 15)\n\n# Output:\n# You strike Shadow Beast for 15 damage!"
+        },
+        {
+          "type": "paragraph",
+          "text": "👉 RPG Connection: This is like choosing who you attack and how hard you hit."
+        },
+        {
+          "type": "header",
+          "text": "Hero Training Drill 3 – Choose Your Damage 💥"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Mission Briefing:",
+            "Define attack(enemy, damage).",
+            "Then:",
+            "Attack \"Shadow Beast\" for 12.",
+            "Attack \"Skeleton\" for 7."
+          ]
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Define attack(enemy, damage)\n\n# Call it twice:\n# 1) Shadow Beast for 12\n# 2) Skeleton for 7\n",
+          "expected_output": "You strike Shadow Beast for 12 damage!\nYou strike Skeleton for 7 damage!",
+          "solution": "def attack(enemy, damage):\n    print(f\"You strike {enemy} for {damage} damage!\")\n\nattack(\"Shadow Beast\", 12)\nattack(\"Skeleton\", 7)",
+          "hints": [
+            "Put enemy and damage in the function parentheses",
+            "Use an f-string inside print",
+            "Call attack with two arguments"
+          ]
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-9",
+      "lesson_id": "python-function-return",
+      "id": "python-function-return",
+      "title": "Function Return",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "FunctionReturn"
+      ],
+      "order": 5,
+      "content": [
+        {
+          "type": "header",
+          "text": "Concept Notes"
+        },
+        {
+          "type": "paragraph",
+          "text": "return is a keyword that sends a value back to whoever called the function. Instead of just printing, the ability hands you damage/healing numbers. You can store this in a variable and use it later."
+        },
+        {
+          "type": "code",
+          "text": "def fireball(power):\n    return power * 2   # double damage\n\ndamage = fireball(10)\nprint(\"Fireball dealt\", damage, \"damage!\")\n\n# Output:\n# Fireball dealt 20 damage!"
+        },
+        {
+          "type": "paragraph",
+          "text": "👉 RPG Connection: Casting a fireball that also gives you the damage number to subtract from the enemy’s HP."
+        },
+        {
+          "type": "header",
+          "text": "Hero Training Drill 4 – Fireball Damage 🔥"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Mission Briefing:",
+            "Define fireball(power) that returns power * 2.",
+            "Call it with 8, store result in damage, then print: \"Fireball dealt X damage!\""
+          ]
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Define fireball(power)\n\n# Call it with 8, store in damage\n# Print: Fireball dealt X damage!\n",
+          "expected_output": "Fireball dealt 16 damage!",
+          "solution": "def fireball(power):\n    return power * 2\n\ndamage = fireball(8)\nprint(\"Fireball dealt\", damage, \"damage!\")",
+          "hints": [
+            "Use return inside the function",
+            "Multiply power by 2",
+            "Store result in a variable before printing"
+          ]
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-9",
+      "lesson_id": "python-function-scope",
+      "id": "python-function-scope",
+      "title": "Function Scope",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "FunctionScope"
+      ],
+      "order": 6,
+      "content": [
+        {
+          "type": "header",
+          "text": "Concept Notes"
+        },
+        {
+          "type": "paragraph",
+          "text": "Global variable = declared outside functions, visible everywhere. Local variable = declared inside a function, only visible there. Python keeps scopes separate to avoid mixing battlefields."
+        },
+        {
+          "type": "code",
+          "text": "hero_hp = 100   # global\n\ndef heal():\n    hero_hp = 20  # local (separate)\n    print(\"Inside heal, HP is\", hero_hp)\n\nheal()\nprint(\"Outside heal, HP is\", hero_hp)\n\n# Output:\n# Inside heal, HP is 20\n# Outside heal, HP is 100"
+        },
+        {
+          "type": "paragraph",
+          "text": "👉 RPG Connection: Healing in a dream vs. healing in the real world."
+        },
+        {
+          "type": "header",
+          "text": "Hero Training Drill 5 – Fake Heal 🩹"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Mission Briefing:",
+            "Set hero_hp = 50 globally.",
+            "Inside heal(), set hero_hp = 999 and print it.",
+            "Print hero_hp outside too."
+          ]
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "hero_hp = 50\n\n# Define heal() here\n\n# Call heal()\n\n# Print hero_hp outside\n",
+          "expected_output": "Inside heal, HP is 999\nOutside heal, HP is 50",
+          "solution": "hero_hp = 50\n\ndef heal():\n    hero_hp = 999\n    print(\"Inside heal, HP is\", hero_hp)\n\nheal()\nprint(\"Outside heal, HP is\", hero_hp)",
+          "hints": [
+            "Define heal() with def",
+            "Inside heal, assign hero_hp = 999",
+            "Print inside and outside the function"
+          ]
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-9",
+      "lesson_id": "python-challenge-quest",
+      "id": "python-challenge-quest",
+      "title": "Challenge Quest",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "FunctionDefine",
+        "FunctionCall",
+        "FunctionParameters",
+        "FunctionReturn",
+        "FunctionScope"
+      ],
+      "order": 7,
+      "content": [
+        {
+          "type": "header",
+          "text": "🎯 Challenge Quest – The Shadow Beast Battle"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Define these functions:",
+            "attack(enemy, damage) → print strike message.",
+            "fireball(power) → return double damage.",
+            "heal(current_hp, amount) → return updated HP."
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Then write a fight sequence:",
+            "Attack the Shadow Beast for 10.",
+            "Cast Fireball with power 6 → store damage → print it.",
+            "Heal yourself by 20 (start at 50 HP)."
+          ]
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# 1) Define attack(enemy, damage)\n\n# 2) Define fireball(power)\n\n# 3) Define heal(current_hp, amount)\n\n# Battle sequence\n# Attack the Shadow Beast for 10\n\n# Cast Fireball with power 6, store in damage, then print a message\n\n# Start hero_hp at 50, heal by 20, then print current HP\n",
+          "expected_output": "You strike Shadow Beast for 10 damage!\nFireball scorches the Shadow Beast for 12 damage!\nYou heal yourself. Current HP: 70",
+          "solution": "def attack(enemy, damage):\n    print(f\"You strike {enemy} for {damage} damage!\")\n\ndef fireball(power):\n    return power * 2\n\ndef heal(current_hp, amount):\n    return current_hp + amount\n\n# Battle sequence\nattack(\"Shadow Beast\", 10)\n\ndamage = fireball(6)\nprint(f\"Fireball scorches the Shadow Beast for {damage} damage!\")\n\nhero_hp = 50\nhero_hp = heal(hero_hp, 20)\nprint(f\"You heal yourself. Current HP: {hero_hp}\")",
+          "hints": [
+            "Write each function with def",
+            "Use return in fireball and heal",
+            "Store fireball result in a variable before printing"
+          ]
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-9",
+      "lesson_id": "python-functions-recap",
+      "id": "python-functions-recap",
+      "title": "Functions Recap",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "FunctionsRecap"
+      ],
+      "order": 8,
+      "content": [
+        {
+          "type": "header",
+          "text": "🎉 Week 9 Recap"
+        },
+        {
+          "type": "list",
+          "items": [
+            "By the end of Week 9, kids master functions as battle abilities:",
+            "def defines new moves.",
+            "Calling a function uses moves.",
+            "Parameters customize who/what/how much.",
+            "return gives back damage/healing numbers you can store.",
+            "Scope explains where variables work (inside vs. outside functions)."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The Shadow Beast retreats — you won with skill, not luck! 👉 Next week: Chapter 10 – Dictionary of Secrets (Monster Codex & Spellbook)."
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "week-9-remedial",
+      "order": 15,
+      "title": "Function Define",
+      "lessonType": "remedial",
+      "tags": [
+        "FunctionDefine",
+        "FunctionCall",
+        "FunctionParameters",
+        "FunctionReturn",
+        "FunctionScope"
+      ],
+      "content": [
+        {
+          "type": "story",
+          "text": "📜 Ability Scroll Crafting — Pip writes a new move once so it can be reused."
+        },
+        {
+          "type": "list",
+          "items": [
+            "def starts a function definition.",
+            "Name your function like an ability: attack, heal, fireball.",
+            "Indent the function body (what it does)."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "def attack():\n    print(\"You slash!\")"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Define roar() that prints \"ROAR!\"",
+            "✅ Solution:\ndef roar():\n    print(\"ROAR!\")"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Function Call"
+        },
+        {
+          "type": "story",
+          "text": "⚔️ Battle Shout Practice — you must *use* the ability you learned."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Calling a function runs it: attack()",
+            "Without parentheses, it won’t execute."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "def attack():\n    print(\"You slash the beast!\")\n\nattack()\nattack()"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Call roar() three times.",
+            "✅ Solution:\ndef roar():\n    print(\"ROAR!\")\n\nroar(); roar(); roar()"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Function Parameters"
+        },
+        {
+          "type": "story",
+          "text": "🎯 Targeting Lessons — choose enemy and damage when you attack."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Parameters are placeholders inside def: def attack(enemy, dmg):",
+            "Arguments are the real values you pass in: attack(\"Goblin\", 5)"
+          ]
+        },
+        {
+          "type": "code",
+          "text": "def attack(enemy, damage):\n    print(f\"You strike {enemy} for {damage} damage!\")\n\nattack(\"Shadow Beast\", 12)"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Make heal(amount) that prints \"Heal for X\"",
+            "✅ Solution:\ndef heal(amount):\n    print(f\"Heal for {amount}\")\n\nheal(10)"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Function Return"
+        },
+        {
+          "type": "story",
+          "text": "🧮 Damage Calculator — the spell hands you a number you can store."
+        },
+        {
+          "type": "list",
+          "items": [
+            "return sends a value back to the caller.",
+            "Store the result in a variable to reuse it."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "def fireball(power):\n    return power * 2\n\ndmg = fireball(8)\nprint(\"Fireball dealt\", dmg)"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) double(n) returns n*2; call with 7 and print.",
+            "✅ Solution:\ndef double(n):\n    return n*2\n\nprint(double(7))"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Function Scope"
+        },
+        {
+          "type": "story",
+          "text": "🏰 Two Battlefields — variables inside a function don’t automatically change the outside world."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Global variables live outside functions.",
+            "Local variables live inside functions.",
+            "A local variable with the same name does NOT change the global one."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "hero_hp = 50\n\ndef heal():\n    hero_hp = 999  # local\n    print(\"Inside heal:\", hero_hp)\n\nheal()\nprint(\"Outside heal:\", hero_hp)"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Make gold=10 globally. Inside spend(), set gold=0 and print inside and outside.",
+            "✅ Solution:\ngold=10\n\ndef spend():\n    gold=0\n    print(\"Inside spend:\", gold)\n\nspend()\nprint(\"Outside spend:\", gold)"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Boss Challenge"
+        },
+        {
+          "type": "story",
+          "text": "🗝️ Boss Challenge — Mini Battle System (Functions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Define attack(enemy, damage) → print message.",
+            "Define fireball(power) → return double damage.",
+            "Define heal(current_hp, amount) → return updated HP.",
+            "Call them in a battle sequence and print results."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "def attack(enemy, damage):\n    print(f\"You strike {enemy} for {damage} damage!\")\n\ndef fireball(power):\n    return power * 2\n\ndef heal(current_hp, amount):\n    return current_hp + amount\n\nattack(\"Shadow Beast\", 10)\ndmg = fireball(6)\nprint(f\"Fireball deals {dmg} damage!\")\n\nhp = 50\nhp = heal(hp, 20)\nprint(f\"HP after heal: {hp}\")"
+        }
+      ],
+      "type": "remedial",
+      "videoId": "",
+      "updated_date": "2026-01-09"
+    }
+  ],
+  "updated_date": "2025-12-31"
+}

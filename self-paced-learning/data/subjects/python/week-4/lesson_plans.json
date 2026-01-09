@@ -6,7 +6,31 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Your hero steps bravely into the forest. Birds sing… until suddenly — BAM! 🐉\nA monster blocks the path.\n\nThe villagers whisper:\n\"Now we’ll see if this hero is smart… or just lunch.\"\n\nIt’s time for your first big choice:\n\nWill you fight the monster?\n\nWill you run away (screaming, probably)?\n\nOr will you bribe it with shiny coins?\n\nIn Python, choices are written with conditionals: if, elif, and else.\n"
+          "text": "Your hero steps bravely into the forest. Birds sing… until suddenly — BAM! 🐉 A monster blocks the path."
+        },
+        {
+          "type": "paragraph",
+          "text": "The villagers whisper:\n\"Now we’ll see if this hero is smart… or just lunch.\""
+        },
+        {
+          "type": "paragraph",
+          "text": "It’s time for your first big choice:"
+        },
+        {
+          "type": "paragraph",
+          "text": "Will you fight the monster?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Will you run away (screaming, probably)?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Or will you bribe it with shiny coins?"
+        },
+        {
+          "type": "paragraph",
+          "text": "In Python, choices are written with conditionals: if, elif, and else."
         },
         {
           "type": "header",
@@ -14,7 +38,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Conditionals are like a choose-your-own-adventure book,\nYour hero looks at the situation and decides what to do.\n"
+          "text": "Conditionals are like a choose-your-own-adventure book, Your hero looks at the situation and decides what to do."
         },
         {
           "type": "code",
@@ -33,7 +57,19 @@
         },
         {
           "type": "paragraph",
-          "text": "The guild healer pokes you with a stick and says:\n\"Hmm… are you alive or should I start the funeral?\" ⚰️\n\nCreate hero_hp = 50.\n\nIf HP > 0 → print \"Your hero is alive!\".\n\nElse → print \"Game Over! The healer sighs and writes your tombstone.\"\n"
+          "text": "The guild healer pokes you with a stick and says:\n\"Hmm… are you alive or should I start the funeral?\" ⚰️"
+        },
+        {
+          "type": "paragraph",
+          "text": "Create hero_hp = 50."
+        },
+        {
+          "type": "paragraph",
+          "text": "If HP > 0 → print \"Your hero is alive!\"."
+        },
+        {
+          "type": "paragraph",
+          "text": "Else → print \"Game Over! The healer sighs and writes your tombstone.\""
         },
         {
           "type": "code_runner",
@@ -48,7 +84,9 @@
       ],
       "type": "initial",
       "id": "python_conditions",
-      "updated_date": "2025-10-02"
+      "updated_date": "2025-10-02",
+      "lessonType": "initial",
+      "order": 1
     },
     {
       "subject": "python",
@@ -63,15 +101,27 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Heroes often need to compare numbers:\n\nDo I have enough coins?\nIs my attack power greater than the monster’s defense?\nAm I still alive?"
+          "text": "Heroes often need to compare numbers:"
+        },
+        {
+          "type": "paragraph",
+          "text": "Do I have enough coins? Is my attack power greater than the monster’s defense? Am I still alive?"
         },
         {
           "type": "header",
           "text": "Python Comparsion Operators "
         },
         {
-          "type": "paragraph",
-          "text": "Python gives us operators for these:\n==  equals        (Example: 5 == 5)   ✅\n!=  not equal     (Example: 5 != 3)   ✅\n<   less than     (Example: 3 < 10)   ✅\n>   greater than  (Example: 10 > 20)  ❌\n<=  less or equal (Example: 7 <= 7)   ✅\n>=  greater or equal (Example: 8 >= 5)   ✅\n"
+          "type": "list",
+          "items": [
+            "Python gives us operators for these:",
+            "==  equals        (Example: 5 == 5)   ✅",
+            "!=  not equal     (Example: 5 != 3)   ✅",
+            "<   less than     (Example: 3 < 10)   ✅",
+            ">   greater than  (Example: 10 > 20)  ❌",
+            "<=  less or equal (Example: 7 <= 7)   ✅",
+            ">=  greater or equal (Example: 8 >= 5)   ✅"
+          ]
         },
         {
           "type": "header",
@@ -79,7 +129,19 @@
         },
         {
           "type": "paragraph",
-          "text": "The shopkeeper says:\n\"This potion costs 10 coins. Pay up, or get out!\"\n\nCreate hero_coins = 8.\n\nIf coins >= 10 → print \"You buy the potion! (The shopkeeper winks.)\"\n\nElse → print \"Not enough coins! (The shopkeeper laughs at your poverty.)\"\n"
+          "text": "The shopkeeper says:\n\"This potion costs 10 coins. Pay up, or get out!\""
+        },
+        {
+          "type": "paragraph",
+          "text": "Create hero_coins = 8."
+        },
+        {
+          "type": "paragraph",
+          "text": "If coins >= 10 → print \"You buy the potion! (The shopkeeper winks.)\""
+        },
+        {
+          "type": "paragraph",
+          "text": "Else → print \"Not enough coins! (The shopkeeper laughs at your poverty.)\""
         },
         {
           "type": "code_runner",
@@ -94,7 +156,23 @@
         },
         {
           "type": "paragraph",
-          "text": "Your hero reaches a fork in the road. A villager shouts:\n\"LEFT is treasure, RIGHT is danger… or was it the other way around? Oops.\"\n\nAsk: \"Do you go LEFT or RIGHT?\"\n\nIf LEFT → print \"You find a golden chest full of socks… wait, socks?\"\n\nIf RIGHT → print \"A wild goblin jumps out, and it looks HUNGRY!\"\n\nElse → print \"You wander in circles until you get dizzy and fall over.\"\n"
+          "text": "Your hero reaches a fork in the road. A villager shouts:\n\"LEFT is treasure, RIGHT is danger… or was it the other way around? Oops.\""
+        },
+        {
+          "type": "paragraph",
+          "text": "Ask: \"Do you go LEFT or RIGHT?\""
+        },
+        {
+          "type": "paragraph",
+          "text": "If LEFT → print \"You find a golden chest full of socks… wait, socks?\""
+        },
+        {
+          "type": "paragraph",
+          "text": "If RIGHT → print \"A wild goblin jumps out, and it looks HUNGRY!\""
+        },
+        {
+          "type": "paragraph",
+          "text": "Else → print \"You wander in circles until you get dizzy and fall over.\""
         },
         {
           "type": "code_runner",
@@ -106,7 +184,86 @@
       ],
       "id": "comparison_operators",
       "type": "initial",
-      "updated_date": "2025-10-02"
+      "updated_date": "2025-10-02",
+      "order": 2
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-4",
+      "lesson_id": "remedial-lesson-ifelse",
+      "title": "IfElse",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "if-else"
+      ],
+      "content": [
+        {
+          "type": "header",
+          "text": "🌲 Forest of Decisions 🌲"
+        },
+        {
+          "type": "paragraph",
+          "text": "You stand at a crossroads. Each choice changes your fate. In Python, choices are made with if, elif, and else statements."
+        },
+        {
+          "type": "paragraph",
+          "text": "💡 Concept:"
+        },
+        {
+          "type": "paragraph",
+          "text": "if → first condition"
+        },
+        {
+          "type": "paragraph",
+          "text": "elif → backup option"
+        },
+        {
+          "type": "paragraph",
+          "text": "else → anything else"
+        },
+        {
+          "type": "paragraph",
+          "text": "Example:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "choice = 'RUN'",
+            "if choice == 'FIGHT':",
+            "print('Swing sword!')",
+            "else:",
+            "print('Retreat!')"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Practice Drills"
+        },
+        {
+          "type": "paragraph",
+          "text": "Drill I1 – The Brave Hero 💪 Task: If choice == 'FIGHT',"
+        },
+        {
+          "type": "paragraph",
+          "text": "print 'Hero attacks!';"
+        },
+        {
+          "type": "paragraph",
+          "text": "else print 'Hero hides!'."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your Python code here\nchoice = 'FIGHT'\nif choice == 'FIGHT':\n    print('Hero attacks!')\nelse:\n    print('Hero hides!')\n",
+          "expected_output": "",
+          "hints": [],
+          "solution": ""
+        }
+      ],
+      "id": "ifelse",
+      "type": "initial",
+      "updated_date": "2025-10-02",
+      "order": 3
     },
     {
       "subject": "python",
@@ -120,8 +277,40 @@
       ],
       "content": [
         {
+          "type": "list",
+          "items": [
+            "✨ Story:",
+            "A monster blocks your path. It growls:",
+            "\"Traveler, choose wisely: FIGHT, RUN, or BRIBE?\""
+          ]
+        },
+        {
           "type": "paragraph",
-          "text": "✨ Story:\nA monster blocks your path. It growls:\n\"Traveler, choose wisely: FIGHT, RUN, or BRIBE?\"\n\n🔑 Your Mission:\n\nAsk the player for their choice.\n\nUse if/elif/else to decide the outcome:\n\nFIGHT → \"You fight bravely with your weapon! (Critical hit!)\"\n\nRUN → \"You sprint so fast, even the birds can’t keep up!\"\n\nBRIBE → \"You toss some coins… the monster buys ice cream instead of eating you.\"\n\nElse → \"The monster scratches its head… then eats you for dinner. Game Over!\"\n"
+          "text": "🔑 Your Mission:"
+        },
+        {
+          "type": "paragraph",
+          "text": "Ask the player for their choice."
+        },
+        {
+          "type": "paragraph",
+          "text": "Use if/elif/else to decide the outcome:"
+        },
+        {
+          "type": "paragraph",
+          "text": "FIGHT → \"You fight bravely with your weapon! (Critical hit!)\""
+        },
+        {
+          "type": "paragraph",
+          "text": "RUN → \"You sprint so fast, even the birds can’t keep up!\""
+        },
+        {
+          "type": "paragraph",
+          "text": "BRIBE → \"You toss some coins… the monster buys ice cream instead of eating you.\""
+        },
+        {
+          "type": "paragraph",
+          "text": "Else → \"The monster scratches its head… then eats you for dinner. Game Over!\""
         },
         {
           "type": "code_runner",
@@ -135,7 +324,8 @@
       ],
       "id": "challenge_quest_–_the_monster’s_challenge",
       "type": "initial",
-      "updated_date": "2025-10-02"
+      "updated_date": "2025-10-02",
+      "order": 4
     },
     {
       "subject": "python",
@@ -150,23 +340,31 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "So far, hope you understand if/elif/else conditionals.\nYou can use comparison operators to test numbers.\nTheir hero can now make funny, branching choices in the RPG.\n\n\n👉 Next module : when you fight, you need math — damage, healing, coins, and critical hits. We’ll learn operators and expressions.\n"
+          "text": "So far, hope you understand if/elif/else conditionals. You can use comparison operators to test numbers. Their hero can now make funny, branching choices in the RPG."
+        },
+        {
+          "type": "paragraph",
+          "text": "👉 Next module : when you fight, you need math — damage, healing, coins, and critical hits. We’ll learn operators and expressions."
         }
       ],
       "id": "summary",
       "type": "initial",
-      "updated_date": "2025-10-02"
+      "updated_date": "2025-10-02",
+      "order": 5
     },
     {
       "subject": "python",
       "subtopic": "week-4",
-      "lesson_id": "remedial-lesson-ifelse",
-      "title": "IfElse",
+      "lesson_id": "python-remedial-if-else",
+      "id": "week-4-remedial",
+      "title": "Remedial If Else",
       "lessonType": "remedial",
       "videoId": "",
       "tags": [
-        "if-else"
+        "IfElse",
+        "ComparisonOperators"
       ],
+      "order": 9,
       "content": [
         {
           "type": "header",
@@ -174,27 +372,170 @@
         },
         {
           "type": "paragraph",
-          "text": "You stand at a crossroads. Each choice changes your fate. In Python, choices are made with if, elif, and else statements.\n\n💡 Concept:\n\nif → first condition\n\nelif → backup option\n\nelse → anything else\n\nExample:\n\n\n\nchoice = 'RUN'\nif choice == 'FIGHT':\n    print('Swing sword!')\nelse:\n    print('Retreat!')\n"
-        },
-        {
-          "type": "header",
-          "text": "Practice Drills"
+          "text": "You stand at a crossroads. Each choice changes your fate. In Python, choices are made with if, elif, and else statements. "
         },
         {
           "type": "paragraph",
-          "text": "Drill I1 – The Brave Hero 💪\nTask: If choice == 'FIGHT', \n\nprint 'Hero attacks!'; \n\nelse print 'Hero hides!'.\n"
+          "text": "💡 Concept:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "if → first condition",
+            "elif → backup option",
+            "else → anything else"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Example:"
         },
         {
           "type": "code_runner",
-          "starter_code": "# Write your Python code here\nchoice = 'FIGHT'\nif choice == 'FIGHT':\n    print('Hero attacks!')\nelse:\n    print('Hero hides!')\n",
+          "starter_code": "choice = 'RUN' \nif choice == 'FIGHT': \n    print('Swing sword!') \nelse: \n    print('Retreat!')",
+          "expected_output": "",
+          "hints": [],
+          "solution": ""
+        },
+        {
+          "type": "header",
+          "text": "Drill 1 – The Brave Hero 💪"
+        },
+        {
+          "type": "paragraph",
+          "text": "Task: If choice == 'FIGHT', print 'Hero attacks!'; else print 'Hero hides!'."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your Python code here\nprint(\"Hello, World!\")",
+          "expected_output": "Hero attacks!",
+          "hints": [],
+          "solution": "choice = 'FIGHT' \nif choice == 'FIGHT': \n    print('Hero attacks!') \nelse: \n    print('Hero hides!')"
+        },
+        {
+          "type": "header",
+          "text": "Drill 2 – The Scared Hero 🏃"
+        },
+        {
+          "type": "paragraph",
+          "text": "Task: choice = 'RUN'; decide what happens."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your Python code here\nprint(\"Hello, World!\")",
+          "expected_output": "Run away!",
+          "hints": [],
+          "solution": "choice = 'RUN' \nif choice == 'FIGHT': \n    print('Fight!') \nelse: \n    print('Run away!')"
+        },
+        {
+          "type": "header",
+          "text": "Section: Remedial Comparison Operators"
+        },
+        {
+          "type": "header",
+          "text": "👹 Monster’s Riddle 👹"
+        },
+        {
+          "type": "paragraph",
+          "text": "The Monster of Logic blocks your path. “Compare your stats,” it growls. You must use comparison operators (==, !=, <, >, <=, >=)."
+        },
+        {
+          "type": "header",
+          "text": "Example:"
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "hero_hp = 50 \nif hero_hp > 0: \n    print('Alive!') \nelse: \n    print('Game Over!')",
+          "expected_output": "",
+          "hints": [],
+          "solution": ""
+        },
+        {
+          "type": "header",
+          "text": "Drill 1 – The Health Check ❤️"
+        },
+        {
+          "type": "paragraph",
+          "text": "Task: hero_hp = 0. If > 0 → 'Alive!', else 'Game Over!'."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "hero_hp = 0 \nif hero_hp > 0: \n    print('Alive!') \nelse: \n    print('Game Over!')",
+          "expected_output": "",
+          "hints": [],
+          "solution": ""
+        },
+        {
+          "type": "header",
+          "text": "Drill 2 – Coin Trade 💰"
+        },
+        {
+          "type": "paragraph",
+          "text": "Task: coins = 5, cost = 10. If coins >= cost → 'Buy potion', else → 'Not enough coins!'."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "coins = 5 \ncost = 10 \nif coins >= cost: \n    print('Buy potion') \nelse: \n    print('Not enough coins!')",
+          "expected_output": "",
+          "hints": [],
+          "solution": ""
+        },
+        {
+          "type": "header",
+          "text": "Section: Remdial Both"
+        },
+        {
+          "type": "header",
+          "text": "🍵 Potion of Logic 🍵"
+        },
+        {
+          "type": "paragraph",
+          "text": "The Healer Cat Meowlin tests your reasoning. Combine comparisons with conditionals to pass her exam."
+        },
+        {
+          "type": "header",
+          "text": "Example:"
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "coins = 15 \nmonster = 'Goblin' \nif coins > 10 and monster == 'Goblin': \n    print('You bribe the Goblin and pass!') \nelse: \n    print('The Goblin attacks!')",
+          "expected_output": "",
+          "hints": [],
+          "solution": ""
+        },
+        {
+          "type": "header",
+          "text": "Drill 1 – The Gatekeeper Test 🚪"
+        },
+        {
+          "type": "paragraph",
+          "text": "Task: If level >= 5 → print 'Pass gate', else → 'Too weak!'."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "level = 4 \nif level >= 5: \n    print('Pass gate') \nelse: \n    print('Too weak!')",
+          "expected_output": "",
+          "hints": [],
+          "solution": ""
+        },
+        {
+          "type": "header",
+          "text": "Drill 2 – Hero vs. Monster Duel ⚔️"
+        },
+        {
+          "type": "paragraph",
+          "text": "Task: hero_attack = 40, monster_defense = 35. Use if/else to compare and print winner."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "hero_attack = 40 \nmonster_defense = 35 \nif hero_attack > monster_defense: \n    print('Hero wins!') \nelse: \n    print('Monster wins!')",
           "expected_output": "",
           "hints": [],
           "solution": ""
         }
       ],
-      "id": "ifelse",
       "type": "remedial",
-      "updated_date": "2025-10-02"
+      "updated_date": "2026-01-09"
     }
   ],
   "updated_date": "2025-10-02"

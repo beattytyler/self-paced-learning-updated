@@ -606,6 +606,7 @@ def admin_edit_lesson(subject, subtopic, lesson_id):
 
             # Get order if provided
             order = data.get("order")
+            order_provided = order is not None
 
             if not lesson_title:
                 return jsonify({"error": "Lesson title is required"}), 400
@@ -634,7 +635,11 @@ def admin_edit_lesson(subject, subtopic, lesson_id):
                 lesson_data["order"] = order
 
             result = admin_service.update_lesson(
-                subject, subtopic, lesson_id, lesson_data
+                subject,
+                subtopic,
+                lesson_id,
+                lesson_data,
+                order_provided=order_provided,
             )
 
             if result.get("success"):

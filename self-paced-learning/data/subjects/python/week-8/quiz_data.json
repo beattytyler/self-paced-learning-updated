@@ -1,0 +1,149 @@
+{
+  "title": "Week 8 Quiz",
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Which list stores three items?",
+      "options": [
+        "items = sword, shield, potion",
+        "items = ['sword','shield','potion']",
+        "items = ('sword','shield','potion')",
+        "items = {'sword','shield','potion'}"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "ListBasics"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What is printed when the hero checks inventory slot 1?",
+      "expected_answer": "shield",
+      "tags": [
+        "ListAccess"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "inventory = ['sword','shield','potion']\nprint(inventory[1])"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Create a list named party with three hero names and print it.",
+      "expected_answer": "party = ['Luna','Kai','Arin']\nprint(party)",
+      "tags": [
+        "ListBasics"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What does append() do to a list?",
+      "expected_answer": "Adds an item to the end of the list",
+      "tags": [
+        "ListMutate"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which removes the last item from inventory?",
+      "options": [
+        "inventory.remove()",
+        "inventory.pop()",
+        "inventory.delete()",
+        "inventory.clear(0)"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "ListMutate"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "How many times does this loop run?",
+      "expected_answer": "3",
+      "tags": [
+        "ListIterate"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "for item in ['a','b','c']:\n    print(item)"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which list stores three items?",
+      "options": [
+        "items = sword, shield, potion",
+        "items = ['sword','shield','potion']",
+        "items = ('sword','shield','potion')",
+        "items = {'sword','shield','potion'}"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "ListBasics"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What is printed when the hero checks inventory slot 1?",
+      "expected_answer": "shield",
+      "tags": [
+        "ListAccess"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "inventory = ['sword','shield','potion']\nprint(inventory[1])"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Create a list named party with three hero names and print it.",
+      "expected_answer": "party = ['Luna','Kai','Arin']\nprint(party)",
+      "tags": [
+        "ListBasics"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What does append() do to a list?",
+      "expected_answer": "Adds an item to the end of the list",
+      "tags": [
+        "ListMutate"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which removes the last item from inventory?",
+      "options": [
+        "inventory.remove()",
+        "inventory.pop()",
+        "inventory.delete()",
+        "inventory.clear(0)"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "ListMutate"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "How many times does this loop run?",
+      "expected_answer": "3",
+      "tags": [
+        "ListIterate"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "for item in ['a','b','c']:\n    print(item)"
+        }
+      ]
+    }
+  ]
+}

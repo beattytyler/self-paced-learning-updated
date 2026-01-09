@@ -25,8 +25,12 @@
           "text": "Python is one of the most popular languages in the world because:"
         },
         {
-          "type": "paragraph",
-          "text": "- It's easy to read (almost like English).\n- It's powerful (used in games, websites, AI, robots, and more).\n- It's fun (great for making stories, puzzles, and adventures)."
+          "type": "list",
+          "items": [
+            "It's easy to read (almost like English).",
+            "It's powerful (used in games, websites, AI, robots, and more).",
+            "It's fun (great for making stories, puzzles, and adventures)."
+          ]
         },
         {
           "type": "paragraph",
@@ -37,7 +41,8 @@
       "type": "initial",
       "updated_date": "2025-10-08",
       "order": 1,
-      "id": "intro-to-python"
+      "id": "intro-to-python",
+      "lessonType": "initial"
     },
     {
       "title": "The Adventure Begins",
@@ -64,254 +69,19 @@
           "text": "Tags Introduced"
         },
         {
-          "type": "paragraph",
-          "text": "- Print\n- Comment (bonus)"
+          "type": "list",
+          "items": [
+            "Print",
+            "Comment (bonus)"
+          ]
         }
       ],
       "tags": [],
       "type": "initial",
       "updated_date": "2025-10-08",
       "order": 2,
-      "id": "adventure-begins"
-    },
-    {
-      "title": "The Print Function",
-      "videoId": "",
-      "content": [
-        {
-          "type": "header",
-          "text": "Concept Notes: Print"
-        },
-        {
-          "type": "paragraph",
-          "text": "The print() function is your hero's voice. It lets you speak to the world of Pythonia. Without it, the story would be silent."
-        },
-        {
-          "type": "code",
-          "text": "print(\"Hello, world!\")"
-        },
-        {
-          "type": "paragraph",
-          "text": "Output:"
-        },
-        {
-          "type": "code",
-          "text": "Hello, world!"
-        },
-        {
-          "type": "paragraph",
-          "text": "This is the legendary Hello World spell - every programmer's first step."
-        }
-      ],
-      "tags": [
-        "Print"
-      ],
-      "type": "initial",
-      "updated_date": "2025-10-08",
-      "order": 3,
-      "id": "print-function"
-    },
-    {
-      "title": "Print with Multiple Values",
-      "videoId": "",
-      "content": [
-        {
-          "type": "header",
-          "text": "Advanced Note - Multiple Messages"
-        },
-        {
-          "type": "code",
-          "text": "print(\"The hero has\", 100, \"HP.\")"
-        },
-        {
-          "type": "paragraph",
-          "text": "Output:"
-        },
-        {
-          "type": "code",
-          "text": "The hero has 100 HP."
-        },
-        {
-          "type": "paragraph",
-          "text": "Think of this as your hero shouting their stats to the villagers."
-        }
-      ],
-      "tags": [
-        "Print"
-      ],
-      "type": "initial",
-      "updated_date": "2025-10-08",
-      "order": 4,
-      "id": "print-multiple-values"
-    },
-    {
-      "title": "Hero Training Drill 1 - Hero's First Words",
-      "videoId": "",
-      "content": [
-        {
-          "type": "header",
-          "text": "Hero Training Drill 1 - Hero's First Words"
-        },
-        {
-          "type": "paragraph",
-          "text": "Mission Briefing: The villagers want to know you are awake."
-        },
-        {
-          "type": "paragraph",
-          "text": "Print:\n\"The hero awakens!\"\n\"The adventure begins...\""
-        },
-        {
-          "type": "code_runner",
-          "starter_code": "# Write your code here\n",
-          "expected_output": "The hero awakens!\nThe adventure begins...",
-          "solution": "print(\"The hero awakens!\")\nprint(\"The adventure begins...\")",
-          "hints": [
-            "Use print() function for each line",
-            "Put the text inside quotation marks",
-            "Each print() statement creates a new line"
-          ]
-        }
-      ],
-      "tags": [
-        "Print"
-      ],
-      "type": "initial",
-      "updated_date": "2025-10-08",
-      "order": 5,
-      "id": "training-drill-1"
-    },
-    {
-      "title": "Comments in Python",
-      "videoId": "",
-      "content": [
-        {
-          "type": "header",
-          "text": "Concept Notes: Comment"
-        },
-        {
-          "type": "paragraph",
-          "text": "Heroes often write notes in their quest log. In Python, these are called comments."
-        },
-        {
-          "type": "paragraph",
-          "text": "Comments are ignored by the computer - they're just for humans. They start with a #."
-        },
-        {
-          "type": "code",
-          "text": "# This is the hero's health\nhero_hp = 100"
-        },
-        {
-          "type": "paragraph",
-          "text": "Use comments to explain code, leave reminders, or just write funny thoughts for future heroes."
-        }
-      ],
-      "tags": [
-        "Comment"
-      ],
-      "type": "initial",
-      "updated_date": "2025-10-08",
-      "order": 6,
-      "id": "comments-in-python"
-    },
-    {
-      "title": "Hero Training Drill 2 - Notes from the Guild Master",
-      "videoId": "",
-      "content": [
-        {
-          "type": "header",
-          "text": "Hero Training Drill 2 - Notes from the Guild Master"
-        },
-        {
-          "type": "paragraph",
-          "text": "Mission Briefing: The guild master leaves a note at the top of your scroll."
-        },
-        {
-          "type": "paragraph",
-          "text": "Write a comment:\n# This is my first Python program\n\nPrint:\n\"The guild welcomes the hero!\""
-        },
-        {
-          "type": "code_runner",
-          "starter_code": "# Write your code here\n",
-          "expected_output": "The guild welcomes the hero!",
-          "solution": "# This is my first Python program\nprint(\"The guild welcomes the hero!\")",
-          "hints": [
-            "Comments start with #",
-            "Comments don't affect the output",
-            "Use print() for the message"
-          ]
-        }
-      ],
-      "tags": [
-        "Print",
-        "Comment"
-      ],
-      "type": "initial",
-      "updated_date": "2025-10-08",
-      "order": 7,
-      "id": "training-drill-2"
-    },
-    {
-      "title": "Challenge Quest - The Prologue",
-      "videoId": "",
-      "content": [
-        {
-          "type": "header",
-          "text": "Challenge Quest - The Prologue"
-        },
-        {
-          "type": "paragraph",
-          "text": "Story: Your hero awakens in a quiet village. The villagers gather to see the chosen one."
-        },
-        {
-          "type": "paragraph",
-          "text": "Your Mission: Use print() to tell at least three sentences about your hero's awakening."
-        },
-        {
-          "type": "code_runner",
-          "starter_code": "# Write your prologue here\n",
-          "expected_output": "The hero awakens in a small village.\nThe villagers gather around.\nThe adventure begins...",
-          "solution": "print(\"The hero awakens in a small village.\")\nprint(\"The villagers gather around.\")\nprint(\"The adventure begins...\")",
-          "hints": [
-            "Write at least 3 print() statements",
-            "Be creative with your story",
-            "Each print() creates a new line"
-          ]
-        }
-      ],
-      "tags": [
-        "Print",
-        "Comment"
-      ],
-      "type": "initial",
-      "updated_date": "2025-10-08",
-      "order": 8,
-      "id": "challenge-prologue"
-    },
-    {
-      "title": "Week 1 Summary",
-      "videoId": "",
-      "content": [
-        {
-          "type": "header",
-          "text": "By the End of Week 1:"
-        },
-        {
-          "type": "paragraph",
-          "text": "- Kids understand what Python is (a language like magic spells).\n- They can use print() to make their hero speak.\n- They know how to use comments as quest notes.\n- They've written the Prologue of their RPG story - the hero's awakening!"
-        },
-        {
-          "type": "paragraph",
-          "text": "Next week: the hero will need stats (HP, coins, weapons). We'll learn about variables and data types to give the hero strength."
-        }
-      ],
-      "tags": [
-        "Print",
-        "Comment"
-      ],
-      "type": "initial",
-      "updated_date": "2025-10-08",
-      "order": 9,
-      "id": "week-1-summary"
+      "id": "adventure-begins",
+      "lessonType": "initial"
     },
     {
       "title": "Week 1 Remedial Lesson - Extra Practice with Print & Comments",
@@ -319,7 +89,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "This remedial lesson is for heroes who need extra practice with Week 1 concepts. It is divided into two independent parts: Print and Comment. You can study only the part where you need more help. "
+          "text": "This remedial lesson is for heroes who need extra practice with Week 1 concepts. It is divided into two independent parts: Print and Comment. You can study only the part where you need more help."
         },
         {
           "type": "header",
@@ -330,8 +100,13 @@
           "text": "The print() function makes the computer say something on the screen."
         },
         {
-          "type": "paragraph",
-          "text": "- Text (words or sentences) -> Put inside quotation marks \" \".\n- Numbers -> Can be written directly without quotes.\n- Commas -> Connect text and numbers so they appear together.\n- Each print() -> Starts on a new line."
+          "type": "list",
+          "items": [
+            "Text (words or sentences) -> Put inside quotation marks \" \".",
+            "Numbers -> Can be written directly without quotes.",
+            "Commas -> Connect text and numbers so they appear together.",
+            "Each print() -> Starts on a new line."
+          ]
         },
         {
           "type": "paragraph",
@@ -398,8 +173,13 @@
           "text": "Drill P1 - The Village Bell"
         },
         {
-          "type": "paragraph",
-          "text": "Task: Write two print() lines.\n- First line: \"The village bell rings.\"\n- Second line: \"The villagers run to the square.\"\n- Think of this as your hero describing what happens in the town."
+          "type": "list",
+          "items": [
+            "Task: Write two print() lines.",
+            "First line: \"The village bell rings.\"",
+            "Second line: \"The villagers run to the square.\"",
+            "Think of this as your hero describing what happens in the town."
+          ]
         },
         {
           "type": "code_runner",
@@ -417,8 +197,13 @@
           "text": "Drill P2 - Hero Stats"
         },
         {
-          "type": "paragraph",
-          "text": "Task: Write one print() line.\n- Show the hero's health points (HP).\n- Sentence should look exactly like: The hero has 45 HP.\n- Hint: Use commas so you can combine text and the number 45."
+          "type": "list",
+          "items": [
+            "Task: Write one print() line.",
+            "Show the hero's health points (HP).",
+            "Sentence should look exactly like: The hero has 45 HP.",
+            "Hint: Use commas so you can combine text and the number 45."
+          ]
         },
         {
           "type": "code_runner",
@@ -436,8 +221,15 @@
           "text": "Drill P3 - Your Own Scene"
         },
         {
-          "type": "paragraph",
-          "text": "Task: Write three print() lines to tell your own short story.\n- Each line should describe a different moment.\n- Example ideas:\n  Line 1: What the hero sees (forest, cave, castle).\n  Line 2: What happens next (monster appears, villagers cheer).\n  Line 3: What the hero does (draws a sword, runs away)."
+          "type": "list",
+          "items": [
+            "Task: Write three print() lines to tell your own short story.",
+            "Each line should describe a different moment.",
+            "Example ideas:",
+            "Line 1: What the hero sees (forest, cave, castle).",
+            "Line 2: What happens next (monster appears, villagers cheer).",
+            "Line 3: What the hero does (draws a sword, runs away)."
+          ]
         },
         {
           "type": "code_runner",
@@ -459,8 +251,12 @@
           "text": "Comments are notes inside your code."
         },
         {
-          "type": "paragraph",
-          "text": "- Start with a #.\n- Python ignores them.\n- They're written only for humans to read."
+          "type": "list",
+          "items": [
+            "Start with a #.",
+            "Python ignores them.",
+            "They're written only for humans to read."
+          ]
         },
         {
           "type": "paragraph",
@@ -491,8 +287,12 @@
           "text": "Drill C1 - The Scroll Header"
         },
         {
-          "type": "paragraph",
-          "text": "Task: At the top of your program, write a comment.\n- The comment should say: # This is my practice scroll\n- Then write one print() line: The practice begins!"
+          "type": "list",
+          "items": [
+            "Task: At the top of your program, write a comment.",
+            "The comment should say: # This is my practice scroll",
+            "Then write one print() line: The practice begins!"
+          ]
         },
         {
           "type": "code_runner",
@@ -510,8 +310,13 @@
           "text": "Drill C2 - Explain Your Line"
         },
         {
-          "type": "paragraph",
-          "text": "Task: Write a program with two lines.\n  Line 1: A comment explaining what the code does.\n  Example: # This line prints the sword discovery\n  Line 2: A print statement that shows: The hero finds a sword. "
+          "type": "list",
+          "items": [
+            "Task: Write a program with two lines.",
+            "Line 1: A comment explaining what the code does.",
+            "Example: # This line prints the sword discovery",
+            "Line 2: A print statement that shows: The hero finds a sword."
+          ]
         },
         {
           "type": "code_runner",
@@ -529,12 +334,21 @@
           "text": "Drill C3 - Write Your Own Notes"
         },
         {
-          "type": "paragraph",
-          "text": "Task: Create a mini-program with at least two comments and two print() lines.\n- Think of the comments as your hero's notes explaining the story."
+          "type": "list",
+          "items": [
+            "Task: Create a mini-program with at least two comments and two print() lines.",
+            "Think of the comments as your hero's notes explaining the story."
+          ]
         },
         {
-          "type": "paragraph",
-          "text": "Example structure:\n# Hero enters the cave\nprint(\"The cave is cold and dark.\")\n# Hero lights a torch\nprint(\"The torch glows brightly.\")"
+          "type": "list",
+          "items": [
+            "Example structure:",
+            "# Hero enters the cave",
+            "print(\"The cave is cold and dark.\")",
+            "# Hero lights a torch",
+            "print(\"The torch glows brightly.\")"
+          ]
         },
         {
           "type": "code_runner",
@@ -552,10 +366,270 @@
         "Print",
         "Comment"
       ],
-      "type": "remedial",
+      "type": "initial",
       "updated_date": "2025-10-02",
       "order": 2,
-      "id": "week-1-remedial"
+      "id": "week-1-remedial",
+      "lessonType": "initial"
+    },
+    {
+      "title": "The Print Function",
+      "videoId": "",
+      "content": [
+        {
+          "type": "header",
+          "text": "Concept Notes: Print"
+        },
+        {
+          "type": "paragraph",
+          "text": "The print() function is your hero's voice. It lets you speak to the world of Pythonia. Without it, the story would be silent."
+        },
+        {
+          "type": "code",
+          "text": "print(\"Hello, world!\")"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output:"
+        },
+        {
+          "type": "code",
+          "text": "Hello, world!"
+        },
+        {
+          "type": "paragraph",
+          "text": "This is the legendary Hello World spell - every programmer's first step."
+        }
+      ],
+      "tags": [
+        "Print"
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-08",
+      "order": 3,
+      "id": "print-function",
+      "lessonType": "initial"
+    },
+    {
+      "title": "Print with Multiple Values",
+      "videoId": "",
+      "content": [
+        {
+          "type": "header",
+          "text": "Advanced Note - Multiple Messages"
+        },
+        {
+          "type": "code",
+          "text": "print(\"The hero has\", 100, \"HP.\")"
+        },
+        {
+          "type": "paragraph",
+          "text": "Output:"
+        },
+        {
+          "type": "code",
+          "text": "The hero has 100 HP."
+        },
+        {
+          "type": "paragraph",
+          "text": "Think of this as your hero shouting their stats to the villagers."
+        }
+      ],
+      "tags": [
+        "Print"
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-08",
+      "order": 4,
+      "id": "print-multiple-values",
+      "lessonType": "initial"
+    },
+    {
+      "title": "Hero Training Drill 1 - Hero's First Words",
+      "videoId": "",
+      "content": [
+        {
+          "type": "header",
+          "text": "Hero Training Drill 1 - Hero's First Words"
+        },
+        {
+          "type": "paragraph",
+          "text": "Mission Briefing: The villagers want to know you are awake."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Print:",
+            "\"The hero awakens!\"",
+            "\"The adventure begins...\""
+          ]
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your code here\n",
+          "expected_output": "The hero awakens!\nThe adventure begins...",
+          "solution": "print(\"The hero awakens!\")\nprint(\"The adventure begins...\")",
+          "hints": [
+            "Use print() function for each line",
+            "Put the text inside quotation marks",
+            "Each print() statement creates a new line"
+          ]
+        }
+      ],
+      "tags": [
+        "Print"
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-08",
+      "order": 5,
+      "id": "training-drill-1",
+      "lessonType": "initial"
+    },
+    {
+      "title": "Comments in Python",
+      "videoId": "",
+      "content": [
+        {
+          "type": "header",
+          "text": "Concept Notes: Comment"
+        },
+        {
+          "type": "paragraph",
+          "text": "Heroes often write notes in their quest log. In Python, these are called comments."
+        },
+        {
+          "type": "paragraph",
+          "text": "Comments are ignored by the computer - they're just for humans. They start with a #."
+        },
+        {
+          "type": "code",
+          "text": "# This is the hero's health\nhero_hp = 100"
+        },
+        {
+          "type": "paragraph",
+          "text": "Use comments to explain code, leave reminders, or just write funny thoughts for future heroes."
+        }
+      ],
+      "tags": [
+        "Comment"
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-08",
+      "order": 6,
+      "id": "comments-in-python",
+      "lessonType": "initial"
+    },
+    {
+      "title": "Hero Training Drill 2 - Notes from the Guild Master",
+      "videoId": "",
+      "content": [
+        {
+          "type": "header",
+          "text": "Hero Training Drill 2 - Notes from the Guild Master"
+        },
+        {
+          "type": "paragraph",
+          "text": "Mission Briefing: The guild master leaves a note at the top of your scroll."
+        },
+        {
+          "type": "paragraph",
+          "text": "Write a comment: # This is my first Python program"
+        },
+        {
+          "type": "paragraph",
+          "text": "Print:\n\"The guild welcomes the hero!\""
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your code here\n",
+          "expected_output": "The guild welcomes the hero!",
+          "solution": "# This is my first Python program\nprint(\"The guild welcomes the hero!\")",
+          "hints": [
+            "Comments start with #",
+            "Comments don't affect the output",
+            "Use print() for the message"
+          ]
+        }
+      ],
+      "tags": [
+        "Print",
+        "Comment"
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-08",
+      "order": 7,
+      "id": "training-drill-2",
+      "lessonType": "initial"
+    },
+    {
+      "title": "Challenge Quest - The Prologue",
+      "videoId": "",
+      "content": [
+        {
+          "type": "header",
+          "text": "Challenge Quest - The Prologue"
+        },
+        {
+          "type": "paragraph",
+          "text": "Story: Your hero awakens in a quiet village. The villagers gather to see the chosen one."
+        },
+        {
+          "type": "paragraph",
+          "text": "Your Mission: Use print() to tell at least three sentences about your hero's awakening."
+        },
+        {
+          "type": "code_runner",
+          "starter_code": "# Write your prologue here\n",
+          "expected_output": "The hero awakens in a small village.\nThe villagers gather around.\nThe adventure begins...",
+          "solution": "print(\"The hero awakens in a small village.\")\nprint(\"The villagers gather around.\")\nprint(\"The adventure begins...\")",
+          "hints": [
+            "Write at least 3 print() statements",
+            "Be creative with your story",
+            "Each print() creates a new line"
+          ]
+        }
+      ],
+      "tags": [
+        "Print",
+        "Comment"
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-08",
+      "order": 8,
+      "id": "challenge-prologue",
+      "lessonType": "initial"
+    },
+    {
+      "title": "Week 1 Summary",
+      "videoId": "",
+      "content": [
+        {
+          "type": "header",
+          "text": "By the End of Week 1:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Kids understand what Python is (a language like magic spells).",
+            "They can use print() to make their hero speak.",
+            "They know how to use comments as quest notes.",
+            "They've written the Prologue of their RPG story - the hero's awakening!"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Next week: the hero will need stats (HP, coins, weapons). We'll learn about variables and data types to give the hero strength."
+        }
+      ],
+      "tags": [
+        "Print",
+        "Comment"
+      ],
+      "type": "initial",
+      "updated_date": "2025-10-08",
+      "order": 9,
+      "id": "week-1-summary",
+      "lessonType": "initial"
     }
   ],
   "updated_date": "2025-10-02"

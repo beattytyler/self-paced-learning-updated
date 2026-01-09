@@ -6,7 +6,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "\ud83d\udccc **What is a List?**"
+          "text": "📌 **What is a List?**"
         },
         {
           "type": "paragraph",
@@ -23,7 +23,7 @@
         },
         {
           "type": "paragraph",
-          "text": "**Everyday analogy**: A grocery list on paper \u2014 each line is an item, and you can add or cross out items."
+          "text": "**Everyday analogy**: A grocery list on paper — each line is an item, and you can add or cross out items."
         },
         {
           "type": "code_runner",
@@ -37,7 +37,11 @@
           ]
         }
       ],
-      "tags": ["python syntax", "lists", "data types"],
+      "tags": [
+        "python syntax",
+        "lists",
+        "data types"
+      ],
       "type": "initial",
       "order": 2,
       "created_date": "2025-01-01"
@@ -48,7 +52,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "\ud83c\udff7\ufe0f **Tag: List Creation**"
+          "text": "🏷️ **Tag: List Creation**"
         },
         {
           "type": "paragraph",
@@ -67,7 +71,7 @@
         },
         {
           "type": "paragraph",
-          "text": "\ud83d\udcdd **Practice \u2014 List Creation**"
+          "text": "📝 **Practice — List Creation**"
         },
         {
           "type": "paragraph",
@@ -85,7 +89,12 @@
           ]
         }
       ],
-      "tags": ["lists", "creation", "append", "range"],
+      "tags": [
+        "lists",
+        "creation",
+        "append",
+        "range"
+      ],
       "type": "initial",
       "order": 1,
       "created_date": "2025-01-01"
@@ -96,7 +105,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "\ud83c\udff7\ufe0f **Tag: List Access**"
+          "text": "🏷️ **Tag: List Access**"
         },
         {
           "type": "paragraph",
@@ -123,7 +132,7 @@
         },
         {
           "type": "paragraph",
-          "text": "\ud83d\udcdd **Practice \u2014 List Access**"
+          "text": "📝 **Practice — List Access**"
         },
         {
           "type": "paragraph",
@@ -141,7 +150,11 @@
           ]
         }
       ],
-      "tags": ["lists", "indexing", "access"],
+      "tags": [
+        "lists",
+        "indexing",
+        "access"
+      ],
       "type": "initial",
       "order": 3,
       "created_date": "2025-01-01"
@@ -152,7 +165,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "\ud83c\udff7\ufe0f **Tag: List Slicing**"
+          "text": "🏷️ **Tag: List Slicing**"
         },
         {
           "type": "paragraph",
@@ -179,7 +192,7 @@
         },
         {
           "type": "paragraph",
-          "text": "\ud83d\udcdd **Practice \u2014 List Slicing**"
+          "text": "📝 **Practice — List Slicing**"
         },
         {
           "type": "paragraph",
@@ -197,7 +210,11 @@
           ]
         }
       ],
-      "tags": ["lists", "slicing", "indexing"],
+      "tags": [
+        "lists",
+        "slicing",
+        "indexing"
+      ],
       "type": "initial",
       "order": 4,
       "created_date": "2025-01-01"
@@ -208,7 +225,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "\ud83c\udff7\ufe0f **Tag: List Modification**"
+          "text": "🏷️ **Tag: List Modification**"
         },
         {
           "type": "paragraph",
@@ -227,7 +244,7 @@
         },
         {
           "type": "paragraph",
-          "text": "\ud83d\udcdd **Practice \u2014 List Modification**"
+          "text": "📝 **Practice — List Modification**"
         },
         {
           "type": "paragraph",
@@ -245,7 +262,11 @@
           ]
         }
       ],
-      "tags": ["lists", "modification", "mutable"],
+      "tags": [
+        "lists",
+        "modification",
+        "mutable"
+      ],
       "type": "initial",
       "order": 5,
       "created_date": "2025-01-01"
@@ -256,7 +277,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "\ud83c\udff7\ufe0f **Tag: Adding Items**"
+          "text": "🏷️ **Tag: Adding Items**"
         },
         {
           "type": "paragraph",
@@ -265,9 +286,9 @@
         {
           "type": "list",
           "items": [
-            "**append(x)** \u2192 add at the end",
-            "**insert(i, x)** \u2192 add at position i",
-            "**extend(iterable)** \u2192 add many items from another list or iterable"
+            "**append(x)** → add at the end",
+            "**insert(i, x)** → add at position i",
+            "**extend(iterable)** → add many items from another list or iterable"
           ]
         },
         {
@@ -283,7 +304,7 @@
         },
         {
           "type": "paragraph",
-          "text": "\ud83d\udcdd **Practice \u2014 Adding Items**"
+          "text": "📝 **Practice — Adding Items**"
         },
         {
           "type": "paragraph",
@@ -301,7 +322,12 @@
           ]
         }
       ],
-      "tags": ["lists", "append", "insert", "extend"],
+      "tags": [
+        "lists",
+        "append",
+        "insert",
+        "extend"
+      ],
       "type": "initial",
       "order": 6,
       "created_date": "2025-01-01"
@@ -312,7 +338,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "\ud83c\udff7\ufe0f **Tag: Removing Items**"
+          "text": "🏷️ **Tag: Removing Items**"
         },
         {
           "type": "paragraph",
@@ -321,10 +347,10 @@
         {
           "type": "list",
           "items": [
-            "**remove(value)** \u2192 delete by value (first match)",
-            "**pop([index])** \u2192 delete by position (defaults to last) and returns the removed item",
-            "**del list[index]** \u2192 delete item at position",
-            "**list.clear()** \u2192 remove all items"
+            "**remove(value)** → delete by value (first match)",
+            "**pop([index])** → delete by position (defaults to last) and returns the removed item",
+            "**del list[index]** → delete item at position",
+            "**list.clear()** → remove all items"
           ]
         },
         {
@@ -340,7 +366,7 @@
         },
         {
           "type": "paragraph",
-          "text": "\ud83d\udcdd **Practice \u2014 Removing Items**"
+          "text": "📝 **Practice — Removing Items**"
         },
         {
           "type": "paragraph",
@@ -358,7 +384,13 @@
           ]
         }
       ],
-      "tags": ["lists", "remove", "pop", "del", "clear"],
+      "tags": [
+        "lists",
+        "remove",
+        "pop",
+        "del",
+        "clear"
+      ],
       "type": "initial",
       "order": 7,
       "created_date": "2025-01-01"
@@ -369,7 +401,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "\ud83c\udff7\ufe0f **Tag: Looping Through Lists**"
+          "text": "🏷️ **Tag: Looping Through Lists**"
         },
         {
           "type": "paragraph",
@@ -395,7 +427,7 @@
         },
         {
           "type": "paragraph",
-          "text": "\ud83d\udcdd **Practice \u2014 Looping**"
+          "text": "📝 **Practice — Looping**"
         },
         {
           "type": "paragraph",
@@ -413,7 +445,11 @@
           ]
         }
       ],
-      "tags": ["lists", "loops", "iteration"],
+      "tags": [
+        "lists",
+        "loops",
+        "iteration"
+      ],
       "type": "initial",
       "order": 8,
       "created_date": "2025-01-01"
@@ -424,7 +460,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "\ud83c\udff7\ufe0f **Tag: List Comprehension**"
+          "text": "🏷️ **Tag: List Comprehension**"
         },
         {
           "type": "paragraph",
@@ -447,7 +483,7 @@
         },
         {
           "type": "paragraph",
-          "text": "\ud83d\udcdd **Practice \u2014 List Comprehension**"
+          "text": "📝 **Practice — List Comprehension**"
         },
         {
           "type": "paragraph",
@@ -465,7 +501,11 @@
           ]
         }
       ],
-      "tags": ["lists", "comprehension", "advanced"],
+      "tags": [
+        "lists",
+        "comprehension",
+        "advanced"
+      ],
       "type": "initial",
       "order": 9,
       "created_date": "2025-01-01"
@@ -476,7 +516,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "\ud83c\udff7\ufe0f **Tag: List Functions and Methods**"
+          "text": "🏷️ **Tag: List Functions and Methods**"
         },
         {
           "type": "paragraph",
@@ -485,11 +525,11 @@
         {
           "type": "list",
           "items": [
-            "**len(list)** \u2192 number of items",
-            "**max(list), min(list)** \u2192 largest/smallest item (for numbers or comparable values)",
-            "**sum(list)** \u2192 total of numeric items",
-            "**list.sort()** \u2192 sorts list in place (ascending by default)",
-            "**list.reverse()** \u2192 reverses the list in place"
+            "**len(list)** → number of items",
+            "**max(list), min(list)** → largest/smallest item (for numbers or comparable values)",
+            "**sum(list)** → total of numeric items",
+            "**list.sort()** → sorts list in place (ascending by default)",
+            "**list.reverse()** → reverses the list in place"
           ]
         },
         {
@@ -505,7 +545,7 @@
         },
         {
           "type": "paragraph",
-          "text": "\ud83d\udcdd **Practice \u2014 List Functions & Methods**"
+          "text": "📝 **Practice — List Functions & Methods**"
         },
         {
           "type": "paragraph",
@@ -524,7 +564,7 @@
         },
         {
           "type": "paragraph",
-          "text": "\ud83e\uddfe **Quick Reference (Cheat Sheet)**"
+          "text": "🧾 **Quick Reference (Cheat Sheet)**"
         },
         {
           "type": "list",
@@ -542,7 +582,12 @@
           ]
         }
       ],
-      "tags": ["lists", "functions", "methods", "reference"],
+      "tags": [
+        "lists",
+        "functions",
+        "methods",
+        "reference"
+      ],
       "type": "initial",
       "order": 10,
       "created_date": "2025-01-01"

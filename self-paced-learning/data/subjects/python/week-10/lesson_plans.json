@@ -1,0 +1,540 @@
+{
+  "lessons": [
+    {
+      "subject": "python",
+      "subtopic": "week-10",
+      "lesson_id": "python-dictionaries-intro",
+      "id": "python-dictionaries-intro",
+      "title": "Dictionaries Intro",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "DictionariesIntro"
+      ],
+      "order": 1,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "After defeating the Shadow Beast, you find a dusty tome glowing with strange runes. The guild master whispers:\n\"This is the Great Codex. Inside are secrets of every monster — their health, their weaknesses, their favorite snacks… all stored in magical pairs.\""
+        },
+        {
+          "type": "paragraph",
+          "text": "In Python, this magic is called a dictionary. It stores key–value pairs: each key (like “Goblin”) points to a value (like “weak to fire”). Unlike lists (which store items in order), dictionaries are like magical lookup tables: ask the book about a monster, and it whispers its weakness."
+        },
+        {
+          "type": "paragraph",
+          "text": "Your mission this week: master the Monster Codex."
+        },
+        {
+          "type": "header",
+          "text": "Tags Introduced"
+        },
+        {
+          "type": "list",
+          "items": [
+            "DictBasics → what dictionaries are and how to create them.",
+            "DictAccess → looking up monster info by key.",
+            "DictMutate → adding, changing, and removing entries.",
+            "DictIterate → looping through monsters and their stats."
+          ]
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-10",
+      "lesson_id": "python-dict-basics",
+      "id": "python-dict-basics",
+      "title": "Dict Basics",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "DictBasics"
+      ],
+      "order": 2,
+      "content": [
+        {
+          "type": "header",
+          "text": "Concept Notes"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Dictionaries use curly braces {}.",
+            "Each entry has a key and a value, joined with a colon :.",
+            "Multiple entries are separated by commas.",
+            "Keys must be unique (you can’t have two different Goblins)."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "codex = {\"Goblin\": \"fire\", \"Skeleton\": \"light\", \"Slime\": \"salt\"}\nprint(codex)"
+        },
+        {
+          "type": "paragraph",
+          "text": "👉 RPG Connection: Think of a dictionary as a magic book. Each monster’s name is a key; its weakness is the value written in invisible ink."
+        },
+        {
+          "type": "header",
+          "text": "Hero Training Drill 1 – First Entries in the Codex 📖"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Mission Briefing:",
+            "Record two monsters:",
+            "\"Dragon\" weak to \"ice\".",
+            "\"Zombie\" weak to \"light\"."
+          ]
+        },
+        {
+          "type": "header",
+          "text": "✅ Solution"
+        },
+        {
+          "type": "code",
+          "text": "codex = {\"Dragon\": \"ice\", \"Zombie\": \"light\"}\nprint(codex)"
+        },
+        {
+          "type": "paragraph",
+          "text": "👀 The book glows: “Knowledge is power… don’t forget it.”"
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-10",
+      "lesson_id": "python-dict-access",
+      "id": "python-dict-access",
+      "title": "Dict Access",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "DictAccess"
+      ],
+      "order": 3,
+      "content": [
+        {
+          "type": "header",
+          "text": "Concept Notes"
+        },
+        {
+          "type": "list",
+          "items": [
+            "To look up a value, use the key inside square brackets [].",
+            "Syntax: codex[\"Goblin\"] → \"fire\".",
+            "If the key doesn’t exist, Python throws an error (like flipping to a blank page)."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "codex = {\"Goblin\": \"fire\", \"Skeleton\": \"light\"}\nprint(codex[\"Goblin\"])  # fire"
+        },
+        {
+          "type": "paragraph",
+          "text": "👉 RPG Connection: This is like asking the book: “Codex, how do I beat a Goblin?”"
+        },
+        {
+          "type": "header",
+          "text": "Hero Training Drill 2 – Discover a Weakness 🔎"
+        },
+        {
+          "type": "paragraph",
+          "text": "Mission Briefing:\n\"Quick! A Skeleton attacks. Find its weakness in my pages!\""
+        },
+        {
+          "type": "header",
+          "text": "✅ Solution"
+        },
+        {
+          "type": "code",
+          "text": "codex = {\"Dragon\": \"ice\", \"Zombie\": \"light\", \"Skeleton\": \"fire\"}\nprint(\"Skeleton is weak to:\", codex[\"Skeleton\"])"
+        },
+        {
+          "type": "paragraph",
+          "text": "👀 Skeleton: “Aw man, why’d they write that down?!”"
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-10",
+      "lesson_id": "python-dict-mutate",
+      "id": "python-dict-mutate",
+      "title": "Dict Mutate",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "DictMutate"
+      ],
+      "order": 4,
+      "content": [
+        {
+          "type": "header",
+          "text": "Concept Notes"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Add a new entry: codex[\"Slime\"] = \"salt\".",
+            "Change an entry: codex[\"Zombie\"] = \"holy water\".",
+            "Remove an entry: del codex[\"Goblin\"]."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "codex = {\"Goblin\": \"fire\"}\n\ncodex[\"Slime\"] = \"salt\"      # add\ncodex[\"Goblin\"] = \"sunlight\" # change\ndel codex[\"Goblin\"]          # remove\n\nprint(codex)"
+        },
+        {
+          "type": "paragraph",
+          "text": "👉 RPG Connection: Updating the Codex = discovering new weaknesses or crossing out old myths."
+        },
+        {
+          "type": "header",
+          "text": "Hero Training Drill 3 – Updating the Codex ✍️"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Mission Briefing:",
+            "Start with {\"Dragon\": \"ice\", \"Zombie\": \"light\"}.",
+            "Add \"Slime\": \"salt\".",
+            "Change \"Zombie\" to \"holy water\".",
+            "Remove \"Dragon\".",
+            "Print the final Codex."
+          ]
+        },
+        {
+          "type": "header",
+          "text": "✅ Solution"
+        },
+        {
+          "type": "code",
+          "text": "codex = {\"Dragon\": \"ice\", \"Zombie\": \"light\"}\n\ncodex[\"Slime\"] = \"salt\"\ncodex[\"Zombie\"] = \"holy water\"\ndel codex[\"Dragon\"]\n\nprint(codex)"
+        },
+        {
+          "type": "paragraph",
+          "text": "👀 Codex whispers: “The truth evolves. Only fools trust old myths.”"
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-10",
+      "lesson_id": "python-dict-iterate",
+      "id": "python-dict-iterate",
+      "title": "Dict Iterate",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "DictIterate"
+      ],
+      "order": 5,
+      "content": [
+        {
+          "type": "header",
+          "text": "Concept Notes"
+        },
+        {
+          "type": "paragraph",
+          "text": "Looping through a dictionary reveals monsters and their weaknesses. Use .items() to get both key and value."
+        },
+        {
+          "type": "code",
+          "text": "codex = {\"Goblin\": \"fire\", \"Skeleton\": \"light\"}\n\nfor monster, weakness in codex.items():\n    print(monster, \"is weak to\", weakness)"
+        },
+        {
+          "type": "paragraph",
+          "text": "👉 RPG Connection: This is like reading the Codex aloud in the guild hall so everyone learns monster secrets."
+        },
+        {
+          "type": "header",
+          "text": "Hero Training Drill 4 – Read the Codex Aloud 📜"
+        },
+        {
+          "type": "paragraph",
+          "text": "Mission Briefing: Speak every entry from the Codex."
+        },
+        {
+          "type": "header",
+          "text": "✅ Solution"
+        },
+        {
+          "type": "code",
+          "text": "codex = {\"Dragon\": \"ice\", \"Zombie\": \"light\", \"Slime\": \"salt\"}\n\nfor monster, weakness in codex.items():\n    print(monster, \"is weak to\", weakness)"
+        },
+        {
+          "type": "paragraph",
+          "text": "👀 Villager: “A slime weak to salt? So my French fries could defeat it?!”"
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-10",
+      "lesson_id": "python-dict-challenge-quest",
+      "id": "python-dict-challenge-quest",
+      "title": "Challenge Quest",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "DictBasics",
+        "DictAccess",
+        "DictMutate",
+        "DictIterate"
+      ],
+      "order": 6,
+      "content": [
+        {
+          "type": "header",
+          "text": "🎯 Challenge Quest – Monster Codex Trial"
+        },
+        {
+          "type": "list",
+          "items": [
+            "✨ Story:",
+            "You enter a chamber filled with monster statues. The Codex glows:",
+            "\"Hero, if you cannot master my pages, the statues will awaken… and eat you.\""
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Tasks"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Create a Codex with:",
+            "\"Orc\": \"lightning\"",
+            "\"Vampire\": \"sunlight\"",
+            "\"Troll\": \"fire\"",
+            "Print the Vampire’s weakness.",
+            "Add \"Werewolf\": \"silver\".",
+            "Change \"Troll\" weakness to \"ice\".",
+            "Remove \"Orc\".",
+            "Loop through the Codex, announcing each weakness."
+          ]
+        },
+        {
+          "type": "header",
+          "text": "✅ Solution"
+        },
+        {
+          "type": "code",
+          "text": "codex = {\"Orc\": \"lightning\", \"Vampire\": \"sunlight\", \"Troll\": \"fire\"}\n\nprint(\"Vampire is weak to:\", codex[\"Vampire\"])\n\ncodex[\"Werewolf\"] = \"silver\"\ncodex[\"Troll\"] = \"ice\"\ndel codex[\"Orc\"]\n\nfor monster, weakness in codex.items():\n    print(monster, \"is weak to\", weakness)"
+        },
+        {
+          "type": "paragraph",
+          "text": "👀 Codex roars: “You have passed the trial. My secrets are yours… but beware — knowledge attracts darker forces.”"
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "subject": "python",
+      "subtopic": "week-10",
+      "lesson_id": "python-dictionaries-recap",
+      "id": "python-dictionaries-recap",
+      "title": "Dictionaries Recap",
+      "lessonType": "initial",
+      "videoId": "",
+      "tags": [
+        "DictionariesRecap"
+      ],
+      "order": 7,
+      "content": [
+        {
+          "type": "header",
+          "text": "🎉 By the end of Week 10"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Kids understand dictionaries:",
+            "{} syntax with key–value pairs.",
+            "Accessing values by key.",
+            "Adding, changing, and removing entries.",
+            "Looping through .items()."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Their hero now owns the Monster Codex, a magical book that reveals enemy weaknesses mid-battle."
+        },
+        {
+          "type": "paragraph",
+          "text": "👉 Next week: Chapter 11 – Tuples & Sets in the Wild (Strange Relics). On the path forward, you’ll discover relics that can’t be changed (tuples) and unique treasures no two heroes can share (sets)."
+        }
+      ],
+      "type": "initial",
+      "updated_date": "2025-12-31"
+    },
+    {
+      "id": "week-10-remedial",
+      "order": 13,
+      "title": "Dict Basics",
+      "lessonType": "remedial",
+      "tags": [
+        "DictBasics",
+        "DictAccess",
+        "DictMutate",
+        "DictIterate"
+      ],
+      "content": [
+        {
+          "type": "story",
+          "text": "📖 Codex Copy Room — Pip writes monster weaknesses as key–value pairs."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Dictionaries use { }.",
+            "Each entry is key: value.",
+            "Keys must be unique."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "codex = {\"Goblin\": \"fire\", \"Skeleton\": \"light\"}\nprint(codex)"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Make codex with Dragon→ice and Zombie→light; print it.",
+            "✅ Solution:\ncodex={\"Dragon\":\"ice\",\"Zombie\":\"light\"}\nprint(codex)"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Dict Access"
+        },
+        {
+          "type": "story",
+          "text": "🔎 Weakness Lookup — Professor Glyph asks the Codex a question."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Use square brackets with a key: codex[\"Goblin\"]",
+            "If the key doesn’t exist, Python raises an error."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "codex = {\"Skeleton\": \"fire\"}\nprint(codex[\"Skeleton\"])  # fire"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Given codex={\"Orc\":\"lightning\"}, print Orc weakness.",
+            "✅ Solution:\ncodex={\"Orc\":\"lightning\"}\nprint(codex[\"Orc\"])"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Dict Mutate"
+        },
+        {
+          "type": "story",
+          "text": "✍️ Updating Pages — add, change, and remove entries as myths evolve."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Add: codex[\"Slime\"] = \"salt\"",
+            "Change: codex[\"Zombie\"] = \"holy water\"",
+            "Remove: del codex[\"Goblin\"]"
+          ]
+        },
+        {
+          "type": "code",
+          "text": "codex = {\"Goblin\": \"fire\"}\ncodex[\"Slime\"] = \"salt\"\ncodex[\"Goblin\"] = \"sunlight\"\ndel codex[\"Goblin\"]\nprint(codex)"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Start {\"Dragon\":\"ice\"}. Add \"Troll\":\"fire\" then delete Dragon.",
+            "✅ Solution:\ncodex={\"Dragon\":\"ice\"}\ncodex[\"Troll\"]=\"fire\"\ndel codex[\"Dragon\"]\nprint(codex)"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Dict Iterate"
+        },
+        {
+          "type": "story",
+          "text": "📣 Guild Reading — announce every monster and weakness using a loop."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Use .items() to loop over (key, value) pairs."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "codex = {\"Goblin\":\"fire\",\"Skeleton\":\"light\"}\nfor monster, weakness in codex.items():\n    print(monster, \"is weak to\", weakness)"
+        },
+        {
+          "type": "section",
+          "title": "Practice (with solutions)"
+        },
+        {
+          "type": "list",
+          "items": [
+            "1) Loop through {\"Slime\":\"salt\",\"Vampire\":\"sunlight\"} and print each.",
+            "✅ Solution:\ncodex={\"Slime\":\"salt\",\"Vampire\":\"sunlight\"}\nfor m,w in codex.items():\n    print(m, \"is weak to\", w)"
+          ]
+        },
+        {
+          "type": "header",
+          "text": "Section: Boss Challenge"
+        },
+        {
+          "type": "story",
+          "text": "🗝️ Boss Challenge — Full Monster Codex Trial"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Create a codex with 3 monsters.",
+            "Access one weakness by key.",
+            "Mutate: add, change, and delete.",
+            "Loop through codex and announce each weakness."
+          ]
+        },
+        {
+          "type": "code",
+          "text": "codex = {\"Orc\": \"lightning\", \"Vampire\": \"sunlight\", \"Troll\": \"fire\"}\nprint(\"Vampire is weak to:\", codex[\"Vampire\"])\n\ncodex[\"Werewolf\"] = \"silver\"\ncodex[\"Troll\"] = \"ice\"\ndel codex[\"Orc\"]\n\nfor monster, weakness in codex.items():\n    print(monster, \"is weak to\", weakness)"
+        }
+      ],
+      "type": "remedial",
+      "videoId": "",
+      "updated_date": "2026-01-09"
+    }
+  ],
+  "updated_date": "2025-12-31"
+}

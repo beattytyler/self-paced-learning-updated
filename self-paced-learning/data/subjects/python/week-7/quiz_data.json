@@ -1,0 +1,185 @@
+{
+  "quiz_title": "Week 7 Quiz – String Magic (Text Spells & Scrolls)",
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Which line correctly creates a string in Python?",
+      "tags": [
+        "StringBasics"
+      ],
+      "options": [
+        "name = Sir Codealot",
+        "name = 'Sir Codealot'",
+        "print(Sir Codealot)",
+        "name = 123"
+      ],
+      "answer_index": 1
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What is printed?",
+      "tags": [
+        "StringBasics"
+      ],
+      "options": [
+        "'Fireball'",
+        "Fireball",
+        "spell",
+        "Error"
+      ],
+      "answer_index": 1,
+      "content": [
+        {
+          "type": "code",
+          "text": "spell = 'Fireball'\nprint(spell)"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Create hero_name = 'Luna' and print it.",
+      "tags": [
+        "StringBasics"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hero_name = 'Luna'\nprint(hero_name)"
+        }
+      ],
+      "expected_answer": "hero_name = 'Luna'\nprint(hero_name)"
+    },
+    {
+      "type": "multiple_choice",
+      "question": "For word='DRAGON', what is word[0]?",
+      "tags": [
+        "StringIndexSlice"
+      ],
+      "options": [
+        "D",
+        "R",
+        "N",
+        "Error"
+      ],
+      "answer_index": 0
+    },
+    {
+      "type": "multiple_choice",
+      "question": "For s='Fireball', what is s[1:4]?",
+      "tags": [
+        "StringIndexSlice"
+      ],
+      "options": [
+        "Fir",
+        "ire",
+        "reb",
+        "eba"
+      ],
+      "answer_index": 1
+    },
+    {
+      "type": "short_answer",
+      "question": "What is the output?",
+      "tags": [
+        "StringIndexSlice"
+      ],
+      "expected_answer": "s r l",
+      "content": [
+        {
+          "type": "code",
+          "text": "s = 'scroll'\nprint(s[0], s[2], s[-1])"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "'hello'.upper() returns…",
+      "tags": [
+        "StringMethods"
+      ],
+      "options": [
+        "Hello",
+        "HELLO",
+        "hello",
+        "error"
+      ],
+      "answer_index": 1
+    },
+    {
+      "type": "short_answer",
+      "question": "What is the output?",
+      "tags": [
+        "StringMethods"
+      ],
+      "expected_answer": "0",
+      "content": [
+        {
+          "type": "code",
+          "text": "s = 'toast monster'\nprint(s.find('toast'))"
+        }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which is a valid f-string?",
+      "tags": [
+        "StringFormatting"
+      ],
+      "options": [
+        "f('HP: {hp}')",
+        "'HP: {hp}'",
+        "f\"HP: {hp}\"",
+        "format('HP: {hp}')"
+      ],
+      "answer_index": 2
+    },
+    {
+      "type": "coding",
+      "question": "name='Kai', coins=12 → print: Kai carries 12 coins.",
+      "tags": [
+        "StringFormatting"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "name = 'Kai'\ncoins = 12\nprint(f\"{name} carries {coins} coins.\")"
+        }
+      ],
+      "expected_answer": "name = 'Kai'\ncoins = 12\nprint(f\"{name} carries {coins} coins.\")"
+    },
+    {
+      "type": "coding",
+      "question": "inscription='sword of light' → print uppercased, then replace light→destiny.",
+      "tags": [
+        "StringBasics",
+        "StringIndexSlice",
+        "StringMethods",
+        "StringFormatting"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "s = 'sword of light'\nprint(s.upper())\nprint(s.replace('light','destiny'))"
+        }
+      ],
+      "expected_answer": "s = 'sword of light'\nprint(s.upper())\nprint(s.replace('light','destiny'))"
+    },
+    {
+      "type": "short_answer",
+      "question": "What is the output?",
+      "tags": [
+        "StringBasics",
+        "StringIndexSlice",
+        "StringMethods",
+        "StringFormatting"
+      ],
+      "expected_answer": "Dragon 6",
+      "content": [
+        {
+          "type": "code",
+          "text": "s = 'Dragonborn'\nprint(s[0:6], s.find('born'))"
+        }
+      ]
+    }
+  ]
+}

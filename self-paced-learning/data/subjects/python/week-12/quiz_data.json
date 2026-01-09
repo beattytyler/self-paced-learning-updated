@@ -1,0 +1,149 @@
+{
+  "title": "Week 12 Quiz",
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What module rolls dice?",
+      "options": [
+        "math",
+        "time",
+        "random",
+        "dice"
+      ],
+      "answer_index": 2,
+      "tags": [
+        "RandomModule"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What range can appear?",
+      "expected_answer": "1 through 6",
+      "tags": [
+        "RandomModule"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "import random\nprint(random.randint(1,6))"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Pause the game for 2 seconds using time.",
+      "expected_answer": "import time\ntime.sleep(2)",
+      "tags": [
+        "TimeSupport"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which squares a number?",
+      "options": [
+        "x*x",
+        "pow(x,2)",
+        "math.pow(x,2)",
+        "All of the above"
+      ],
+      "answer_index": 3,
+      "tags": [
+        "MathSupport"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What does this print after delay?",
+      "expected_answer": "Rolling complete",
+      "tags": [
+        "TimeSupport"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "import time\nprint('Rolling...')\ntime.sleep(1)\nprint('Rolling complete')"
+        }
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Why use module aliases?",
+      "expected_answer": "To write shorter code",
+      "tags": [
+        "ModuleAlias"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "What module rolls dice?",
+      "options": [
+        "math",
+        "time",
+        "random",
+        "dice"
+      ],
+      "answer_index": 2,
+      "tags": [
+        "RandomModule"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What range can appear?",
+      "expected_answer": "1 through 6",
+      "tags": [
+        "RandomModule"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "import random\nprint(random.randint(1,6))"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Pause the game for 2 seconds using time.",
+      "expected_answer": "import time\ntime.sleep(2)",
+      "tags": [
+        "TimeSupport"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which squares a number?",
+      "options": [
+        "x*x",
+        "pow(x,2)",
+        "math.pow(x,2)",
+        "All of the above"
+      ],
+      "answer_index": 3,
+      "tags": [
+        "MathSupport"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What does this print after delay?",
+      "expected_answer": "Rolling complete",
+      "tags": [
+        "TimeSupport"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "import time\nprint('Rolling...')\ntime.sleep(1)\nprint('Rolling complete')"
+        }
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Why use module aliases?",
+      "expected_answer": "To write shorter code",
+      "tags": [
+        "ModuleAlias"
+      ]
+    }
+  ]
+}

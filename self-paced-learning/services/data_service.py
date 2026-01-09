@@ -232,35 +232,56 @@ class DataService:
             )
 
             # Load existing lessons or create new structure
-            lessons = []
+            existing_data: Dict[str, Any] = {}
+            lessons_container: Any = []
+            lessons_container_type = "list"
             if os.path.exists(lesson_file_path):
                 with open(lesson_file_path, "r", encoding="utf-8") as f:
-                    existing_data = json.load(f)
+                    existing_raw = json.load(f)
                     # Handle both old format (array) and new format (dict with lessons key)
-                    if isinstance(existing_data, list):
-                        lessons = existing_data
-                    elif isinstance(existing_data, dict):
-                        lessons = existing_data.get("lessons", [])
+                    if isinstance(existing_raw, list):
+                        lessons_container = existing_raw
+                    elif isinstance(existing_raw, dict):
+                        existing_data = existing_raw
+                        lessons_container = existing_raw.get("lessons", [])
+                        if isinstance(lessons_container, dict):
+                            lessons_container_type = "dict"
                     else:
-                        lessons = []
+                        lessons_container = []
 
             # Always include the lesson identifier in the payload we persist.
             serialised_lesson = dict(lesson_data)
             serialised_lesson["id"] = lesson_id
 
-            # Find and update existing lesson or add new one
-            lesson_found = False
-            for index, lesson in enumerate(lessons):
-                if isinstance(lesson, dict) and lesson.get("id") == lesson_id:
-                    lessons[index] = serialised_lesson
-                    lesson_found = True
-                    break
+            if lessons_container_type == "dict":
+                # Preserve mapping-style lesson payloads
+                lessons_container = dict(lessons_container or {})
+                lessons_container[lesson_id] = serialised_lesson
+            else:
+                # Normalise list payloads to avoid non-dict entries and preserve sequence
+                normalised_lessons = [
+                    lesson for lesson in lessons_container if isinstance(lesson, dict)
+                ]
 
-            if not lesson_found:
-                lessons.append(serialised_lesson)
+                # Replace in place if it exists; otherwise append to preserve existing ordering
+                replaced = False
+                for index, lesson in enumerate(normalised_lessons):
+                    if lesson.get("id") == lesson_id:
+                        normalised_lessons[index] = serialised_lesson
+                        replaced = True
+                        break
 
-            # Create the complete lesson plans structure
-            lesson_plans_data = {"lessons": lessons, "updated_date": "2025-10-02"}
+                if not replaced:
+                    normalised_lessons.append(serialised_lesson)
+
+                lessons_container = normalised_lessons
+
+            # Create the complete lesson plans structure and preserve any extra metadata
+            lesson_plans_data: Dict[str, Any] = (
+                dict(existing_data) if isinstance(existing_data, dict) else {}
+            )
+            lesson_plans_data["lessons"] = lessons_container
+            lesson_plans_data["updated_date"] = "2025-10-02"
 
             # Ensure directory exists
             os.makedirs(os.path.dirname(lesson_file_path), exist_ok=True)
@@ -296,15 +317,28 @@ class DataService:
                 data = json.load(f)
 
             lessons = data.get("lessons", [])
-            original_count = len(lessons)
+            lessons_container_type = "dict" if isinstance(lessons, dict) else "list"
 
-            # Remove the lesson with matching ID
-            lessons = [lesson for lesson in lessons if lesson.get("id") != lesson_id]
+            if lessons_container_type == "dict":
+                if lesson_id not in lessons:
+                    return False  # Lesson not found
+                # Create a copy so we don't mutate the original mapping
+                lessons = {
+                    key: value for key, value in lessons.items() if key != lesson_id
+                }
+            else:
+                original_count = len(lessons) if isinstance(lessons, list) else 0
+                lessons = (
+                    [
+                        lesson
+                        for lesson in (lessons if isinstance(lessons, list) else [])
+                        if isinstance(lesson, dict) and lesson.get("id") != lesson_id
+                    ]
+                )
+                if len(lessons) == original_count:
+                    return False  # Lesson not found
 
-            if len(lessons) == original_count:
-                return False  # Lesson not found
-
-            # Update the data structure
+            # Update the data structure while preserving other metadata
             data["lessons"] = lessons
             data["updated_date"] = "2025-10-02"
 
@@ -448,6 +482,7 @@ class DataService:
         subject_info: Optional[Dict] = None,
         subtopics: Optional[Dict] = None,
         allowed_tags: Optional[List[str]] = None,
+        rename_subtopic: Optional[Dict[str, str]] = None,
     ) -> bool:
         """Update the configuration files for an existing subject.
 
@@ -489,42 +524,87 @@ class DataService:
                     raise TypeError("allowed_tags must be a list when provided")
                 config_updates["allowed_tags"] = allowed_tags
 
+            subject_config_path = os.path.join(subject_dir, "subject_config.json")
+
+            existing_config: Dict[str, Any] = {}
+            if os.path.exists(subject_config_path):
+                with open(subject_config_path, "r", encoding="utf-8") as handle:
+                    try:
+                        existing_config = json.load(handle) or {}
+                    except json.JSONDecodeError:
+                        existing_config = {}
+
+            # Handle subtopic rename if requested
+            existing_subtopics = existing_config.get("subtopics", {})
+            effective_subtopics = (
+                dict(subtopics) if isinstance(subtopics, dict) else dict(existing_subtopics)
+            )
+
+            if rename_subtopic:
+                if not isinstance(rename_subtopic, dict):
+                    raise TypeError("rename_subtopic must be a dictionary when provided")
+                old_id = (rename_subtopic.get("from") or "").strip()
+                new_id = (rename_subtopic.get("to") or "").strip()
+
+                if not old_id or not new_id:
+                    raise ValueError("Both 'from' and 'to' subtopic identifiers are required for renaming")
+
+                if old_id == new_id:
+                    # No-op rename, proceed with normal update
+                    rename_subtopic = None
+                else:
+                    if old_id not in existing_subtopics:
+                        raise ValueError(f"Subtopic '{old_id}' does not exist and cannot be renamed")
+                    if new_id in existing_subtopics:
+                        raise ValueError(f"Subtopic '{new_id}' already exists; choose a different identifier")
+
+                    # Move subtopic directory if it exists
+                    old_dir = os.path.join(subject_dir, old_id)
+                    new_dir = os.path.join(subject_dir, new_id)
+                    if os.path.exists(old_dir):
+                        os.rename(old_dir, new_dir)
+                    else:
+                        os.makedirs(new_dir, exist_ok=True)
+
+                    # Re-key the subtopic entry in the effective payload
+                    subtopic_payload = effective_subtopics.pop(
+                        old_id, existing_subtopics.get(old_id, {})
+                    )
+                    effective_subtopics[new_id] = subtopic_payload
+
+                    # Update prerequisites that reference the old subtopic ID
+                    for payload in effective_subtopics.values():
+                        if not isinstance(payload, dict):
+                            continue
+                        prereqs = payload.get("prerequisites", [])
+                        if isinstance(prereqs, list) and old_id in prereqs:
+                            payload["prerequisites"] = [
+                                new_id if prereq == old_id else prereq for prereq in prereqs
+                            ]
+
+                    updated = True
+
+            # If subtopics are being updated (or inferred), ensure directories exist and prepare config
+            if subtopics is not None or rename_subtopic:
+                for subtopic_id in effective_subtopics.keys():
+                    subtopic_dir = os.path.join(subject_dir, subtopic_id)
+                    if not os.path.exists(subtopic_dir):
+                        os.makedirs(subtopic_dir, exist_ok=True)
+
+                        # Initialize with proper lesson_plans.json structure to make it valid
+                        lesson_plans_path = os.path.join(subtopic_dir, "lesson_plans.json")
+                        if not os.path.exists(lesson_plans_path):
+                            with open(lesson_plans_path, "w", encoding="utf-8") as f:
+                                json.dump(
+                                    {"lessons": [], "updated_date": "2025-10-15"},
+                                    f,
+                                    indent=2,
+                                    ensure_ascii=False,
+                                )
+
+                config_updates["subtopics"] = effective_subtopics
+
             if config_updates:
-                subject_config_path = os.path.join(subject_dir, "subject_config.json")
-
-                existing_config: Dict[str, Any] = {}
-                if os.path.exists(subject_config_path):
-                    with open(subject_config_path, "r", encoding="utf-8") as handle:
-                        try:
-                            existing_config = json.load(handle) or {}
-                        except json.JSONDecodeError:
-                            existing_config = {}
-
-                # If subtopics are being updated, create directory structure for new subtopics
-                if subtopics is not None:
-                    existing_subtopics = existing_config.get("subtopics", {})
-                    for subtopic_id in subtopics.keys():
-                        # Check if this is a new subtopic
-                        if subtopic_id not in existing_subtopics:
-                            # Create the subtopic directory
-                            subtopic_dir = os.path.join(subject_dir, subtopic_id)
-                            os.makedirs(subtopic_dir, exist_ok=True)
-
-                            # Initialize with proper lesson_plans.json structure to make it valid
-                            lesson_plans_path = os.path.join(
-                                subtopic_dir, "lesson_plans.json"
-                            )
-                            if not os.path.exists(lesson_plans_path):
-                                with open(
-                                    lesson_plans_path, "w", encoding="utf-8"
-                                ) as f:
-                                    json.dump(
-                                        {"lessons": [], "updated_date": "2025-10-15"},
-                                        f,
-                                        indent=2,
-                                        ensure_ascii=False,
-                                    )
-
                 existing_config.update(config_updates)
 
                 with open(subject_config_path, "w", encoding="utf-8") as handle:
@@ -631,23 +711,118 @@ class DataService:
             return []
 
     def get_subject_tags(self, subject: str) -> List[str]:
-        """Get all available tags for a subject."""
-        tags = set()
+        """Get all available tags for a subject.
 
-        # Get subject config to find all subtopics
-        subject_config = self.load_subject_config(subject)
+        Combines the explicit allowed tag pool with tags found on lessons so admins
+        can pick from curated and already-used values.
+        """
+        tag_lookup: Dict[str, str] = {}
 
+        # Start with allowed tags configured on the subject
+        subject_config = self.load_subject_config(subject) or {}
+        allowed_tags = subject_config.get(
+            "allowed_tags", subject_config.get("allowed_keywords", [])
+        )
+        for tag in allowed_tags or []:
+            if not isinstance(tag, str):
+                continue
+            cleaned = tag.strip()
+            if cleaned:
+                tag_lookup.setdefault(cleaned.lower(), cleaned)
+
+        # Merge in lesson-level tags
         if subject_config and "subtopics" in subject_config:
             for subtopic_id in subject_config["subtopics"].keys():
                 lessons = self.get_lesson_plans(subject, subtopic_id)
-
                 if lessons:
                     for lesson in lessons:
                         lesson_tags = lesson.get("tags", [])
-                        if isinstance(lesson_tags, list):
-                            tags.update(lesson_tags)
+                        if not isinstance(lesson_tags, list):
+                            continue
+                        for tag in lesson_tags:
+                            if not isinstance(tag, str):
+                                continue
+                            cleaned = tag.strip()
+                            if cleaned:
+                                tag_lookup.setdefault(cleaned.lower(), cleaned)
 
-        return sorted(list(tags))
+        return sorted(tag_lookup.values(), key=lambda value: value.lower())
+
+    def add_subject_tag(self, subject: str, tag: str) -> Optional[List[str]]:
+        """Add a new tag to a subject's allowed tag pool and return the updated list."""
+        if not isinstance(tag, str):
+            raise TypeError("tag must be a string")
+
+        cleaned_tag = tag.strip()
+        if not cleaned_tag:
+            raise ValueError("tag cannot be empty")
+
+        subject_config = self.load_subject_config(subject)
+        if not subject_config:
+            return None
+
+        allowed_tags = subject_config.get(
+            "allowed_tags", subject_config.get("allowed_keywords", [])
+        ) or []
+
+        tag_lookup: Dict[str, str] = {
+            str(existing).strip().lower(): str(existing).strip()
+            for existing in allowed_tags
+            if isinstance(existing, str) and str(existing).strip()
+        }
+
+        tag_lookup.setdefault(cleaned_tag.lower(), cleaned_tag)
+
+        updated_tags = sorted(tag_lookup.values(), key=lambda value: value.lower())
+
+        if not self.update_subject(subject, allowed_tags=updated_tags):
+            return None
+
+        try:
+            self.clear_cache_for_subject(subject)
+        except Exception:
+            pass
+
+        return updated_tags
+
+    def remove_subject_tag(self, subject: str, tag: str) -> Optional[List[str]]:
+        """Remove a tag from a subject's allowed tag pool and return the updated list."""
+        if not isinstance(tag, str):
+            raise TypeError("tag must be a string")
+
+        cleaned_tag = tag.strip()
+        if not cleaned_tag:
+            raise ValueError("tag cannot be empty")
+
+        subject_config = self.load_subject_config(subject)
+        if not subject_config:
+            return None
+
+        allowed_tags = subject_config.get(
+            "allowed_tags", subject_config.get("allowed_keywords", [])
+        ) or []
+
+        tag_lookup: Dict[str, str] = {
+            str(existing).strip().lower(): str(existing).strip()
+            for existing in allowed_tags
+            if isinstance(existing, str) and str(existing).strip()
+        }
+
+        lowered = cleaned_tag.lower()
+        if lowered in tag_lookup:
+            del tag_lookup[lowered]
+
+        updated_tags = sorted(tag_lookup.values(), key=lambda value: value.lower())
+
+        if not self.update_subject(subject, allowed_tags=updated_tags):
+            return None
+
+        try:
+            self.clear_cache_for_subject(subject)
+        except Exception:
+            pass
+
+        return updated_tags
 
     def find_lessons_by_tags(
         self, subject: str, required_tags: List[str], include_unlisted: bool = True

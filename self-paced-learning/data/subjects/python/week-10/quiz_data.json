@@ -1,0 +1,149 @@
+{
+  "title": "Week 10 Quiz",
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "Which creates a dictionary?",
+      "options": [
+        "[]",
+        "()",
+        "{}",
+        "<>"
+      ],
+      "answer_index": 2,
+      "tags": [
+        "DictBasics"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What weakness is revealed?",
+      "expected_answer": "fire",
+      "tags": [
+        "DictAccess"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "codex={'Goblin':'fire','Troll':'ice'}\nprint(codex['Goblin'])"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Create a codex with Orc:'lightning' and print it.",
+      "expected_answer": "codex={'Orc':'lightning'}\nprint(codex)",
+      "tags": [
+        "DictBasics"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which line adds a new monster?",
+      "options": [
+        "codex.add('Slime')",
+        "codex['Slime']='salt'",
+        "add codex['Slime']",
+        "codex+='Slime'"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "DictMutate"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "How many key–value pairs are here?",
+      "expected_answer": "2",
+      "tags": [
+        "DictIterate"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "codex={'A':1,'B':2}"
+        }
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What does .items() return?",
+      "expected_answer": "Pairs of keys and values",
+      "tags": [
+        "DictIterate"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which creates a dictionary?",
+      "options": [
+        "[]",
+        "()",
+        "{}",
+        "<>"
+      ],
+      "answer_index": 2,
+      "tags": [
+        "DictBasics"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What weakness is revealed?",
+      "expected_answer": "fire",
+      "tags": [
+        "DictAccess"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "codex={'Goblin':'fire','Troll':'ice'}\nprint(codex['Goblin'])"
+        }
+      ]
+    },
+    {
+      "type": "coding",
+      "question": "Create a codex with Orc:'lightning' and print it.",
+      "expected_answer": "codex={'Orc':'lightning'}\nprint(codex)",
+      "tags": [
+        "DictBasics"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Which line adds a new monster?",
+      "options": [
+        "codex.add('Slime')",
+        "codex['Slime']='salt'",
+        "add codex['Slime']",
+        "codex+='Slime'"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "DictMutate"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "How many key–value pairs are here?",
+      "expected_answer": "2",
+      "tags": [
+        "DictIterate"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "codex={'A':1,'B':2}"
+        }
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "What does .items() return?",
+      "expected_answer": "Pairs of keys and values",
+      "tags": [
+        "DictIterate"
+      ]
+    }
+  ]
+}
