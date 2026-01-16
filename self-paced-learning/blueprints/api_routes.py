@@ -373,8 +373,15 @@ def api_add_subject_tag(subject):
             tag.strip(),
         )
 
+        tags_pool = data_service.get_subject_tags(subject)
+
         return jsonify(
-            {"success": True, "tag": saved_tag, "tags": updated_tags, "subject": subject}
+            {
+                "success": True,
+                "tag": saved_tag,
+                "tags": tags_pool,
+                "subject": subject,
+            }
         )
 
     except (TypeError, ValueError) as e:
@@ -405,10 +412,12 @@ def api_remove_subject_tag(subject, tag):
         normalized = decoded_tag.strip().lower()
         removed = all(item.lower() != normalized for item in updated_tags)
 
+        tags_pool = data_service.get_subject_tags(subject)
+
         return jsonify(
             {
                 "success": removed,
-                "tags": updated_tags,
+                "tags": tags_pool,
                 "subject": subject,
                 "removed": removed,
             }

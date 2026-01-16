@@ -150,6 +150,49 @@
         }
       ],
       "expected_answer": "Halfway there!"
+    },
+    {
+      "question": "What will this code print if choice = 'TALK'?",
+      "type": "multiple_choice",
+      "options": [
+        "You charge!",
+        "You negotiate.",
+        "You hide.",
+        "Error"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "if-else"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "choice = \"TALK\"\nif choice == \"FIGHT\":\n    print(\"You charge!\")\nelif choice == \"TALK\":\n    print(\"You negotiate.\")\nelse:\n    print(\"You hide.\")"
+        }
+      ]
+    },
+    {
+      "question": "Predict the output.",
+      "type": "short_answer",
+      "expected_answer": "Still standing!",
+      "tags": [
+        "comparsion_operators"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hp = 12\nif hp <= 0:\n    print(\"Game Over!\")\nelse:\n    print(\"Still standing!\")"
+        }
+      ]
+    },
+    {
+      "question": "Write code that checks if coins >= 10. If yes print 'Buy potion', else print 'Save up'.",
+      "type": "coding",
+      "expected_answer": "coins = 10\nif coins >= 10:\n    print('Buy potion')\nelse:\n    print('Save up')",
+      "tags": [
+        "if-else",
+        "comparsion_operators"
+      ]
     }
   ]
 }

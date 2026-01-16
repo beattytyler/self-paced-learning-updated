@@ -115,6 +115,29 @@
       "tags": [
         "Comment"
       ]
+    },
+    {
+      "question": "Which line is a comment that Python will ignore?",
+      "type": "multiple_choice",
+      "options": [
+        "# The hero rests at the inn",
+        "print('The hero rests at the inn')",
+        "comment('The hero rests at the inn')",
+        "// The hero rests at the inn"
+      ],
+      "answer_index": 0,
+      "tags": [
+        "Comment"
+      ]
+    },
+    {
+      "question": "Ring the morning bell. Print these two lines:\n1. Wake up, hero!\n2. The quest begins now.",
+      "type": "coding",
+      "starter_code": "# Write your code here\n",
+      "sample_solution": "print(\"Wake up, hero!\")\nprint(\"The quest begins now.\")",
+      "tags": [
+        "Print"
+      ]
     }
   ]
 }

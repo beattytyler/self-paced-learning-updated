@@ -114,6 +114,221 @@
       "tags": [
         "Comment"
       ]
+    },
+    {
+      "question": "Which line is a comment that Python will ignore?",
+      "type": "multiple_choice",
+      "options": [
+        "# The hero rests at the inn",
+        "print('The hero rests at the inn')",
+        "comment('The hero rests at the inn')",
+        "// The hero rests at the inn"
+      ],
+      "answer_index": 0,
+      "tags": [
+        "Comment"
+      ]
+    },
+    {
+      "question": "Ring the morning bell. Print these two lines:\n1. Wake up, hero!\n2. The quest begins now.",
+      "type": "coding",
+      "starter_code": "# Write your code here\n",
+      "sample_solution": "print(\"Wake up, hero!\")\nprint(\"The quest begins now.\")",
+      "tags": [
+        "Print"
+      ]
+    },
+    {
+      "question": "What does this code display?\n\nprint('Quest', 'Start')",
+      "type": "multiple_choice",
+      "options": [
+        "Quest Start",
+        "QuestStart",
+        "Quest, Start",
+        "Error"
+      ],
+      "answer_index": 0,
+      "tags": [
+        "Print"
+      ]
+    },
+    {
+      "question": "Which code prints a blank line between the two messages?",
+      "type": "multiple_choice",
+      "options": [
+        "print(\"Campfire\"); print(); print(\"Dawn\")",
+        "print(\"Campfire\\nDawn\")",
+        "print(\"Campfire\" + \"Dawn\")",
+        "print(\"Campfire\", \"Dawn\")"
+      ],
+      "answer_index": 0,
+      "tags": [
+        "Print"
+      ]
+    },
+    {
+      "question": "What is the output?\n\nprint('Gold:', 30)",
+      "type": "short_answer",
+      "expected_answer": "Gold: 30",
+      "tags": [
+        "Print"
+      ]
+    },
+    {
+      "question": "What will be output?\n\n# The hero sharpens the blade\nprint('Blade ready')",
+      "type": "short_answer",
+      "expected_answer": "Blade ready",
+      "tags": [
+        "Comment"
+      ]
+    },
+    {
+      "question": "Create hero_name = \"Arin\" and hero_level = 1. Print: Hero Arin is level 1.",
+      "type": "coding",
+      "starter_code": "# Write your code here\n",
+      "sample_solution": "hero_name = \"Arin\"\nhero_level = 1\nprint(\"Hero\", hero_name, \"is level\", hero_level)",
+      "tags": [
+        "Print"
+      ]
+    },
+    {
+      "question": "Add a comment that says the hero is training, then print \"Training begins.\"",
+      "type": "coding",
+      "starter_code": "# Write your code here\n",
+      "sample_solution": "# The hero is training\nprint(\"Training begins.\")",
+      "tags": [
+        "Comment"
+      ]
+    },
+    {
+      "question": "Which line is a valid Python comment?",
+      "type": "multiple_choice",
+      "options": [
+        "/* training */",
+        "-- training",
+        "# training",
+        "// training"
+      ],
+      "answer_index": 2,
+      "tags": [
+        "Comment"
+      ]
+    },
+    {
+      "question": "Print three lines:\nDay 1\nDay 2\nDay 3",
+      "type": "coding",
+      "starter_code": "# Write your code here\n",
+      "sample_solution": "print(\"Day 1\")\nprint(\"Day 2\")\nprint(\"Day 3\")",
+      "tags": [
+        "Print"
+      ]
+    },
+    {
+      "question": "What will this code show?\n\nprint('The hero has', 3, 'keys')",
+      "type": "multiple_choice",
+      "options": [
+        "The hero has 3 keys",
+        "The hero has keys 3",
+        "The hero has, 3, keys",
+        "Error"
+      ],
+      "answer_index": 0,
+      "tags": [
+        "Print"
+      ]
+    },
+    {
+      "question": "Predict the output.\n\nprint('HP:', 100)\nprint('MP:', 40)",
+      "type": "short_answer",
+      "expected_answer": "HP: 100\nMP: 40",
+      "tags": [
+        "Print"
+      ]
+    },
+    {
+      "question": "Write a comment that labels the quest log, then print \"Quest log opened.\"",
+      "type": "coding",
+      "starter_code": "# Write your code here\n",
+      "sample_solution": "# Quest log\nprint(\"Quest log opened.\")",
+      "tags": [
+        "Comment"
+      ]
+    },
+    {
+      "question": "Which line prints exactly: The gate opens!",
+      "type": "multiple_choice",
+      "options": [
+        "print(\"The gate opens!\")",
+        "print(\"The gate opens\")",
+        "print(\"The gate opens!!\")",
+        "print(\"The gate opens?\")"
+      ],
+      "answer_index": 0,
+      "tags": [
+        "Print"
+      ]
+    },
+    {
+      "question": "What is the output?\n\nprint('Coins:', 7 + 5)",
+      "type": "short_answer",
+      "expected_answer": "Coins: 12",
+      "tags": [
+        "Print"
+      ]
+    },
+    {
+      "question": "When Python runs a program, what happens to comment lines?",
+      "type": "multiple_choice",
+      "options": [
+        "They are ignored by Python",
+        "They are printed to the screen",
+        "They change variables",
+        "They cause an error"
+      ],
+      "answer_index": 0,
+      "tags": [
+        "Comment"
+      ]
+    },
+    {
+      "question": "Create hero_class = \"Mage\" and hero_weapon = \"Oak Staff\". Print: Mage uses Oak Staff.",
+      "type": "coding",
+      "starter_code": "# Write your code here\n",
+      "sample_solution": "hero_class = \"Mage\"\nhero_weapon = \"Oak Staff\"\nprint(hero_class, \"uses\", hero_weapon)",
+      "tags": [
+        "Print"
+      ]
+    },
+    {
+      "question": "What is the output?\n\nprint('Torch lit')  # light the cave",
+      "type": "short_answer",
+      "expected_answer": "Torch lit",
+      "tags": [
+        "Comment"
+      ]
+    },
+    {
+      "question": "Which code prints two lines: Ready and Set?",
+      "type": "multiple_choice",
+      "options": [
+        "print(\"Ready\"); print(\"Set\")",
+        "print(\"Ready Set\")",
+        "print(\"Ready\", \"Set\")",
+        "print(\"Ready/Set\")"
+      ],
+      "answer_index": 0,
+      "tags": [
+        "Print"
+      ]
+    },
+    {
+      "question": "Print the map message:\nThe map is ready.\nGo north.",
+      "type": "coding",
+      "starter_code": "# Write your code here\n",
+      "sample_solution": "print(\"The map is ready.\")\nprint(\"Go north.\")",
+      "tags": [
+        "Print"
+      ]
     }
   ]
 }

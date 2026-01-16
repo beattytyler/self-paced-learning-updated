@@ -101,10 +101,23 @@ def expand_tag_keys(tag_value: Any) -> Set[str]:
         return set()
     text = str(tag_value)
     parts = [text]
-    if re.search(r"[,;/|]", text):
-        parts = re.split(r"[,;/|]+", text)
+    if re.search(r"[,;/|+]", text):
+        parts = re.split(r"[,;/|+]+", text)
     elif " " in text and "_" in text:
         parts = re.split(r"\s+", text)
+
+    expanded_parts: List[str] = []
+    for part in parts:
+        if "(" in part and ")" in part:
+            base = part.split("(", 1)[0].strip()
+            if base:
+                expanded_parts.append(base)
+            inner = part[part.find("(") + 1 : part.find(")")]
+            if inner:
+                expanded_parts.append(inner.strip())
+
+    if expanded_parts:
+        parts.extend(expanded_parts)
 
     keys: Set[str] = set()
     full_key = normalize_tag_key(text)

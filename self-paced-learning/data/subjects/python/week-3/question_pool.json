@@ -143,6 +143,229 @@
         "Print"
       ],
       "expected_answer": "hero_attack = float(input(\"Enter hero attack: \"))\nhero_attack += 2.5\nprint(f\"Your boosted attack power is {hero_attack}\")"
+    },
+    {
+      "question": "Which line correctly asks for the hero's name and stores it in hero_name?",
+      "type": "multiple_choice",
+      "options": [
+        "hero_name = input(\"Name: \")",
+        "input(hero_name) = \"Name:\"",
+        "hero_name == input(\"Name: \")",
+        "print(input(\"Name: \"))"
+      ],
+      "answer_index": 0,
+      "tags": [
+        "Input"
+      ]
+    },
+    {
+      "question": "What is printed if the player types Mira?",
+      "type": "short_answer",
+      "expected_answer": "Name: Mira\nGreetings, Mira",
+      "tags": [
+        "Input"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "name = input(\"Name: \")\nprint(\"Greetings,\", name)"
+        }
+      ]
+    },
+    {
+      "question": "Ask for a pet name using input() and print: Your pet is <name>.",
+      "type": "coding",
+      "expected_answer": "pet_name = input(\"Pet name: \")\nprint(\"Your pet is\", pet_name)",
+      "tags": [
+        "Input"
+      ]
+    },
+    {
+      "question": "Which function converts text to an integer?",
+      "type": "multiple_choice",
+      "options": [
+        "int()",
+        "str()",
+        "float()",
+        "input()"
+      ],
+      "answer_index": 0,
+      "tags": [
+        "Casting"
+      ]
+    },
+    {
+      "question": "What will be printed if the player enters 8?",
+      "type": "short_answer",
+      "expected_answer": "Coins: 8\n16",
+      "tags": [
+        "Casting"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "coins = int(input(\"Coins: \"))\ncoins = coins * 2\nprint(coins)"
+        }
+      ]
+    },
+    {
+      "question": "Ask for number of arrows (int), add 5, and print the total.",
+      "type": "coding",
+      "expected_answer": "arrows = int(input(\"Arrows: \"))\narrows += 5\nprint(\"Total arrows:\", arrows)",
+      "tags": [
+        "Casting"
+      ]
+    },
+    {
+      "question": "Which line uses an f-string to show the hero's name?",
+      "type": "multiple_choice",
+      "options": [
+        "print(f\"Hero: {hero_name}\")",
+        "print(\"Hero: {hero_name}\")",
+        "print(\"Hero:\" + hero_name + \"{ }\")",
+        "print(\"Hero:\", hero_name f)"
+      ],
+      "answer_index": 0,
+      "tags": [
+        "Print"
+      ]
+    },
+    {
+      "question": "What does this program print?",
+      "type": "short_answer",
+      "expected_answer": "Tara has 55 HP.",
+      "tags": [
+        "Print"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "hero = \"Tara\"\nhp = 55\nprint(f\"{hero} has {hp} HP.\")"
+        }
+      ]
+    },
+    {
+      "question": "Ask for hero name and print \"Welcome <name>! Level 1 ready.\" using an f-string.",
+      "type": "coding",
+      "expected_answer": "hero_name = input(\"Hero name: \")\nprint(f\"Welcome {hero_name}! Level 1 ready.\")",
+      "tags": [
+        "Print"
+      ]
+    },
+    {
+      "question": "Which line correctly reads a number of coins and adds 5?",
+      "type": "multiple_choice",
+      "options": [
+        "coins = int(input(\"Coins: \"))\ncoins += 5",
+        "coins = input(\"Coins: \")\ncoins += 5",
+        "coins = float(\"Coins: \")\ncoins += 5",
+        "coins = int(\"Coins: \")\ncoins += 5"
+      ],
+      "answer_index": 0,
+      "tags": [
+        "Input",
+        "Casting"
+      ]
+    },
+    {
+      "question": "What will be printed if the player types Kai and 3?",
+      "type": "short_answer",
+      "expected_answer": "Name: Kai\nPotions: 3\nKai has 3 potions.",
+      "tags": [
+        "Input",
+        "Casting",
+        "Print"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "name = input(\"Name: \")\npotions = int(input(\"Potions: \"))\nprint(f\"{name} has {potions} potions.\")"
+        }
+      ]
+    },
+    {
+      "question": "Ask for village (text) and gold (int), then print: <village> has <gold> gold coins.",
+      "type": "coding",
+      "expected_answer": "village = input(\"Village: \")\ngold = int(input(\"Gold: \"))\nprint(f\"{village} has {gold} gold coins.\")",
+      "tags": [
+        "Input",
+        "Casting",
+        "Print"
+      ]
+    },
+    {
+      "question": "Which line will cause an error because it mixes text and numbers?",
+      "type": "multiple_choice",
+      "options": [
+        "coins = input(\"Coins: \")\nprint(coins + 5)",
+        "coins = int(input(\"Coins: \"))\nprint(coins + 5)",
+        "coins = input(\"Coins: \")\nprint(coins + \"5\")",
+        "coins = 5\nprint(coins + 5)"
+      ],
+      "answer_index": 0,
+      "tags": [
+        "Casting"
+      ]
+    },
+    {
+      "question": "What will be printed if the player types Rin?",
+      "type": "short_answer",
+      "expected_answer": "Title: Rin\nTitle unlocked: Rin",
+      "tags": [
+        "Input"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "title = input(\"Title: \")\nprint(\"Title unlocked:\", title)"
+        }
+      ]
+    },
+    {
+      "question": "Ask for the hero's home town and print: Home: <town>.",
+      "type": "coding",
+      "expected_answer": "town = input(\"Home town: \")\nprint(\"Home:\", town)",
+      "tags": [
+        "Input"
+      ]
+    },
+    {
+      "question": "Which line prints HP with an f-string?",
+      "type": "multiple_choice",
+      "options": [
+        "print(f\"HP: {hero_hp}\")",
+        "print(\"HP: {hero_hp}\")",
+        "print(\"HP:\", {hero_hp})",
+        "print(\"HP:\" + hero_hp)"
+      ],
+      "answer_index": 0,
+      "tags": [
+        "Print"
+      ]
+    },
+    {
+      "question": "What will be printed if the player types 2.5?",
+      "type": "short_answer",
+      "expected_answer": "Power: 2.5\n3.0",
+      "tags": [
+        "Casting"
+      ],
+      "content": [
+        {
+          "type": "code",
+          "text": "power = float(input(\"Power: \"))\npower = power + 0.5\nprint(power)"
+        }
+      ]
+    },
+    {
+      "question": "Ask for two numbers (ints), add them, and print: Total: <sum>.",
+      "type": "coding",
+      "expected_answer": "a = int(input(\"First number: \"))\nb = int(input(\"Second number: \"))\nprint(f\"Total: {a + b}\")",
+      "tags": [
+        "Input",
+        "Casting",
+        "Print"
+      ]
     }
   ]
 }

@@ -143,6 +143,210 @@
         "DataType",
         "Print"
       ]
+    },
+    {
+      "question": "Which variable name is valid for a hero level?",
+      "type": "multiple_choice",
+      "options": [
+        "hero level",
+        "2hero_level",
+        "hero_level",
+        "hero-level"
+      ],
+      "answer_index": 2,
+      "tags": [
+        "Variable"
+      ]
+    },
+    {
+      "question": "What is printed?\n\nhero_hp = 50\nhero_hp = hero_hp + 25\nprint(hero_hp)",
+      "type": "short_answer",
+      "expected_answer": "75",
+      "tags": [
+        "Variable"
+      ]
+    },
+    {
+      "question": "Set potions = 3 and found = 2. Update potions to the total and print: Potions: 5",
+      "type": "coding",
+      "starter_code": "# Write your code here\n",
+      "sample_solution": "potions = 3\nfound = 2\npotions = potions + found\nprint(\"Potions:\", potions)",
+      "tags": [
+        "Variable",
+        "Print"
+      ]
+    },
+    {
+      "question": "Which data type is best for hero_name = \"Luna\"?",
+      "type": "multiple_choice",
+      "options": [
+        "int",
+        "float",
+        "str",
+        "bool"
+      ],
+      "answer_index": 2,
+      "tags": [
+        "DataType"
+      ]
+    },
+    {
+      "question": "What does this print?\n\nprint(type(3.0))",
+      "type": "short_answer",
+      "expected_answer": "<class 'float'>",
+      "tags": [
+        "DataType"
+      ]
+    },
+    {
+      "question": "Create hero_speed = 4.5 and hero_is_fast = True, then print both in one line.",
+      "type": "coding",
+      "starter_code": "# Write your code here\n",
+      "sample_solution": "hero_speed = 4.5\nhero_is_fast = True\nprint(\"Speed:\", hero_speed, \"Fast:\", hero_is_fast)",
+      "tags": [
+        "DataType",
+        "Print",
+        "Variable"
+      ]
+    },
+    {
+      "question": "What will be printed?\n\ncoins = 10\ncoins = coins - 3\nprint(coins)",
+      "type": "multiple_choice",
+      "options": [
+        "10",
+        "7",
+        "3",
+        "Error"
+      ],
+      "answer_index": 1,
+      "tags": [
+        "Variable"
+      ]
+    },
+    {
+      "question": "Predict the output.\n\nhero_name = \"Kai\"\nhero_hp = 90\nprint(hero_name, hero_hp)",
+      "type": "short_answer",
+      "expected_answer": "Kai 90",
+      "tags": [
+        "Print",
+        "Variable"
+      ]
+    },
+    {
+      "question": "Create hero_name = \"Arin\" and hero_class = \"Ranger\", then print: Arin the Ranger.",
+      "type": "coding",
+      "starter_code": "# Write your code here\n",
+      "sample_solution": "hero_name = \"Arin\"\nhero_class = \"Ranger\"\nprint(hero_name, \"the\", hero_class)",
+      "tags": [
+        "Variable",
+        "Print"
+      ]
+    },
+    {
+      "question": "Which value is a boolean?",
+      "type": "multiple_choice",
+      "options": [
+        "True",
+        "\"True\"",
+        "1",
+        "\"yes\""
+      ],
+      "answer_index": 0,
+      "tags": [
+        "DataType"
+      ]
+    },
+    {
+      "question": "What is printed?\n\nhero_alive = False\nprint(type(hero_alive))",
+      "type": "short_answer",
+      "expected_answer": "<class 'bool'>",
+      "tags": [
+        "DataType"
+      ]
+    },
+    {
+      "question": "Create hero_gold = 25 (int) and hero_ratio = 2.0 (float). Print both stats.",
+      "type": "coding",
+      "starter_code": "# Write your code here\n",
+      "sample_solution": "hero_gold = 25\nhero_ratio = 2.0\nprint(\"Gold:\", hero_gold, \"| Ratio:\", hero_ratio)",
+      "tags": [
+        "Variable",
+        "DataType",
+        "Print"
+      ]
+    },
+    {
+      "question": "Which line prints exactly: Hero: Luna | HP: 80",
+      "type": "multiple_choice",
+      "options": [
+        "print(\"Hero:\", hero_name, \"| HP:\", hero_hp)",
+        "print(\"Hero: hero_name | HP: hero_hp\")",
+        "print(hero_name + hero_hp)",
+        "print(\"Hero:\", hero_name, \"HP:\", hero_hp)"
+      ],
+      "answer_index": 0,
+      "tags": [
+        "Print"
+      ]
+    },
+    {
+      "question": "What is output?\n\nlevel = 1\nlevel = level * 2\nprint(level)",
+      "type": "short_answer",
+      "expected_answer": "2",
+      "tags": [
+        "Variable"
+      ]
+    },
+    {
+      "question": "Start with hero_hp = 40. Add 10 and print: HP: 50.",
+      "type": "coding",
+      "starter_code": "# Write your code here\n",
+      "sample_solution": "hero_hp = 40\nhero_hp += 10\nprint(\"HP:\", hero_hp)",
+      "tags": [
+        "Variable",
+        "Print"
+      ]
+    },
+    {
+      "question": "What is the data type of \"120\" (with quotes)?",
+      "type": "multiple_choice",
+      "options": [
+        "int",
+        "float",
+        "str",
+        "bool"
+      ],
+      "answer_index": 2,
+      "tags": [
+        "DataType"
+      ]
+    },
+    {
+      "question": "Predict the output.\n\nname = \"Milo\"\nprint(\"Hero:\", name)",
+      "type": "short_answer",
+      "expected_answer": "Hero: Milo",
+      "tags": [
+        "Print"
+      ]
+    },
+    {
+      "question": "Create hero_name = \"Luna\" and hero_pet = \"Wolf\". Print: Luna travels with Wolf.",
+      "type": "coding",
+      "starter_code": "# Write your code here\n",
+      "sample_solution": "hero_name = \"Luna\"\nhero_pet = \"Wolf\"\nprint(hero_name, \"travels with\", hero_pet)",
+      "tags": [
+        "Variable",
+        "Print"
+      ]
+    },
+    {
+      "question": "What will be printed?\n\nhero_hp = 75\nhero_hp = hero_hp / 2\nprint(hero_hp)",
+      "type": "short_answer",
+      "expected_answer": "37.5",
+      "tags": [
+        "Variable",
+        "DataType"
+      ]
     }
   ]
 }

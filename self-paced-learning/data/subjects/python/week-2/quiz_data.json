@@ -144,6 +144,20 @@
         "DataType",
         "Print"
       ]
+    },
+    {
+      "question": "Which variable name is valid for a hero level?",
+      "type": "multiple_choice",
+      "options": [
+        "hero level",
+        "2hero_level",
+        "hero_level",
+        "hero-level"
+      ],
+      "answer_index": 2,
+      "tags": [
+        "Variable"
+      ]
     }
   ]
 }
