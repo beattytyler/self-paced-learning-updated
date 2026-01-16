@@ -165,6 +165,15 @@
                 <i class="fas fa-list-ol"></i>
                 View All Questions
               </a>
+              <button
+                type="button"
+                class="action-btn secondary"
+                id="openAdminModalBtn"
+                onclick="openAdminModal()"
+              >
+                <i class="fas fa-user-shield"></i>
+                Add Admin
+              </button>
               <a href="/admin/export" class="action-btn tertiary">
                 <i class="fas fa-download"></i>
                 Export Data
@@ -226,6 +235,97 @@
               {% endif %}
             </div>
           </section>
+        </div>
+
+        <div
+          id="adminModal"
+          class="modal is-hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="adminModalTitle"
+        >
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 id="adminModalTitle">Add Admin Access</h3>
+              <button
+                type="button"
+                class="modal-close"
+                onclick="closeAdminModal()"
+                aria-label="Close admin modal"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+
+            <div class="admin-modal-section">
+              <h4>Promote Existing Teacher</h4>
+              <p>Select a teacher account to grant admin access.</p>
+              <div class="admin-modal-form">
+                <label for="adminTeacherSelect">Teacher account</label>
+                <select id="adminTeacherSelect"></select>
+                <div class="admin-modal-actions">
+                  <button
+                    type="button"
+                    class="action-btn primary"
+                    id="grantAdminBtn"
+                    onclick="grantAdminAccess()"
+                  >
+                    <i class="fas fa-user-shield"></i>
+                    Grant Admin
+                  </button>
+                </div>
+                <p id="adminTeacherEmpty" class="admin-modal-note is-hidden">
+                  No eligible teacher accounts available.
+                </p>
+              </div>
+            </div>
+
+            <div class="admin-modal-section">
+              <h4>Current Admins</h4>
+              <ul class="admin-list" id="currentAdminList"></ul>
+            </div>
+
+            <div class="admin-modal-divider"></div>
+
+            <div class="admin-modal-section">
+              <h4>Create New Admin</h4>
+              <p>Create a new teacher account and grant admin access.</p>
+              <div class="admin-modal-form">
+                <label for="newAdminUsername">Username</label>
+                <input
+                  type="text"
+                  id="newAdminUsername"
+                  autocomplete="off"
+                  placeholder="guildmaster"
+                />
+                <label for="newAdminEmail">Email</label>
+                <input
+                  type="email"
+                  id="newAdminEmail"
+                  autocomplete="off"
+                  placeholder="guildmaster@example.com"
+                />
+                <label for="newAdminPassword">Password</label>
+                <input
+                  type="password"
+                  id="newAdminPassword"
+                  autocomplete="new-password"
+                  placeholder="At least 8 characters"
+                />
+                <div class="admin-modal-actions">
+                  <button
+                    type="button"
+                    class="action-btn secondary"
+                    id="createAdminBtn"
+                    onclick="createAdminAccount()"
+                  >
+                    <i class="fas fa-user-plus"></i>
+                    Create Admin
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
     </div>
@@ -403,6 +503,9 @@
         transition: all 0.3s ease;
         text-align: center;
         justify-content: center;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
       }
 
       .action-btn.primary {
@@ -509,6 +612,184 @@
       .action-btn.warning:hover {
         background: linear-gradient(135deg, #e67600, #c02456);
         transform: translateY(-2px);
+      }
+
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(15, 23, 42, 0.55);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1200;
+        padding: 20px;
+      }
+
+      .modal.is-hidden {
+        display: none;
+      }
+
+      .modal-content {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 24px;
+        width: min(720px, 100%);
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.3);
+      }
+
+      .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
+
+      .modal-header h3 {
+        margin: 0;
+        color: #1a202c;
+      }
+
+      .modal-close {
+        border: none;
+        background: transparent;
+        color: #718096;
+        cursor: pointer;
+        font-size: 1.1rem;
+      }
+
+      .modal-close:hover {
+        color: #2d3748;
+      }
+
+      .admin-modal-section {
+        margin-bottom: 20px;
+      }
+
+      .admin-modal-section:last-child {
+        margin-bottom: 0;
+      }
+
+      .admin-modal-section h4 {
+        margin: 0 0 8px 0;
+        color: #2d3748;
+      }
+
+      .admin-modal-section p {
+        margin: 0 0 12px 0;
+        color: #718096;
+        font-size: 0.9rem;
+      }
+
+      .admin-modal-form {
+        display: grid;
+        gap: 12px;
+      }
+
+      .admin-modal-form label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #4a5568;
+      }
+
+      .admin-modal-form input,
+      .admin-modal-form select {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        background: #ffffff;
+      }
+
+      .admin-modal-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .admin-modal-actions .action-btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+      }
+
+      .admin-modal-note {
+        margin: 8px 0 0 0;
+        color: #718096;
+        font-size: 0.85rem;
+      }
+
+      .admin-modal-note.is-hidden {
+        display: none;
+      }
+
+      .admin-modal-divider {
+        border-top: 1px solid #e2e8f0;
+        margin: 20px 0;
+      }
+
+      .admin-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 8px;
+      }
+
+      .admin-list li {
+        background: #f7fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 10px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .admin-entry-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .admin-list .admin-name {
+        color: #2d3748;
+        font-weight: 600;
+      }
+
+      .admin-list .admin-email {
+        color: #718096;
+        font-size: 0.85rem;
+      }
+
+      .admin-entry-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .admin-remove-btn {
+        background: #e53e3e;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .admin-remove-btn:hover {
+        background: #c53030;
+      }
+
+      .admin-remove-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
       }
 
       @media (max-width: 768px) {
@@ -751,6 +1032,308 @@
           }
         }, 4000);
       }
+
+      function openAdminModal() {
+        const modal = document.getElementById("adminModal");
+        if (!modal) {
+          return;
+        }
+        modal.classList.remove("is-hidden");
+        document.body.style.overflow = "hidden";
+        loadAdminCandidates();
+      }
+
+      function closeAdminModal() {
+        const modal = document.getElementById("adminModal");
+        if (!modal) {
+          return;
+        }
+        modal.classList.add("is-hidden");
+        document.body.style.overflow = "";
+      }
+
+      function loadAdminCandidates() {
+        const teacherSelect = document.getElementById("adminTeacherSelect");
+        const adminList = document.getElementById("currentAdminList");
+        const emptyNote = document.getElementById("adminTeacherEmpty");
+        const grantBtn = document.getElementById("grantAdminBtn");
+
+        if (!teacherSelect || !adminList) {
+          return;
+        }
+
+        teacherSelect.innerHTML = "";
+        adminList.innerHTML = "";
+
+        fetch("/admin/admins")
+          .then((response) => response.json())
+          .then((data) => {
+            if (!data.success) {
+              throw new Error(data.error || "Unable to load admin accounts.");
+            }
+
+            const teachers = Array.isArray(data.teachers) ? data.teachers : [];
+            const admins = Array.isArray(data.admins) ? data.admins : [];
+            const canManageAdmins = !!data.can_manage_admins;
+            const currentUserId = data.current_user_id;
+            const superAdminId = data.super_admin_id;
+
+            if (teachers.length) {
+              teachers.forEach((teacher) => {
+                const option = document.createElement("option");
+                option.value = teacher.id;
+                option.textContent = `${teacher.username} (${teacher.email})`;
+                teacherSelect.appendChild(option);
+              });
+              teacherSelect.disabled = false;
+              if (grantBtn) {
+                grantBtn.disabled = false;
+              }
+              if (emptyNote) {
+                emptyNote.classList.add("is-hidden");
+              }
+            } else {
+              const option = document.createElement("option");
+              option.value = "";
+              option.textContent = "No available teacher accounts";
+              teacherSelect.appendChild(option);
+              teacherSelect.disabled = true;
+              if (grantBtn) {
+                grantBtn.disabled = true;
+              }
+              if (emptyNote) {
+                emptyNote.classList.remove("is-hidden");
+              }
+            }
+
+            if (admins.length) {
+              admins.forEach((admin) => {
+                const item = document.createElement("li");
+                const info = document.createElement("div");
+                info.className = "admin-entry-info";
+                const name = document.createElement("span");
+                name.className = "admin-name";
+                name.textContent = admin.username || "Unknown";
+                const email = document.createElement("span");
+                email.className = "admin-email";
+                email.textContent = admin.email || "";
+                info.appendChild(name);
+                info.appendChild(email);
+                item.appendChild(info);
+
+                const canRemove =
+                  canManageAdmins &&
+                  admin.id &&
+                  admin.id !== currentUserId &&
+                  admin.id !== superAdminId;
+
+                if (canRemove) {
+                  const actions = document.createElement("div");
+                  actions.className = "admin-entry-actions";
+                  const removeBtn = document.createElement("button");
+                  removeBtn.type = "button";
+                  removeBtn.className = "admin-remove-btn";
+                  removeBtn.textContent = "Remove";
+                  removeBtn.addEventListener("click", () =>
+                    revokeAdminAccess(admin.id, admin.username)
+                  );
+                  actions.appendChild(removeBtn);
+                  item.appendChild(actions);
+                }
+
+                adminList.appendChild(item);
+              });
+            } else {
+              const item = document.createElement("li");
+              const name = document.createElement("span");
+              name.className = "admin-name";
+              name.textContent = "No admins found.";
+              item.appendChild(name);
+              adminList.appendChild(item);
+            }
+          })
+          .catch((error) => {
+            console.error("Error loading admin list:", error);
+            showNotification(
+              error.message || "Unable to load admin accounts.",
+              "error"
+            );
+            if (emptyNote) {
+              emptyNote.classList.remove("is-hidden");
+            }
+            if (grantBtn) {
+              grantBtn.disabled = true;
+            }
+          });
+      }
+
+      function grantAdminAccess() {
+        const teacherSelect = document.getElementById("adminTeacherSelect");
+        const grantBtn = document.getElementById("grantAdminBtn");
+
+        if (!teacherSelect || !grantBtn) {
+          return;
+        }
+
+        const teacherId = teacherSelect.value;
+        if (!teacherId) {
+          showNotification("Select a teacher account first.", "error");
+          return;
+        }
+
+        const originalLabel = grantBtn.innerHTML;
+        grantBtn.disabled = true;
+        grantBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Granting...';
+
+        fetch("/admin/admins/grant", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ teacher_id: teacherId }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              showNotification(data.message || "Admin access granted.", "success");
+              loadAdminCandidates();
+            } else {
+              throw new Error(data.error || "Unable to grant admin access.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error granting admin:", error);
+            showNotification(
+              error.message || "Unable to grant admin access.",
+              "error"
+            );
+          })
+          .finally(() => {
+            grantBtn.disabled = false;
+            grantBtn.innerHTML = originalLabel;
+          });
+      }
+
+      function createAdminAccount() {
+        const usernameInput = document.getElementById("newAdminUsername");
+        const emailInput = document.getElementById("newAdminEmail");
+        const passwordInput = document.getElementById("newAdminPassword");
+        const createBtn = document.getElementById("createAdminBtn");
+
+        if (!usernameInput || !emailInput || !passwordInput || !createBtn) {
+          return;
+        }
+
+        const username = usernameInput.value.trim();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        if (!username || !email || !password) {
+          showNotification(
+            "Username, email, and password are required.",
+            "error"
+          );
+          return;
+        }
+
+        if (password.length < 8) {
+          showNotification("Password must be at least 8 characters.", "error");
+          return;
+        }
+
+        const originalLabel = createBtn.innerHTML;
+        createBtn.disabled = true;
+        createBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating...';
+
+        fetch("/admin/admins/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username,
+            email: email,
+            password: password,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              showNotification(data.message || "Admin account created.", "success");
+              usernameInput.value = "";
+              emailInput.value = "";
+              passwordInput.value = "";
+              loadAdminCandidates();
+            } else {
+              throw new Error(data.error || "Unable to create admin account.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error creating admin:", error);
+            showNotification(
+              error.message || "Unable to create admin account.",
+              "error"
+            );
+          })
+          .finally(() => {
+            createBtn.disabled = false;
+            createBtn.innerHTML = originalLabel;
+          });
+      }
+
+      function revokeAdminAccess(adminId, username) {
+        if (!adminId) {
+          return;
+        }
+
+        const name = username || "this admin";
+        if (!confirm(`Remove admin access from ${name}?`)) {
+          return;
+        }
+
+        fetch("/admin/admins/revoke", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ admin_id: adminId }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              showNotification(
+                data.message || "Admin access removed.",
+                "success"
+              );
+              loadAdminCandidates();
+            } else {
+              throw new Error(data.error || "Unable to remove admin access.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error removing admin:", error);
+            showNotification(
+              error.message || "Unable to remove admin access.",
+              "error"
+            );
+          });
+      }
+
+      document.addEventListener("click", (event) => {
+        const modal = document.getElementById("adminModal");
+        if (!modal || modal.classList.contains("is-hidden")) {
+          return;
+        }
+        if (event.target === modal) {
+          closeAdminModal();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeAdminModal();
+        }
+      });
     </script>
   </body>
 </html>

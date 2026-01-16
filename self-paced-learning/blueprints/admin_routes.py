@@ -14,11 +14,12 @@ from flask import (
     Response,
     session,
 )
-from services import get_admin_service, get_data_service
+from services import get_admin_service, get_data_service, get_user_service
 from typing import Any, Dict, List
 import os
 import json
 from datetime import datetime
+from models import User
 
 # Create the Blueprint
 admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
@@ -83,6 +84,259 @@ def admin_dashboard():
     except Exception as e:
         print(f"Error loading admin dashboard: {e}")
         return f"Error loading admin dashboard: {e}", 500
+
+
+# ============================================================================
+# ADMIN ACCOUNT MANAGEMENT
+# ============================================================================
+
+
+@admin_bp.route("/admins", methods=["GET"])
+def admin_list_admins():
+    """Return available teacher accounts and current admins."""
+    try:
+        user_service = get_user_service()
+        current_user_id = session.get("user_id")
+        current_user = (
+            user_service.get_user(current_user_id) if current_user_id else None
+        )
+        can_manage_admins = user_service.is_super_admin_user(current_user)
+        super_admin = User.query.filter_by(username="admin").first()
+        super_admin_id = super_admin.id if super_admin else None
+        teachers = (
+            User.query.filter_by(role="teacher")
+            .order_by(User.username.asc())
+            .all()
+        )
+
+        admin_entries = []
+        teacher_entries = []
+
+        for teacher in teachers:
+            entry = {
+                "id": teacher.id,
+                "username": teacher.username,
+                "email": teacher.email,
+            }
+            if user_service.is_admin_user(teacher):
+                admin_entries.append(entry)
+            else:
+                teacher_entries.append(entry)
+
+        admin_entries.sort(key=lambda item: (item.get("username") or "").lower())
+        teacher_entries.sort(key=lambda item: (item.get("username") or "").lower())
+
+        return jsonify(
+            {
+                "success": True,
+                "admins": admin_entries,
+                "teachers": teacher_entries,
+                "can_manage_admins": can_manage_admins,
+                "current_user_id": current_user_id,
+                "super_admin_id": super_admin_id,
+            }
+        )
+    except Exception as exc:
+        print(f"Error loading admin candidates: {exc}")
+        return jsonify({"success": False, "error": str(exc)}), 500
+
+
+@admin_bp.route("/admins/grant", methods=["POST"])
+def admin_grant_admin():
+    """Grant admin access to an existing teacher account."""
+    try:
+        payload = request.get_json(silent=True) or {}
+        teacher_id = payload.get("teacher_id")
+        try:
+            teacher_id = int(teacher_id)
+        except (TypeError, ValueError):
+            return (
+                jsonify({"success": False, "error": "Teacher ID is required."}),
+                400,
+            )
+
+        teacher = User.query.get(teacher_id)
+        if not teacher or teacher.role != "teacher":
+            return (
+                jsonify({"success": False, "error": "Teacher account not found."}),
+                404,
+            )
+
+        user_service = get_user_service()
+        if user_service.is_admin_user(teacher):
+            return jsonify(
+                {
+                    "success": True,
+                    "message": f"{teacher.username} already has admin access.",
+                }
+            )
+
+        if not user_service.grant_admin_access(teacher.id):
+            return (
+                jsonify({"success": False, "error": "Unable to grant admin access."}),
+                500,
+            )
+
+        return jsonify(
+            {
+                "success": True,
+                "message": f"{teacher.username} now has admin access.",
+                "admin": {
+                    "id": teacher.id,
+                    "username": teacher.username,
+                    "email": teacher.email,
+                },
+            }
+        )
+    except Exception as exc:
+        print(f"Error granting admin access: {exc}")
+        return jsonify({"success": False, "error": str(exc)}), 500
+
+
+@admin_bp.route("/admins/revoke", methods=["POST"])
+def admin_revoke_admin():
+    """Revoke admin access (super admin only)."""
+    try:
+        payload = request.get_json(silent=True) or {}
+        admin_id = payload.get("admin_id")
+        try:
+            admin_id = int(admin_id)
+        except (TypeError, ValueError):
+            return (
+                jsonify({"success": False, "error": "Admin ID is required."}),
+                400,
+            )
+
+        user_service = get_user_service()
+        current_user_id = session.get("user_id")
+        current_user = (
+            user_service.get_user(current_user_id) if current_user_id else None
+        )
+
+        if not user_service.is_super_admin_user(current_user):
+            return (
+                jsonify(
+                    {
+                        "success": False,
+                        "error": "Only the original admin can remove admin access.",
+                    }
+                ),
+                403,
+            )
+
+        if current_user_id and admin_id == current_user_id:
+            return (
+                jsonify(
+                    {
+                        "success": False,
+                        "error": "You cannot remove your own admin access.",
+                    }
+                ),
+                400,
+            )
+
+        target_user = User.query.get(admin_id)
+        if not target_user or target_user.role != "teacher":
+            return (
+                jsonify({"success": False, "error": "Admin account not found."}),
+                404,
+            )
+
+        if user_service.is_super_admin_user(target_user):
+            return (
+                jsonify(
+                    {
+                        "success": False,
+                        "error": "The original admin cannot be removed.",
+                    }
+                ),
+                400,
+            )
+
+        if not user_service.is_admin_user(target_user):
+            return (
+                jsonify(
+                    {
+                        "success": False,
+                        "error": "User does not have admin access.",
+                    }
+                ),
+                400,
+            )
+
+        if not user_service.revoke_admin_access(admin_id):
+            return (
+                jsonify(
+                    {
+                        "success": False,
+                        "error": "Unable to remove admin access.",
+                    }
+                ),
+                500,
+            )
+
+        return jsonify(
+            {
+                "success": True,
+                "message": f"Admin access removed for {target_user.username}.",
+            }
+        )
+    except Exception as exc:
+        print(f"Error revoking admin access: {exc}")
+        return jsonify({"success": False, "error": str(exc)}), 500
+
+
+@admin_bp.route("/admins/create", methods=["POST"])
+def admin_create_admin():
+    """Create a new admin account."""
+    try:
+        payload = request.get_json(silent=True) or {}
+        username = (payload.get("username") or "").strip()
+        email = (payload.get("email") or "").strip()
+        password = payload.get("password") or ""
+
+        if not username or not email or not password:
+            return (
+                jsonify(
+                    {
+                        "success": False,
+                        "error": "Username, email, and password are required.",
+                    }
+                ),
+                400,
+            )
+
+        user_service = get_user_service()
+        result = user_service.register_user(username, email, password, "teacher")
+        if not result.get("success"):
+            return jsonify(result), 400
+
+        user = result.get("user")
+        if not user or not user_service.grant_admin_access(user.id):
+            return (
+                jsonify(
+                    {
+                        "success": False,
+                        "error": "Account created but admin access could not be granted.",
+                    }
+                ),
+                500,
+            )
+
+        return jsonify(
+            {
+                "success": True,
+                "message": f"{user.username} created with admin access.",
+                "admin": {
+                    "id": user.id,
+                    "username": user.username,
+                    "email": user.email,
+                },
+            }
+        )
+    except Exception as exc:
+        print(f"Error creating admin: {exc}")
+        return jsonify({"success": False, "error": str(exc)}), 500
 
 
 @admin_bp.route("/overview/lessons")

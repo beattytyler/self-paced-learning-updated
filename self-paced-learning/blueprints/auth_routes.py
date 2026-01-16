@@ -54,7 +54,7 @@ def login():
         user = user_service.authenticate(email, password)
 
         if user:
-            is_admin = user.username.lower() == "admin"
+            is_admin = user_service.is_admin_user(user)
             session["user_id"] = user.id
             session["username"] = user.username
             session["is_admin"] = is_admin

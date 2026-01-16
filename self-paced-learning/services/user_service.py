@@ -1,5 +1,7 @@
 """User and class management service."""
 
+import json
+import os
 import random
 import string
 from typing import Dict, List, Optional
@@ -15,6 +17,7 @@ class UserService:
     """Encapsulates authentication and teacher/class management logic."""
 
     CODE_LENGTH = 6
+    ADMIN_STORE_FILENAME = "admin_users.json"
 
     def _generate_class_code(self) -> str:
         """Generate a random alphanumeric class code."""
@@ -27,6 +30,98 @@ class UserService:
             candidate = self._generate_class_code()
             if not User.query.filter_by(code=candidate).first():
                 return candidate
+
+    def _get_admin_store_path(self) -> str:
+        """Return the path to the admin user store."""
+        if current_app:
+            base_dir = current_app.instance_path
+        else:
+            base_dir = os.path.join(os.getcwd(), "instance")
+        os.makedirs(base_dir, exist_ok=True)
+        return os.path.join(base_dir, self.ADMIN_STORE_FILENAME)
+
+    def _load_admin_store(self) -> Dict[str, List[int]]:
+        """Load admin user IDs from disk."""
+        path = self._get_admin_store_path()
+        if not os.path.exists(path):
+            return {"admins": []}
+
+        try:
+            with open(path, "r", encoding="utf-8") as handle:
+                payload = json.load(handle) or {}
+        except Exception as exc:
+            if current_app:
+                current_app.logger.exception(
+                    "Failed to read admin user store: %s", exc
+                )
+            return {"admins": []}
+
+        admins = payload.get("admins")
+        if not isinstance(admins, list):
+            admins = []
+        return {"admins": admins}
+
+    def _save_admin_store(self, admin_ids: List[int]) -> None:
+        """Persist admin user IDs to disk."""
+        path = self._get_admin_store_path()
+        unique_ids = sorted({int(value) for value in admin_ids if value})
+        payload = {"admins": unique_ids}
+        with open(path, "w", encoding="utf-8") as handle:
+            json.dump(payload, handle, indent=2)
+
+    def get_admin_user_ids(self) -> List[int]:
+        """Return stored admin user IDs."""
+        payload = self._load_admin_store()
+        admin_ids: List[int] = []
+        for value in payload.get("admins", []):
+            try:
+                admin_ids.append(int(value))
+            except (TypeError, ValueError):
+                continue
+        return sorted(set(admin_ids))
+
+    def grant_admin_access(self, user_id: int) -> bool:
+        """Grant admin access to a user ID."""
+        if not user_id:
+            return False
+        admin_ids = set(self.get_admin_user_ids())
+        if user_id in admin_ids:
+            return True
+        admin_ids.add(int(user_id))
+        self._save_admin_store(list(admin_ids))
+        return True
+
+    def revoke_admin_access(self, user_id: int) -> bool:
+        """Remove admin access for a user ID."""
+        if not user_id:
+            return False
+        admin_ids = set(self.get_admin_user_ids())
+        try:
+            admin_id = int(user_id)
+        except (TypeError, ValueError):
+            return False
+        if admin_id not in admin_ids:
+            return True
+        admin_ids.remove(admin_id)
+        self._save_admin_store(list(admin_ids))
+        return True
+
+    def is_admin_user(self, user: Optional[User]) -> bool:
+        """Return True if the user should be treated as an admin."""
+        if not user:
+            return False
+        if (user.username or "").strip().lower() == "admin":
+            return True
+        try:
+            return user.id in set(self.get_admin_user_ids())
+        except Exception:
+            return False
+
+    def is_super_admin_user(self, user: Optional[User]) -> bool:
+        """Return True if the user is the original admin account."""
+        if not user:
+            return False
+        return (user.username or "").strip().lower() == "admin"
 
     # --------------------------------------------------------------------- #
     # Authentication
