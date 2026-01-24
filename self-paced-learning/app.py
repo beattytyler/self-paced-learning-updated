@@ -17,7 +17,7 @@ from flask import Flask, session, render_template, jsonify
 from dotenv import load_dotenv
 import werkzeug
 
-from extensions import db, migrate
+from extensions import db, migrate, cache
 from models import Class, ClassRegistration, LessonProgress, User  # noqa: F401
 
 # Import our refactored services and blueprints
@@ -52,6 +52,10 @@ if not app.secret_key:
         "FLASK_KEY not set, using a default secret key. Please set this in your .env file for production."
     )
     app.secret_key = "your_default_secret_key_for_development_12345_v2"
+
+app.config.setdefault("CACHE_TYPE", os.getenv("CACHE_TYPE", "SimpleCache"))
+app.config.setdefault("CACHE_DEFAULT_TIMEOUT", int(os.getenv("CACHE_TTL", "60")))
+cache.init_app(app)
 
 # Initialize data path
 DATA_ROOT_PATH = os.path.join(os.path.dirname(__file__), "data")

@@ -17,6 +17,7 @@ from flask import (
     jsonify,
 )
 from services import get_data_service, get_progress_service, get_ai_service
+from extensions import cache
 from typing import Dict, List, Optional, Any, Set
 
 # Create the Blueprint
@@ -130,12 +131,32 @@ def expand_tag_keys(tag_value: Any) -> Set[str]:
     return keys
 
 
+
+
+# Cache key helpers (per-user to avoid leaking personalized data)
+def _subject_selection_cache_key() -> str:
+    user_id = session.get("user_id") or "anon"
+    role = session.get("role") or "none"
+    username = session.get("username") or "anon"
+    is_admin = session.get("is_admin", False)
+    return f"subject_selection:{user_id}:{role}:{username}:{int(bool(is_admin))}"
+
+def _subject_page_cache_key() -> str:
+    user_id = session.get("user_id") or "anon"
+    role = session.get("role") or "none"
+    username = session.get("username") or "anon"
+    is_admin = session.get("is_admin", False)
+    subject = (request.view_args or {}).get("subject", "")
+    return f"subject_page:{subject}:{user_id}:{role}:{username}:{int(bool(is_admin))}"
+
+
 # ============================================================================
 # MAIN APPLICATION ROUTES
 # ============================================================================
 
 
 @main_bp.route("/")
+@cache.cached(timeout=60, key_prefix=_subject_selection_cache_key)
 def subject_selection():
     """New home page showing all available subjects."""
     try:
@@ -205,6 +226,7 @@ def subject_selection():
 
 
 @main_bp.route("/subjects/<subject>")
+@cache.cached(timeout=60, key_prefix=_subject_page_cache_key)
 def subject_page(subject):
     """Display subtopics for a specific subject."""
     try:
