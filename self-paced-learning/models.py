@@ -17,6 +17,7 @@ class User(db.Model):
     password_hash = db.Column(db.String(255), nullable=False)
     role = db.Column(Enum("student", "teacher", name="user_roles"), nullable=False)
     code = db.Column(db.String(10), nullable=True, unique=True)
+    token_balance = db.Column(db.Integer, nullable=False, default=10)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     classes = db.relationship("Class", back_populates="teacher", lazy=True)
@@ -92,7 +93,9 @@ class LessonProgress(db.Model):
         Enum("lesson", "video", name="progress_item_types"), nullable=False
     )
     completed = db.Column(db.Boolean, nullable=False, default=True)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    updated_at = db.Column(
+        db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
+    )
 
     student = db.relationship("User", back_populates="lesson_progress")
 

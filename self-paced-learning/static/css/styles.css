@@ -1652,6 +1652,155 @@ body.quiz-page {
   box-shadow: 0 12px 25px rgba(148, 163, 184, 0.28);
 }
 
+.ai-analysis-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease,
+    border-color 0.2s ease;
+  color: #0f172a;
+  background: linear-gradient(
+    135deg,
+    rgba(16, 185, 129, 0.2),
+    rgba(5, 150, 105, 0.25)
+  );
+}
+
+.ai-analysis-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 18px rgba(5, 150, 105, 0.18);
+}
+
+.token-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(251, 191, 36, 0.18);
+  color: #92400e;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.quiz-token-badge {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 950;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.15);
+}
+
+.ai-analysis-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 1100;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.ai-analysis-modal.active {
+  display: flex;
+}
+
+.ai-analysis-modal-content {
+  background: #ffffff;
+  border-radius: 18px;
+  width: min(720px, 95vw);
+  max-height: 75vh;
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ai-analysis-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  background: #0f172a;
+  color: #fff;
+}
+
+.ai-analysis-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ai-analysis-close {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.ai-analysis-body {
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: hidden;
+}
+
+.ai-analysis-preview {
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  padding: 12px;
+}
+
+.ai-analysis-preview pre {
+  margin: 8px 0 0;
+  max-height: 240px;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+.ai-analysis-error {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.ai-analysis-result {
+  background: #ecfeff;
+  border: 1px solid #bae6fd;
+  border-radius: 12px;
+  padding: 12px;
+  white-space: pre-wrap;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.ai-analysis-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 22px 22px;
+}
+
+.toggle-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .run-code-btn:hover,
 .clear-output-btn:hover,
 .show-solution-btn:hover,

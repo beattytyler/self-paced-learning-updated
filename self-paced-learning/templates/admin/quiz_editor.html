@@ -510,6 +510,13 @@
                 >
                 <div class="error-message" id="sampleSolutionError"></div>
               </div>
+              <div class="form-group">
+                <label for="allowAiAnalysis">AI Analysis</label>
+                <div class="toggle-row">
+                  <input type="checkbox" id="allowAiAnalysis" checked />
+                  <span>Allow students to request AI analysis</span>
+                </div>
+              </div>
             </div>
 
             <!-- Short Answer Question -->
@@ -2281,6 +2288,11 @@
           resetOptions();
           clearErrors();
 
+      const allowAiToggle = document.getElementById('allowAiAnalysis');
+      if (allowAiToggle) {
+        allowAiToggle.checked = true;
+      }
+
           // Clear content blocks
           document.getElementById('questionContentBlocks').innerHTML = '';
 
@@ -2377,6 +2389,10 @@
           } else if (question.type === 'coding') {
               document.getElementById('starterCode').value = question.starter_code || '';
               document.getElementById('sampleSolution').value = question.sample_solution || '';
+        const allowAiToggle = document.getElementById('allowAiAnalysis');
+        if (allowAiToggle) {
+          allowAiToggle.checked = question.allow_ai_analysis !== false;
+        }
           }
       }
 
@@ -2753,6 +2769,7 @@
       function validateCoding(questionData) {
           const starterCode = document.getElementById('starterCode').value;
           const sampleSolution = document.getElementById('sampleSolution').value;
+      const allowAiToggle = document.getElementById('allowAiAnalysis');
 
           if (starterCode.length > 5000) {
               showError('starterCode', 'Starter code is too long (max 5000 characters)');
@@ -2766,6 +2783,7 @@
 
           questionData.starter_code = starterCode;
           questionData.sample_solution = sampleSolution;
+      questionData.allow_ai_analysis = allowAiToggle ? allowAiToggle.checked : true;
           return true;
       }
 
@@ -2928,6 +2946,9 @@
                                   <pre>${question.sample_solution}</pre>
                               </div>
                           ` : ''}
+              <div class="ai-toggle-indicator">
+                <strong>AI Analysis:</strong> ${question.allow_ai_analysis !== false ? 'Enabled' : 'Disabled'}
+              </div>
                       </div>
                   `;
               }

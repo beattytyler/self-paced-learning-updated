@@ -212,6 +212,51 @@ class AIService:
                 return content_value
         return None
 
+    def analyze_code_submission(
+        self,
+        code: str,
+        question: Optional[str] = None,
+        expected_output: Optional[str] = None,
+        sample_solution: Optional[str] = None,
+        subject: Optional[str] = None,
+        subtopic: Optional[str] = None,
+    ) -> Optional[str]:
+        """Analyze a student's code submission and return feedback."""
+        if not self.is_available():
+            return None
+
+        prompt_parts = [
+            "Analyze the student's Python code for correctness and provide helpful feedback.",
+            "Focus on logic issues, edge cases, and clarity.",
+            "Provide concise suggestions and avoid giving the full solution.",
+        ]
+
+        if subject or subtopic:
+            topic = " / ".join(filter(None, [subject, subtopic]))
+            prompt_parts.append(f"Topic: {topic}")
+
+        if question:
+            prompt_parts.append(f"Question: {question}")
+
+        if expected_output:
+            prompt_parts.append(f"Expected Output: {expected_output}")
+
+        if sample_solution:
+            prompt_parts.append("Sample Solution (reference only):")
+            prompt_parts.append(sample_solution)
+
+        prompt_parts.append("Student Code:")
+        prompt_parts.append(code)
+
+        prompt = "\n\n".join(prompt_parts)
+
+        return self.call_openai_api(
+            prompt=prompt,
+            system_message="You are a supportive programming tutor.",
+            max_tokens=700,
+            temperature=0.2,
+        )
+
     # ============================================================================
     # QUIZ ANALYSIS AND RECOMMENDATIONS
     # ============================================================================
@@ -733,9 +778,7 @@ Keep the response concise and student-friendly.
             print("DEBUG: generate_remedial_quiz found no target topics")
             return []
 
-        print(
-            f"DEBUG: generate_remedial_quiz extracted target_topics: {target_topics}"
-        )
+        print(f"DEBUG: generate_remedial_quiz extracted target_topics: {target_topics}")
         return self.select_remedial_questions(question_pool, list(target_topics))
 
     def select_remedial_questions(

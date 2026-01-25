@@ -92,6 +92,8 @@
       .actions {
         display: flex;
         gap: 0.75rem;
+        flex-wrap: wrap;
+        align-items: center;
       }
       .btn {
         padding: 0.6rem 1rem;
@@ -117,6 +119,39 @@
       .btn-remove {
         background: #fee2e2;
         color: #b91c1c;
+      }
+      .token-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #1e293b;
+        background: #e0f2fe;
+        border-radius: 999px;
+        padding: 0.35rem 0.75rem;
+      }
+      .token-form {
+        display: inline-flex;
+        gap: 0.5rem;
+        align-items: center;
+        background: #eef2ff;
+        padding: 0.4rem 0.6rem;
+        border-radius: 12px;
+      }
+      .token-form input,
+      .token-form select {
+        border: 1px solid #c7d2fe;
+        border-radius: 8px;
+        padding: 0.35rem 0.5rem;
+        font-size: 0.9rem;
+      }
+      .token-form input {
+        width: 70px;
+      }
+      .btn-token {
+        background: #312e81;
+        color: #fff;
       }
       .empty-state {
         text-align: center;
@@ -169,15 +204,14 @@
 
     <main>
       <div class="card">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            <div class="flash-container">
-              {% for category, message in messages %}
-                <div class="flash-message {{ category }}">{{ message }}</div>
-              {% endfor %}
-            </div>
-          {% endif %}
-        {% endwith %}
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %}
+        <div class="flash-container">
+          {% for category, message in messages %}
+          <div class="flash-message {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+        {% endif %} {% endwith %}
 
         <div class="teacher-code">
           <span><i class="fas fa-id-card"></i> Share your teacher code</span>
@@ -185,38 +219,69 @@
         </div>
 
         {% if students %}
-          <div class="students-list">
-            {% for student in students %}
-              <div class="student-item">
-                <div class="student-details">
-                  <span class="student-name">{{ student.username }}</span>
-                  <span class="student-email">{{ student.email }}</span>
-                </div>
+        <div class="students-list">
+          {% for student in students %}
+          <div class="student-item">
+            <div class="student-details">
+              <span class="student-name">{{ student.username }}</span>
+              <span class="student-email">{{ student.email }}</span>
+              <span class="token-badge">
+                <i class="fas fa-coins"></i>
+                {{ student.token_balance or 0 }} tokens
+              </span>
+            </div>
 
-                <div class="actions">
-                  <a
-                    class="btn btn-progress"
-                    href="{{ url_for('teacher.student_progress', student_id=student.id) }}"
-                  >
-                    <i class="fas fa-chart-line"></i> View Progress
-                  </a>
+            <div class="actions">
+              <a
+                class="btn btn-progress"
+                href="{{ url_for('teacher.student_progress', student_id=student.id) }}"
+              >
+                <i class="fas fa-chart-line"></i> View Progress
+              </a>
 
-                  <form
-                    method="post"
-                    action="{{ url_for('teacher.remove_student', student_id=student.id) }}"
-                  >
-                    <button class="btn btn-remove" type="submit">
-                      <i class="fas fa-user-minus"></i> Remove
-                    </button>
-                  </form>
-                </div>
-              </div>
-            {% endfor %}
+              <form
+                class="token-form"
+                method="post"
+                action="{{ url_for('teacher.adjust_tokens') }}"
+              >
+                <input
+                  type="hidden"
+                  name="student_id"
+                  value="{{ student.id }}"
+                />
+                <input
+                  type="number"
+                  name="amount"
+                  min="1"
+                  value="1"
+                  aria-label="Token amount"
+                  required
+                />
+                <select name="action" aria-label="Token action">
+                  <option value="add">Add</option>
+                  <option value="remove">Remove</option>
+                </select>
+                <button class="btn btn-token" type="submit">
+                  <i class="fas fa-coins"></i> Update
+                </button>
+              </form>
+
+              <form
+                method="post"
+                action="{{ url_for('teacher.remove_student', student_id=student.id) }}"
+              >
+                <button class="btn btn-remove" type="submit">
+                  <i class="fas fa-user-minus"></i> Remove
+                </button>
+              </form>
+            </div>
           </div>
+          {% endfor %}
+        </div>
         {% else %}
-          <div class="empty-state">
-            <p>No students enrolled yet. Share your code to invite them.</p>
-          </div>
+        <div class="empty-state">
+          <p>No students enrolled yet. Share your code to invite them.</p>
+        </div>
         {% endif %}
 
         <div class="back-link">

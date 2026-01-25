@@ -57,6 +57,12 @@
               </span>
             </div>
           </div>
+          {% if token_balance is not none %}
+          <div class="token-badge" id="tokenBalanceBadge" data-balance="{{ token_balance }}">
+            <i class="fas fa-coins"></i>
+            <span id="tokenBalanceValue">{{ token_balance }}</span>
+          </div>
+          {% endif %}
         </div>
       </div>
     </header>
@@ -1601,6 +1607,8 @@
       let currentSubject = "";
       let currentSubtopic = "";
       let currentLesson = null;
+  const initialTokenBalance = {{ token_balance if token_balance is not none else 0 }};
+  let currentTokenBalance = initialTokenBalance;
 
       const lessonCompletionCache = new Map();
       const videoCompletionCache = new Map();
@@ -1944,6 +1952,11 @@
                         <button class="clear-output-btn" onclick="clearOutput('${blockId}')">
                           <i class="fas fa-trash"></i> Clear Output
                         </button>
+                        ${
+                          item.allow_ai_analysis !== false
+                            ? `<button class="ai-analysis-btn" onclick="openAiAnalysisModal('${blockId}')"><i class="fas fa-robot"></i> AI Analysis</button>`
+                            : ""
+                        }
                         ${
                           item.solution
                             ? `<button class="show-solution-btn" onclick="showSolution('${blockId}')"><i class="fas fa-lightbulb"></i> Show Solution</button>`
@@ -3199,6 +3212,124 @@ __builtins__.input = lambda msg="": str(prompt(msg) or "")
         }
       }
 
+      function calculateTokenCost(code) {
+        const length = code ? code.length : 0;
+        if (length <= 0) return 0;
+        const rawTokens = length / 250;
+        const rounded = Math.floor(rawTokens + 0.5);
+        return Math.max(1, rounded);
+      }
+
+      function updateTokenBadge(balance) {
+        const badge = document.getElementById("tokenBalanceBadge");
+        const value = document.getElementById("tokenBalanceValue");
+        if (!badge || !value) return;
+        value.textContent = balance;
+        badge.dataset.balance = balance;
+      }
+
+      let activeAiBlockId = null;
+
+      function openAiAnalysisModal(blockId) {
+        const modal = document.getElementById("aiAnalysisModal");
+        const codeElement = document.getElementById(`code-editor-${blockId}`);
+        if (!modal || !codeElement) return;
+
+        const code = codeElement.value || "";
+        const cost = calculateTokenCost(code);
+
+        activeAiBlockId = blockId;
+
+        const costEl = document.getElementById("aiAnalysisTokenCost");
+        const balanceEl = document.getElementById("aiAnalysisTokenBalance");
+        const previewEl = document.getElementById("aiAnalysisCodePreview");
+        const errorEl = document.getElementById("aiAnalysisError");
+        const resultEl = document.getElementById("aiAnalysisResult");
+        const confirmBtn = document.getElementById("aiAnalysisConfirm");
+
+        if (costEl) costEl.textContent = cost;
+        if (balanceEl) balanceEl.textContent = currentTokenBalance;
+        if (previewEl) previewEl.textContent = code || "(No code entered yet)";
+        if (errorEl) errorEl.textContent = "";
+        if (resultEl) resultEl.textContent = "";
+
+        const insufficient = cost > currentTokenBalance || cost <= 0;
+        if (confirmBtn) {
+          confirmBtn.disabled = insufficient;
+        }
+        if (errorEl && insufficient) {
+          errorEl.textContent = cost <= 0
+            ? "Enter some code to analyze."
+            : "Not enough tokens to run analysis.";
+        }
+
+        modal.classList.add("active");
+      }
+
+      function closeAiAnalysisModal() {
+        const modal = document.getElementById("aiAnalysisModal");
+        if (modal) {
+          modal.classList.remove("active");
+        }
+        activeAiBlockId = null;
+      }
+
+      async function confirmAiAnalysis() {
+        if (!activeAiBlockId) return;
+
+        const codeElement = document.getElementById(
+          `code-editor-${activeAiBlockId}`
+        );
+        if (!codeElement) return;
+
+        const code = codeElement.value || "";
+        const cost = calculateTokenCost(code);
+
+        const resultEl = document.getElementById("aiAnalysisResult");
+        const errorEl = document.getElementById("aiAnalysisError");
+        const confirmBtn = document.getElementById("aiAnalysisConfirm");
+
+        if (confirmBtn) {
+          confirmBtn.disabled = true;
+          confirmBtn.textContent = "Analyzing...";
+        }
+        if (errorEl) errorEl.textContent = "";
+        if (resultEl) resultEl.textContent = "";
+
+        try {
+          const response = await fetch("/api/ai/code-analysis", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              code,
+              allow_ai_analysis: true,
+              subject: currentSubject,
+              subtopic: currentSubtopic,
+            }),
+          });
+
+          const data = await response.json();
+          if (!response.ok) {
+            throw new Error(data.error || "AI analysis failed.");
+          }
+
+          if (resultEl) {
+            resultEl.textContent = data.analysis || "No feedback returned.";
+          }
+          currentTokenBalance = data.token_balance ?? currentTokenBalance - cost;
+          updateTokenBadge(currentTokenBalance);
+        } catch (err) {
+          if (errorEl) {
+            errorEl.textContent = err.message || "AI analysis failed.";
+          }
+        } finally {
+          if (confirmBtn) {
+            confirmBtn.disabled = false;
+            confirmBtn.textContent = "Confirm";
+          }
+        }
+      }
+
       function showSolution(blockId) {
         const solutionElement = document.getElementById(`solution-${blockId}`);
         const button = document.querySelector(
@@ -3536,6 +3667,34 @@ __builtins__.input = lambda msg="": str(prompt(msg) or "")
         setExpandButtonState(blockId, false);
       }
     </script>
+
+    <div id="aiAnalysisModal" class="ai-analysis-modal" aria-hidden="true">
+      <div class="ai-analysis-modal-content" role="dialog" aria-modal="true">
+        <div class="ai-analysis-header">
+          <h3><i class="fas fa-robot"></i> AI Analysis</h3>
+          <button class="ai-analysis-close" type="button" onclick="closeAiAnalysisModal()">
+            &times;
+          </button>
+        </div>
+        <div class="ai-analysis-body">
+          <p>
+            Your code will be sent to the AI tutor for feedback. This will cost
+            <strong><span id="aiAnalysisTokenCost">0</span> tokens</strong>.
+            You have <strong><span id="aiAnalysisTokenBalance">0</span></strong>.
+          </p>
+          <div class="ai-analysis-preview">
+            <label>Code preview</label>
+            <pre id="aiAnalysisCodePreview"></pre>
+          </div>
+          <div id="aiAnalysisError" class="ai-analysis-error"></div>
+          <div class="ai-analysis-result" id="aiAnalysisResult"></div>
+        </div>
+        <div class="ai-analysis-actions">
+          <button class="btn-secondary" type="button" onclick="closeAiAnalysisModal()">Cancel</button>
+          <button class="btn-primary" id="aiAnalysisConfirm" type="button" onclick="confirmAiAnalysis()">Confirm</button>
+        </div>
+      </div>
+    </div>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
   </body>

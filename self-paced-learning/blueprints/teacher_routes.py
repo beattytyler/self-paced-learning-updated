@@ -53,6 +53,39 @@ def students():
     )
 
 
+@teacher_bp.route("/adjust_tokens", methods=["POST"])
+def adjust_tokens():
+    """Adjust tokens for a student in the teacher's classes."""
+    teacher_id_or_response = _require_teacher()
+    if not isinstance(teacher_id_or_response, int):
+        return teacher_id_or_response
+
+    teacher_id = teacher_id_or_response
+    user_service = get_user_service()
+
+    try:
+        student_id = int(request.form.get("student_id", "0"))
+        amount = int(request.form.get("amount", "0"))
+    except ValueError:
+        flash("Invalid token adjustment values.", "error")
+        return redirect(url_for("teacher.students"))
+
+    if amount <= 0:
+        flash("Token adjustment amount must be greater than 0.", "error")
+        return redirect(url_for("teacher.students"))
+
+    action = (request.form.get("action") or "add").strip().lower()
+    delta = amount if action == "add" else -amount
+
+    result = user_service.adjust_student_tokens(teacher_id, student_id, delta)
+    if result.get("success"):
+        flash("Student token balance updated.", "success")
+    else:
+        flash(result.get("error") or "Unable to update tokens.", "error")
+
+    return redirect(url_for("teacher.students"))
+
+
 @teacher_bp.route("/remove_student/<int:student_id>", methods=["POST"])
 def remove_student(student_id: int):
     """Remove a student from all of the teacher's classes."""

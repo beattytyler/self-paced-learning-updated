@@ -16,7 +16,12 @@ from flask import (
     request,
     jsonify,
 )
-from services import get_data_service, get_progress_service, get_ai_service
+from services import (
+    get_data_service,
+    get_progress_service,
+    get_ai_service,
+    get_user_service,
+)
 from typing import Dict, List, Optional, Any, Set
 
 # Create the Blueprint
@@ -56,9 +61,21 @@ def get_quiz_data(subject: str, subtopic: str) -> Optional[List[Dict]]:
 def get_lesson_plans(subject: str, subtopic: str) -> List[Dict]:
     """Load lesson plans for a specific subject/subtopic."""
     data_service = get_data_service()
-    return data_service.get_lesson_plans(
-        subject, subtopic, include_unlisted=False
-    ) or []
+    return (
+        data_service.get_lesson_plans(subject, subtopic, include_unlisted=False) or []
+    )
+
+
+def get_student_token_balance() -> Optional[int]:
+    """Return the current student's token balance if logged in."""
+    user_id = session.get("user_id")
+    role = session.get("role")
+    if not user_id or role not in {"student", "admin"}:
+        return None
+    user_service = get_user_service()
+    if role == "admin":
+        return 10**9
+    return user_service.get_token_balance(int(user_id))
 
 
 def get_video_data(subject: str, subtopic: str) -> Optional[Dict]:
@@ -249,6 +266,7 @@ def subject_page(subject):
             subject_info=subject_info,
             subtopics=subtopics,
             admin_override=progress_service.get_admin_override_status(),
+            token_balance=get_student_token_balance(),
         )
 
     except Exception as e:
@@ -322,9 +340,7 @@ def quiz_page(subject, subtopic):
             )
 
         subject_config = data_service.load_subject_config(subject) or {}
-        subtopic_meta = (
-            subject_config.get("subtopics", {}) or {}
-        ).get(subtopic, {})
+        subtopic_meta = (subject_config.get("subtopics", {}) or {}).get(subtopic, {})
         if not is_active_subtopic(subtopic_meta):
             return redirect(url_for("main.subject_page", subject=subject))
 
@@ -350,6 +366,7 @@ def quiz_page(subject, subtopic):
             questions=quiz_questions,
             quiz_title=quiz_title,
             admin_override=progress_service.get_admin_override_status(),
+            token_balance=get_student_token_balance(),
         )
 
     except Exception as e:
@@ -475,9 +492,12 @@ def show_results_page():
             normalized_topics.append(normalized)
 
         # Gather lessons for the current subject/subtopic
-        lesson_list: List[Dict[str, Any]] = data_service.get_lesson_plans(
-            current_subject, current_subtopic, include_unlisted=False
-        ) or []
+        lesson_list: List[Dict[str, Any]] = (
+            data_service.get_lesson_plans(
+                current_subject, current_subtopic, include_unlisted=False
+            )
+            or []
+        )
 
         # Sort lessons by order field to ensure predictable, pedagogical ordering
         lesson_list.sort(key=lambda x: (x.get("order", 999), x.get("id", "")))
@@ -653,9 +673,10 @@ def generate_remedial_quiz():
         had_stored_weak_topics = bool(weak_topics_raw)
 
         if not weak_topics_raw:
-            stored_analysis = progress_service.get_quiz_analysis(
-                current_subject, current_subtopic
-            ) or {}
+            stored_analysis = (
+                progress_service.get_quiz_analysis(current_subject, current_subtopic)
+                or {}
+            )
             weak_topics_raw = (
                 stored_analysis.get("weak_topics")
                 or stored_analysis.get("weak_tags")
