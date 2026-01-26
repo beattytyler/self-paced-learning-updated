@@ -35,7 +35,9 @@ class DataLoader:
         self.data_root = resolved_root
         self._cache = {}
 
-    def _load_json_file(self, file_path: str) -> Optional[Dict[str, Any]]:
+    def _load_json_file(
+        self, file_path: str, allow_missing: bool = False
+    ) -> Optional[Dict[str, Any]]:
         """
         Load a JSON file and return its contents.
 
@@ -50,7 +52,12 @@ class DataLoader:
                 return json.load(f)
         except FileNotFoundError:
             if current_app:
-                current_app.logger.error(f"JSON file not found: {file_path}")
+                if allow_missing:
+                    current_app.logger.debug(
+                        f"Optional JSON file not found: {file_path}"
+                    )
+                else:
+                    current_app.logger.error(f"JSON file not found: {file_path}")
             return None
         except json.JSONDecodeError as e:
             if current_app:
@@ -223,12 +230,17 @@ class DataLoader:
         videos_path = os.path.join(
             self.data_root, "subjects", subject, subtopic, "videos.json"
         )
-        videos_data = self._load_json_file(videos_path)
+        videos_data = self._load_json_file(videos_path, allow_missing=True)
 
         if videos_data:
             self._cache[cache_key] = videos_data
+            return videos_data
 
-        return videos_data
+        # Missing videos are expected for many subtopics; cache an empty payload
+        # to avoid repeated filesystem checks and log noise.
+        empty_payload: Dict[str, Any] = {"videos": []}
+        self._cache[cache_key] = empty_payload
+        return empty_payload
 
     def get_subject_keywords(self, subject: str) -> List[str]:
         """
