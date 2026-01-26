@@ -61,6 +61,12 @@ class DataService:
             with open(quiz_file_path, "w", encoding="utf-8") as f:
                 json.dump(quiz_data, f, indent=2, ensure_ascii=False)
 
+            # Ensure cached quiz data is refreshed for subsequent reads.
+            try:
+                self.clear_cache_for_subject_subtopic(subject, subtopic)
+            except Exception:
+                pass
+
             return True
         except Exception as e:
             print(f"Error saving quiz data: {e}")
@@ -88,6 +94,12 @@ class DataService:
 
             with open(pool_file_path, "w", encoding="utf-8") as f:
                 json.dump(pool_data, f, indent=2, ensure_ascii=False)
+
+            # Ensure cached question pool data is refreshed for subsequent reads.
+            try:
+                self.clear_cache_for_subject_subtopic(subject, subtopic)
+            except Exception:
+                pass
 
             return True
         except Exception as e:
@@ -291,9 +303,8 @@ class DataService:
 
             # Clear cached lesson data so future reads pick up the updates.
             try:
-                self.data_loader.clear_cache_for_subject_subtopic(subject, subtopic)
-            except AttributeError:
-                # Older DataLoader implementations may not provide cache clearing.
+                self.clear_cache_for_subject_subtopic(subject, subtopic)
+            except Exception:
                 pass
 
             return True
@@ -346,8 +357,8 @@ class DataService:
                 json.dump(data, f, indent=2, ensure_ascii=False)
 
             try:
-                self.data_loader.clear_cache_for_subject_subtopic(subject, subtopic)
-            except AttributeError:
+                self.clear_cache_for_subject_subtopic(subject, subtopic)
+            except Exception:
                 pass
 
             return True
@@ -470,6 +481,11 @@ class DataService:
             subject_config_path = os.path.join(subject_dir, "subject_config.json")
             with open(subject_config_path, "w", encoding="utf-8") as f:
                 json.dump(subject_data["config"], f, indent=2, ensure_ascii=False)
+
+            try:
+                self.clear_cache()
+            except Exception:
+                pass
 
             return True
         except Exception as e:
@@ -635,6 +651,10 @@ class DataService:
 
             if os.path.exists(subject_dir):
                 shutil.rmtree(subject_dir)
+                try:
+                    self.clear_cache()
+                except Exception:
+                    pass
                 return True
 
             return False
@@ -854,14 +874,32 @@ class DataService:
     # CACHE OPERATIONS
     # ============================================================================
 
+    def _clear_flask_cache(self) -> None:
+        """Clear Flask-Caching layer when running inside an app context."""
+        try:
+            from flask import has_app_context
+
+            if not has_app_context():
+                return
+
+            from extensions import cache
+
+            cache.clear()
+        except Exception:
+            # Cache clearing is best-effort; failures should not block data writes.
+            return
+
     def clear_cache(self) -> None:
         """Clear all cached data."""
         self.data_loader.clear_cache()
+        self._clear_flask_cache()
 
     def clear_cache_for_subject_subtopic(self, subject: str, subtopic: str) -> None:
         """Clear cache for specific subject/subtopic."""
         self.data_loader.clear_cache_for_subject_subtopic(subject, subtopic)
+        self._clear_flask_cache()
 
     def clear_cache_for_subject(self, subject: str) -> None:
         """Clear all cached data for a subject."""
         self.data_loader.clear_cache_for_subject(subject)
+        self._clear_flask_cache()

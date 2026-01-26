@@ -793,9 +793,7 @@ class AdminService:
                 json.dump(lesson_plans_data, f, indent=2, ensure_ascii=False)
 
             # Ensure subsequent reads observe the updated ordering
-            self.data_service.data_loader.clear_cache_for_subject_subtopic(
-                subject, subtopic
-            )
+            self.data_service.clear_cache_for_subject_subtopic(subject, subtopic)
 
             return {"success": True, "message": "Lessons reordered successfully"}
 
@@ -1039,7 +1037,7 @@ class AdminService:
                     json.dump(subjects_index, index_file, indent=2, ensure_ascii=False)
 
             # Clear any cached data so fresh content is picked up
-            self.data_service.data_loader.clear_cache()
+            self.data_service.clear_cache()
 
             return {
                 "success": True,

@@ -1461,7 +1461,7 @@ def admin_reorder_subtopics(subject):
             json.dump(updated_config, f, indent=2, ensure_ascii=False)
 
         # Clear cache
-        data_loader.clear_cache_for_subject(subject)
+        data_service.clear_cache_for_subject(subject)
 
         return jsonify({"success": True, "message": "Subtopics reordered successfully"})
 
