@@ -460,6 +460,13 @@ class DataService:
         """Validate that a subject/subtopic combination exists."""
         return self.data_loader.validate_subject_subtopic(subject, subtopic)
 
+    def videos_file_exists(self, subject: str, subtopic: str) -> bool:
+        """Return True if a videos.json file exists for the subtopic."""
+        videos_path = os.path.join(
+            self.data_root_path, "subjects", subject, subtopic, "videos.json"
+        )
+        return os.path.exists(videos_path)
+
     def create_subject(self, subject_id: str, subject_data: Dict) -> bool:
         """Create a new subject with its directory structure and files."""
         try:

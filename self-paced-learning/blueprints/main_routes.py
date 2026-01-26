@@ -65,6 +65,8 @@ def get_lesson_plans(subject: str, subtopic: str) -> List[Dict]:
 def get_video_data(subject: str, subtopic: str) -> Optional[Dict]:
     """Load video data for a specific subject/subtopic."""
     data_service = get_data_service()
+    if not data_service.videos_file_exists(subject, subtopic):
+        return {"videos": []}
     videos_data = data_service.data_loader.load_videos(subject, subtopic)
     return videos_data.get("videos", {}) if videos_data else {}
 

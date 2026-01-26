@@ -1192,8 +1192,10 @@ class ProgressService:
             if lesson_id not in completed_lessons
         ]
 
-        videos_data = data_service.get_video_data(subject, subtopic) or {}
-        raw_videos = videos_data.get("videos", []) or []
+        raw_videos: List[Any] = []
+        if data_service.videos_file_exists(subject, subtopic):
+            videos_data = data_service.get_video_data(subject, subtopic) or {}
+            raw_videos = videos_data.get("videos", []) or []
 
         video_titles: Dict[str, str] = {}
         video_ids: List[str] = []

@@ -174,7 +174,9 @@ def check_subtopic_progress(subject, subtopic):
         lessons = data_service.get_lesson_plans(
             subject, subtopic, include_unlisted=False
         )
-        videos_data = data_service.get_video_data(subject, subtopic)
+        videos_data = None
+        if data_service.videos_file_exists(subject, subtopic):
+            videos_data = data_service.get_video_data(subject, subtopic)
 
         lesson_count = len(lessons) if lessons else 0
         video_count = len(videos_data.get("videos", [])) if videos_data else 0
