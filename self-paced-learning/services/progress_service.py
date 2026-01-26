@@ -264,6 +264,9 @@ class ProgressService:
 
     def mark_lesson_complete(self, subject: str, subtopic: str, lesson_id: str) -> bool:
         """Mark a specific lesson as completed."""
+        lesson_id = str(lesson_id) if lesson_id is not None else ""
+        if not lesson_id:
+            return False
         if not has_request_context():
             key = self.get_session_key(subject, subtopic, "completed_lessons")
             completed = self._test_completed_lessons.setdefault(key, set())
@@ -287,6 +290,9 @@ class ProgressService:
 
     def is_lesson_complete(self, subject: str, subtopic: str, lesson_id: str) -> bool:
         """Check if a specific lesson is completed."""
+        lesson_id = str(lesson_id) if lesson_id is not None else ""
+        if not lesson_id:
+            return False
         if not has_request_context():
             key = self.get_session_key(subject, subtopic, "completed_lessons")
             completed = self._test_completed_lessons.get(key, set())
@@ -304,10 +310,17 @@ class ProgressService:
         """Get list of completed lesson IDs for a subject/subtopic."""
         completed_key = self.get_session_key(subject, subtopic, "completed_lessons")
         if not has_request_context():
-            return list(self._test_completed_lessons.get(completed_key, set()))
+            return [
+                str(lesson_id)
+                for lesson_id in self._test_completed_lessons.get(completed_key, set())
+            ]
         completed_lessons = session.get(completed_key)
         if completed_lessons:
-            return completed_lessons
+            normalized = [str(lesson_id) for lesson_id in completed_lessons]
+            if normalized != completed_lessons:
+                session[completed_key] = normalized
+                session.permanent = True
+            return normalized
 
         user_id = session.get("user_id")
         if not user_id:
@@ -1177,6 +1190,9 @@ class ProgressService:
             if not include_lesson(lesson):
                 continue
             lesson_id = lesson.get("id") or f"lesson_{index + 1}"
+            lesson_id = str(lesson_id) if lesson_id is not None else ""
+            if not lesson_id:
+                continue
             lesson_items.append((lesson_id, lesson))
 
         lesson_titles = {
