@@ -1726,29 +1726,37 @@
         document.getElementById("initial-learning-title").textContent = `${
           subtopic.charAt(0).toUpperCase() + subtopic.slice(1)
         } Learning`;
+        const videoCount = getSubtopicVideoCount(subtopic);
         document.getElementById("initial-learning-subtitle").textContent =
-          "Learn with lessons and videos for this topic.";
+          typeof videoCount === "number" && videoCount <= 0
+            ? "Learn with lessons for this topic."
+            : "Learn with lessons and videos for this topic.";
 
         initializeLessonQuizButton(subject, subtopic);
 
         // Load lessons and videos into sidebar
-        loadInitialContent(subject, subtopic);
+        loadInitialContent(subject, subtopic, videoCount);
       }
 
       // New function to load content into the sidebar layout
-      function loadInitialContent(subject, subtopic) {
+      function loadInitialContent(subject, subtopic, videoCount) {
         const navList = document.getElementById("initial-topics-nav");
         navList.innerHTML =
           '<li><div class="loading">Loading content...</div></li>';
 
         // Load lessons and videos
+        const shouldFetchVideos = !(
+          typeof videoCount === "number" && videoCount <= 0
+        );
         Promise.all([
           fetch(`/api/lesson-plans/${subject}/${subtopic}`)
             .then((r) => r.json())
             .catch(() => ({ lessons: {} })),
-          fetch(`/api/video/${subject}/${subtopic}/all`)
-            .then((r) => r.json())
-            .catch(() => ({ videos: {} })),
+          shouldFetchVideos
+            ? fetch(`/api/video/${subject}/${subtopic}/all`)
+                .then((r) => r.json())
+                .catch(() => ({ videos: {} }))
+            : Promise.resolve({ videos: [] }),
         ])
           .then(([lessonData, videoData]) => {
             navList.innerHTML = "";
@@ -1853,6 +1861,18 @@
             navList.innerHTML =
               '<li><div class="error">Error loading content. Please try again.</div></li>';
           });
+      }
+
+      function getSubtopicVideoCount(subtopic) {
+        if (!subtopic) return null;
+        const card =
+          document.getElementById(`${subtopic}-card`) ||
+          document.querySelector(`.topic-card[data-subtopic="${subtopic}"]`);
+        if (!card) return null;
+        const rawValue = card.dataset.videoCount;
+        if (rawValue === undefined || rawValue === null) return null;
+        const parsed = Number.parseInt(rawValue, 10);
+        return Number.isFinite(parsed) ? parsed : null;
       }
 
       // Function to display lesson content
