@@ -227,24 +227,30 @@ class DataLoader:
         if cache_key in self._cache:
             return self._cache[cache_key]
 
-        videos_path = os.path.join(
-            self.data_root, "subjects", subject, subtopic, "videos.json"
-        )
-        if not os.path.exists(videos_path):
-            empty_payload: Dict[str, Any] = {"videos": []}
-            self._cache[cache_key] = empty_payload
-            return empty_payload
-
-        videos_data = self._load_json_file(videos_path, allow_missing=True)
-
-        if videos_data:
-            self._cache[cache_key] = videos_data
-            return videos_data
-
-        # Cache an empty payload to avoid repeated filesystem checks.
+        # VIDEO FEATURE DISABLED (temporary). Keeping original implementation
+        # commented out below so it can be restored later.
         empty_payload: Dict[str, Any] = {"videos": []}
         self._cache[cache_key] = empty_payload
         return empty_payload
+
+        # videos_path = os.path.join(
+        #     self.data_root, "subjects", subject, subtopic, "videos.json"
+        # )
+        # if not os.path.exists(videos_path):
+        #     empty_payload: Dict[str, Any] = {"videos": []}
+        #     self._cache[cache_key] = empty_payload
+        #     return empty_payload
+        #
+        # videos_data = self._load_json_file(videos_path, allow_missing=True)
+        #
+        # if videos_data:
+        #     self._cache[cache_key] = videos_data
+        #     return videos_data
+        #
+        # # Cache an empty payload to avoid repeated filesystem checks.
+        # empty_payload: Dict[str, Any] = {"videos": []}
+        # self._cache[cache_key] = empty_payload
+        # return empty_payload
 
     def get_subject_keywords(self, subject: str) -> List[str]:
         """

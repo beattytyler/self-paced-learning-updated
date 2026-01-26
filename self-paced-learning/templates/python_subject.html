@@ -1745,18 +1745,21 @@
           '<li><div class="loading">Loading content...</div></li>';
 
         // Load lessons and videos
-        const shouldFetchVideos = !(
-          typeof videoCount === "number" && videoCount <= 0
-        );
+        // VIDEO FEATURE DISABLED (temporary). Keeping original implementation
+        // commented out below so it can be restored later.
+        // const shouldFetchVideos = !(
+        //   typeof videoCount === "number" && videoCount <= 0
+        // );
         Promise.all([
           fetch(`/api/lesson-plans/${subject}/${subtopic}`)
             .then((r) => r.json())
             .catch(() => ({ lessons: {} })),
-          shouldFetchVideos
-            ? fetch(`/api/video/${subject}/${subtopic}/all`)
-                .then((r) => r.json())
-                .catch(() => ({ videos: {} }))
-            : Promise.resolve({ videos: [] }),
+          // shouldFetchVideos
+          //   ? fetch(`/api/video/${subject}/${subtopic}/all`)
+          //       .then((r) => r.json())
+          //       .catch(() => ({ videos: {} }))
+          //   : Promise.resolve({ videos: [] }),
+          Promise.resolve({ videos: [] }),
         ])
           .then(([lessonData, videoData]) => {
             navList.innerHTML = "";
@@ -1816,6 +1819,7 @@
               });
             }
 
+            /*
             // Add videos to sidebar
             const videosCollection = Array.isArray(videoData.videos)
               ? videoData.videos
@@ -1850,6 +1854,7 @@
                 navList.appendChild(li);
               });
             }
+            */
 
             if (navList.children.length === 0) {
               navList.innerHTML =

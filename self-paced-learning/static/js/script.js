@@ -325,6 +325,11 @@ document.addEventListener("DOMContentLoaded", function () {
   function openVideo(topic) {
     currentTopic = topic;
 
+    // VIDEO FEATURE DISABLED (temporary). Keeping original implementation
+    // commented out below so it can be restored later.
+    return;
+
+    /*
     // Determine the correct API endpoint based on page context
     let apiUrl;
     const currentPath = window.location.pathname;
@@ -412,12 +417,12 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         }
 
-        // Show modal
-        videoModal.style.display = "flex";
-        videoModal.dataset.currentTopic = topic;
+    // Show modal
+    videoModal.style.display = "flex";
+    videoModal.dataset.currentTopic = topic;
 
         // Add admin override button if user is admin
-        if (isAdminOverride) {
+    if (isAdminOverride) {
           addAdminOverrideButton();
         }
       })
@@ -497,6 +502,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (topic === "functions") {
       window.location.href = "/quiz/functions";
     }
+    */
   }
 
   // Track video progress (simulation for demonstration)
