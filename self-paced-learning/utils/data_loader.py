@@ -230,14 +230,18 @@ class DataLoader:
         videos_path = os.path.join(
             self.data_root, "subjects", subject, subtopic, "videos.json"
         )
+        if not os.path.exists(videos_path):
+            empty_payload: Dict[str, Any] = {"videos": []}
+            self._cache[cache_key] = empty_payload
+            return empty_payload
+
         videos_data = self._load_json_file(videos_path, allow_missing=True)
 
         if videos_data:
             self._cache[cache_key] = videos_data
             return videos_data
 
-        # Missing videos are expected for many subtopics; cache an empty payload
-        # to avoid repeated filesystem checks and log noise.
+        # Cache an empty payload to avoid repeated filesystem checks.
         empty_payload: Dict[str, Any] = {"videos": []}
         self._cache[cache_key] = empty_payload
         return empty_payload
