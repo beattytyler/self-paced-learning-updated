@@ -5,7 +5,12 @@ and learning management APIs.
 """
 
 from flask import Blueprint, jsonify, request, session
-from services import get_data_service, get_progress_service, get_ai_service
+from services import (
+    get_data_service,
+    get_progress_service,
+    get_ai_service,
+    get_user_service,
+)
 from typing import Dict, List, Optional
 from urllib.parse import unquote
 
@@ -203,6 +208,141 @@ def get_all_progress_api():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+# ============================================================================
+# TOKEN AND AI ANALYSIS ENDPOINTS
+# ============================================================================
+
+
+@api_bp.route("/tokens/balance")
+def get_token_balance():
+    """Return the current student's token balance."""
+    user_id = session.get("user_id")
+    role = session.get("role")
+    if not user_id or role not in {"student", "admin"}:
+        return jsonify({"error": "Authentication required."}), 401
+
+    user_service = get_user_service()
+    if role == "admin":
+        balance = 10**9
+    else:
+        balance = user_service.get_token_balance(int(user_id))
+    if balance is None:
+        return jsonify({"error": "User not found."}), 404
+
+    return jsonify({"success": True, "token_balance": balance})
+
+
+@api_bp.route("/ai/code-analysis", methods=["POST"])
+def analyze_code_submission():
+    """Analyze a code submission and debit tokens."""
+    user_id = session.get("user_id")
+    role = session.get("role")
+    if not user_id or role not in {"student", "admin"}:
+        return jsonify({"error": "Authentication required."}), 401
+
+    payload = request.get_json(silent=True) or {}
+    code = (payload.get("code") or "").rstrip()
+    if not code.strip():
+        return jsonify({"error": "Code submission cannot be empty."}), 400
+
+    question_index = payload.get("question_index")
+    subject = payload.get("subject")
+    subtopic = payload.get("subtopic")
+
+    allow_ai_analysis = payload.get("allow_ai_analysis", True)
+    question_context = payload.get("question")
+    expected_output = payload.get("expected_output")
+    sample_solution = payload.get("sample_solution")
+
+    progress_service = get_progress_service()
+    if question_index is not None:
+        current_subject = session.get("current_subject")
+        current_subtopic = session.get("current_subtopic")
+        if not current_subject or not current_subtopic:
+            return jsonify({"error": "No active quiz session found."}), 400
+
+        quiz_session = progress_service.get_quiz_session_data(
+            current_subject, current_subtopic
+        )
+        questions = quiz_session.get("questions", []) or []
+        try:
+            index = int(question_index)
+        except (TypeError, ValueError):
+            index = None
+
+        if index is None or index < 0 or index >= len(questions):
+            return jsonify({"error": "Invalid question reference."}), 400
+
+        question = questions[index]
+        allow_ai_analysis = bool(question.get("allow_ai_analysis", False))
+        question_context = question.get("question")
+        expected_output = question.get("expected_output")
+        sample_solution = question.get("sample_solution")
+
+        subject = subject or current_subject
+        subtopic = subtopic or current_subtopic
+
+    if not allow_ai_analysis:
+        return jsonify({"error": "AI analysis is not enabled for this item."}), 403
+
+    user_service = get_user_service()
+    token_cost = user_service.calculate_token_cost(code)
+    if token_cost <= 0:
+        return jsonify({"error": "Unable to calculate token cost."}), 400
+
+    if role == "admin":
+        current_balance = 10**9
+    else:
+        current_balance = user_service.get_token_balance(int(user_id))
+        if current_balance is None:
+            return jsonify({"error": "User not found."}), 404
+        if current_balance < token_cost:
+            return (
+                jsonify(
+                    {
+                        "error": "Insufficient tokens.",
+                        "required_tokens": token_cost,
+                        "token_balance": current_balance,
+                    }
+                ),
+                402,
+            )
+
+    ai_service = get_ai_service()
+    analysis = ai_service.analyze_code_submission(
+        code=code,
+        question=question_context,
+        expected_output=expected_output,
+        sample_solution=sample_solution,
+        subject=subject,
+        subtopic=subtopic,
+    )
+
+    if not analysis:
+        return jsonify({"error": "AI analysis is unavailable."}), 503
+
+    if role == "admin":
+        spend_result = {"success": True, "balance": current_balance}
+    else:
+        spend_result = user_service.spend_tokens(int(user_id), token_cost)
+        if not spend_result.get("success"):
+            return (
+                jsonify(
+                    {"error": spend_result.get("error", "Unable to spend tokens.")}
+                ),
+                400,
+            )
+
+    return jsonify(
+        {
+            "success": True,
+            "analysis": analysis,
+            "token_cost": token_cost,
+            "token_balance": spend_result.get("balance"),
+        }
+    )
 
 
 # ============================================================================
@@ -447,9 +587,7 @@ def api_get_subtopics(subject):
         active_subtopics = {
             subtopic_id: subtopic_data
             for subtopic_id, subtopic_data in subtopics.items()
-            if str((subtopic_data or {}).get("status", "") or "")
-            .strip()
-            .lower()
+            if str((subtopic_data or {}).get("status", "") or "").strip().lower()
             in ("", "active")
         }
 
@@ -498,18 +636,14 @@ def api_subtopic_prerequisites(subject, subtopic):
             for subtopic_id, subtopic_data in (
                 subject_config.get("subtopics", {}) or {}
             ).items()
-            if str((subtopic_data or {}).get("status", "") or "")
-            .strip()
-            .lower()
+            if str((subtopic_data or {}).get("status", "") or "").strip().lower()
             in ("", "active")
         }
 
         if subtopic not in subtopics:
             return jsonify({"error": "Subject/subtopic not found"}), 404
 
-        prerequisites = progress_service.check_subtopic_prerequisites(
-            subject, subtopic
-        )
+        prerequisites = progress_service.check_subtopic_prerequisites(subject, subtopic)
         return jsonify(prerequisites)
 
     except Exception as e:

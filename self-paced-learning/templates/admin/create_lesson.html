@@ -1631,6 +1631,13 @@
                                 <label>Solution (optional):</label>
                                 <textarea placeholder="Complete solution code..." style="font-family: monospace;">${existingData ? existingData.solution || '' : ''}</textarea>
                             </div>
+                            <div class="form-row">
+                                <label>AI Analysis:</label>
+                                <div class="toggle-row">
+                                    <input type="checkbox" class="allow-ai-analysis" ${existingData && existingData.allow_ai_analysis === false ? '' : 'checked'} />
+                                    <span>Allow students to request AI analysis</span>
+                                </div>
+                            </div>
                         </div>
                     `;
                 
@@ -1812,6 +1819,8 @@
                             blockData.expected_output = textareas[1] ? textareas[1].value : '';
                             blockData.hints = textareas[2] ? textareas[2].value.split('\n').filter(h => h.trim()) : [];
                             blockData.solution = textareas[3] ? textareas[3].value : '';
+                            const allowToggle = codeRunnerDiv.querySelector('.allow-ai-analysis');
+                            blockData.allow_ai_analysis = allowToggle ? allowToggle.checked : true;
                         }
                         break;
                     

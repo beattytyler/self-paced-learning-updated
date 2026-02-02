@@ -94,7 +94,8 @@
         align-items: center;
         justify-content: space-between;
         cursor: pointer;
-        transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+        transition: transform 0.15s ease, box-shadow 0.15s ease,
+          background 0.15s ease;
       }
       .subject-tab.active {
         background: linear-gradient(135deg, #4338ca, #6366f1);
@@ -234,109 +235,123 @@
     <main>
       <div class="card">
         {% if not progress_summary or not progress_summary.subjects %}
-          <div class="empty-state">
-            <p>No lesson progress recorded yet. Encourage {{ student.username }} to dive into the lessons!</p>
-          </div>
+        <div class="empty-state">
+          <p>
+            No lesson progress recorded yet. Encourage {{ student.username }} to
+            dive into the lessons!
+          </p>
+        </div>
         {% else %}
-          <div class="summary-grid">
-            <div class="summary-item">
-              <span class="label">Completed Lessons</span>
-              <span class="value">{{ progress_summary.completed_lessons }}</span>
-            </div>
-            <div class="summary-item">
-              <span class="label">Total Lessons</span>
-              <span class="value">{{ progress_summary.total_lessons }}</span>
-            </div>
-            <div class="summary-item">
-              <span class="label">Subjects</span>
-              <span class="value">{{ progress_summary.subject_count }}</span>
-            </div>
-            <div class="summary-item">
-              <span class="label">Subtopics</span>
-              <span class="value">{{ progress_summary.subtopic_count }}</span>
-            </div>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <span class="label">Completed Lessons</span>
+            <span class="value">{{ progress_summary.completed_lessons }}</span>
           </div>
-
-          <div class="subject-tabs" role="tablist">
-            {% for subject in progress_summary.subjects %}
-              <button
-                class="subject-tab {% if loop.first %}active{% endif %}"
-                role="tab"
-                aria-selected="{{ 'true' if loop.first else 'false' }}"
-                data-target="subject-panel-{{ loop.index }}"
-                type="button"
-              >
-                <span>{{ subject.display_name }}</span>
-                <span class="progress">
-                  {{ subject.completed_lessons }} / {{ subject.total_lessons }}
-                </span>
-              </button>
-            {% endfor %}
+          <div class="summary-item">
+            <span class="label">Token Balance</span>
+            <span class="value">{{ student.token_balance or 0 }}</span>
           </div>
+          <div class="summary-item">
+            <span class="label">Total Lessons</span>
+            <span class="value">{{ progress_summary.total_lessons }}</span>
+          </div>
+          <div class="summary-item">
+            <span class="label">Subjects</span>
+            <span class="value">{{ progress_summary.subject_count }}</span>
+          </div>
+          <div class="summary-item">
+            <span class="label">Subtopics</span>
+            <span class="value">{{ progress_summary.subtopic_count }}</span>
+          </div>
+        </div>
 
-          <div class="subject-panels">
-            {% for subject in progress_summary.subjects %}
-              <section
-                id="subject-panel-{{ loop.index }}"
-                class="subject-panel {% if loop.first %}active{% endif %}"
-                role="tabpanel"
-                aria-hidden="{{ 'false' if loop.first else 'true' }}"
-              >
-                {% if subject.subtopics %}
-                  <div class="subtopic-accordion">
-                    {% for subtopic in subject.subtopics %}
-                      <div class="subtopic-item">
-                        <button
-                          class="subtopic-toggle"
-                          type="button"
-                          aria-expanded="{{ 'true' if loop.first else 'false' }}"
-                        >
-                          <span>{{ subtopic.display_name }}</span>
-                          <span class="subtopic-progress">
-                            {{ subtopic.completed_lessons }}/{{ subtopic.total_lessons }} lessons
-                          </span>
-                          <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="subtopic-content {% if loop.first %}open{% endif %}">
-                          {% if subtopic.lessons %}
-                            <ul class="lesson-list">
-                              {% for lesson in subtopic.lessons %}
-                                <li
-                                  class="lesson-item {% if lesson.completed %}completed{% endif %}"
-                                >
-                                  <span>
-                                    {% if lesson.completed %}
-                                      <i class="fas fa-check-circle" style="color: #16a34a"></i>
-                                    {% else %}
-                                      <i class="fas fa-circle" style="color: #cbd5f5"></i>
-                                    {% endif %}
-                                  </span>
-                                  <span>{{ lesson.title }}</span>
-                                  <span
-                                    class="status {% if lesson.completed %}completed{% else %}pending{% endif %}"
-                                  >
-                                    {% if lesson.completed %}Completed{% else %}Pending{% endif %}
-                                  </span>
-                                </li>
-                              {% endfor %}
-                            </ul>
-                          {% else %}
-                            <div class="empty-state">
-                              <p>No lessons found for this subtopic.</p>
-                            </div>
-                          {% endif %}
-                        </div>
-                      </div>
+        <div class="subject-tabs" role="tablist">
+          {% for subject in progress_summary.subjects %}
+          <button
+            class="subject-tab {% if loop.first %}active{% endif %}"
+            role="tab"
+            aria-selected="{{ 'true' if loop.first else 'false' }}"
+            data-target="subject-panel-{{ loop.index }}"
+            type="button"
+          >
+            <span>{{ subject.display_name }}</span>
+            <span class="progress">
+              {{ subject.completed_lessons }} / {{ subject.total_lessons }}
+            </span>
+          </button>
+          {% endfor %}
+        </div>
+
+        <div class="subject-panels">
+          {% for subject in progress_summary.subjects %}
+          <section
+            id="subject-panel-{{ loop.index }}"
+            class="subject-panel {% if loop.first %}active{% endif %}"
+            role="tabpanel"
+            aria-hidden="{{ 'false' if loop.first else 'true' }}"
+          >
+            {% if subject.subtopics %}
+            <div class="subtopic-accordion">
+              {% for subtopic in subject.subtopics %}
+              <div class="subtopic-item">
+                <button
+                  class="subtopic-toggle"
+                  type="button"
+                  aria-expanded="{{ 'true' if loop.first else 'false' }}"
+                >
+                  <span>{{ subtopic.display_name }}</span>
+                  <span class="subtopic-progress">
+                    {{ subtopic.completed_lessons }}/{{ subtopic.total_lessons
+                    }} lessons
+                  </span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div
+                  class="subtopic-content {% if loop.first %}open{% endif %}"
+                >
+                  {% if subtopic.lessons %}
+                  <ul class="lesson-list">
+                    {% for lesson in subtopic.lessons %}
+                    <li
+                      class="lesson-item {% if lesson.completed %}completed{% endif %}"
+                    >
+                      <span>
+                        {% if lesson.completed %}
+                        <i
+                          class="fas fa-check-circle"
+                          style="color: #16a34a"
+                        ></i>
+                        {% else %}
+                        <i class="fas fa-circle" style="color: #cbd5f5"></i>
+                        {% endif %}
+                      </span>
+                      <span>{{ lesson.title }}</span>
+                      <span
+                        class="status {% if lesson.completed %}completed{% else %}pending{% endif %}"
+                      >
+                        {% if lesson.completed %}Completed{% else %}Pending{%
+                        endif %}
+                      </span>
+                    </li>
                     {% endfor %}
-                  </div>
-                {% else %}
+                  </ul>
+                  {% else %}
                   <div class="empty-state">
-                    <p>No subtopics available for this subject.</p>
+                    <p>No lessons found for this subtopic.</p>
                   </div>
-                {% endif %}
-              </section>
-            {% endfor %}
-          </div>
+                  {% endif %}
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+              <p>No subtopics available for this subject.</p>
+            </div>
+            {% endif %}
+          </section>
+          {% endfor %}
+        </div>
         {% endif %}
 
         <div class="back-link">

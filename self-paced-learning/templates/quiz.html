@@ -34,7 +34,16 @@
 
     <h1>{{ quiz_title or "Quiz" }}</h1>
 
-    {% if ai_feedback %}
+    {% if token_balance is not none %}
+    <div
+      class="token-badge quiz-token-badge"
+      id="tokenBalanceBadge"
+      data-balance="{{ token_balance }}"
+    >
+      <i class="fas fa-coins"></i>
+      <span id="tokenBalanceValue">{{ token_balance }}</span>
+    </div>
+    {% endif %} {% if ai_feedback %}
     <div class="ai-feedback-banner">
       <div class="ai-feedback-icon">
         <i class="fas fa-robot"></i>
@@ -129,6 +138,15 @@
               >
                 <i class="fas fa-trash"></i> Clear Output
               </button>
+              {% if q.allow_ai_analysis is not defined or q.allow_ai_analysis %}
+              <button
+                type="button"
+                class="ai-analysis-btn"
+                onclick="openQuizAiAnalysisModal('q{{ idx }}', {{ idx }})"
+              >
+                <i class="fas fa-robot"></i> AI Analysis
+              </button>
+              {% endif %}
             </div>
             <div class="code-output">
               <div class="output-header">Test Output:</div>
@@ -166,178 +184,278 @@
     </form>
 
     <script>
-      // Add click handlers for visual feedback
-      document.addEventListener("DOMContentLoaded", function () {
-        // Add click event listeners to all labels
-        const labels = document.querySelectorAll(".question label");
-        labels.forEach((label) => {
-          label.addEventListener("click", function () {
-            // Find the question container
-            const questionDiv = this.closest(".question");
+            // Add click handlers for visual feedback
+            document.addEventListener("DOMContentLoaded", function () {
+              // Add click event listeners to all labels
+              const labels = document.querySelectorAll(".question label");
+              labels.forEach((label) => {
+                label.addEventListener("click", function () {
+                  // Find the question container
+                  const questionDiv = this.closest(".question");
 
-            // Remove selected class from all labels in this question
-            questionDiv.querySelectorAll("label").forEach((l) => {
-              l.classList.remove("selected");
+                  // Remove selected class from all labels in this question
+                  questionDiv.querySelectorAll("label").forEach((l) => {
+                    l.classList.remove("selected");
+                  });
+
+                  // Add selected class to clicked label
+                  this.classList.add("selected");
+                });
+              });
             });
 
-            // Add selected class to clicked label
-            this.classList.add("selected");
-          });
-        });
-      });
+            document
+              .getElementById("quiz-form")
+              .addEventListener("submit", async function (e) {
+                e.preventDefault();
 
-      document
-        .getElementById("quiz-form")
-        .addEventListener("submit", async function (e) {
-          e.preventDefault();
+                // Get the submit button and disable it immediately
+                const submitButton = e.target.querySelector(".quiz-submit-button");
+                const originalText = submitButton.textContent;
 
-          // Get the submit button and disable it immediately
-          const submitButton = e.target.querySelector(".quiz-submit-button");
-          const originalText = submitButton.textContent;
+                // Disable button and show processing state
+                submitButton.disabled = true;
+                submitButton.textContent = "Submitting...";
+                submitButton.classList.add("disabled");
 
-          // Disable button and show processing state
-          submitButton.disabled = true;
-          submitButton.textContent = "Submitting...";
-          submitButton.classList.add("disabled");
+                const formData = new FormData(e.target);
+                const responses = {};
 
-          const formData = new FormData(e.target);
-          const responses = {};
+                for (const [name, value] of formData.entries()) {
+                  responses[name] = value;
+                }
 
-          for (const [name, value] of formData.entries()) {
-            responses[name] = value;
-          }
+                try {
+                  // Submit answers to analyze route - Flask session will handle data persistence
+                  const analyzeResponse = await fetch("/analyze", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ answers: responses }),
+                  });
 
-          try {
-            // Submit answers to analyze route - Flask session will handle data persistence
-            const analyzeResponse = await fetch("/analyze", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ answers: responses }),
-            });
+                  if (analyzeResponse.ok) {
+                    // Analysis complete - redirect to results (data is in Flask session)
+                    window.location.href = "/results";
+                  } else {
+                    console.error("Analysis failed:", analyzeResponse.status);
+                    alert("Quiz analysis failed. Please try again.");
+                    // Re-enable button on error
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalText;
+                    submitButton.classList.remove("disabled");
+                  }
+                } catch (error) {
+                  console.error("Error during analysis:", error);
+                  alert("Error submitting quiz. Please try again.");
+                  // Re-enable button on error
+                  submitButton.disabled = false;
+                  submitButton.textContent = originalText;
+                  submitButton.classList.remove("disabled");
+                }
+              });
 
-            if (analyzeResponse.ok) {
-              // Analysis complete - redirect to results (data is in Flask session)
-              window.location.href = "/results";
-            } else {
-              console.error("Analysis failed:", analyzeResponse.status);
-              alert("Quiz analysis failed. Please try again.");
-              // Re-enable button on error
-              submitButton.disabled = false;
-              submitButton.textContent = originalText;
-              submitButton.classList.remove("disabled");
+            // Pyodide functionality for code execution in quiz
+            let pyodide = null;
+            let pyodideLoading = false;
+        const initialTokenBalance = {{ token_balance if token_balance is not none else 0 }};
+        let currentTokenBalance = initialTokenBalance;
+        let activeQuizAiQuestionIndex = null;
+
+            async function initPyodide() {
+              if (pyodide) return pyodide;
+              if (pyodideLoading) {
+                // Wait for existing initialization to complete
+                while (pyodideLoading) {
+                  await new Promise((resolve) => setTimeout(resolve, 100));
+                }
+                return pyodide;
+              }
+
+              pyodideLoading = true;
+              try {
+                pyodide = await loadPyodide({
+                  indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/",
+                });
+                console.log("Pyodide loaded successfully");
+                return pyodide;
+              } catch (error) {
+                console.error("Failed to load Pyodide:", error);
+                throw error;
+              } finally {
+                pyodideLoading = false;
+              }
             }
-          } catch (error) {
-            console.error("Error during analysis:", error);
-            alert("Error submitting quiz. Please try again.");
-            // Re-enable button on error
-            submitButton.disabled = false;
-            submitButton.textContent = originalText;
-            submitButton.classList.remove("disabled");
-          }
-        });
 
-      // Pyodide functionality for code execution in quiz
-      let pyodide = null;
-      let pyodideLoading = false;
+            async function runPythonCodeInQuiz(questionId) {
+              const codeElement = document.getElementById(
+                `code-editor-${questionId}`
+              );
+              const outputElement = document.getElementById(
+                `code-output-${questionId}`
+              );
+              const runButton = document.querySelector(
+                `#code-runner-${questionId} .run-code-btn`
+              );
 
-      async function initPyodide() {
-        if (pyodide) return pyodide;
-        if (pyodideLoading) {
-          // Wait for existing initialization to complete
-          while (pyodideLoading) {
-            await new Promise((resolve) => setTimeout(resolve, 100));
-          }
-          return pyodide;
-        }
+              if (!codeElement || !outputElement) return;
 
-        pyodideLoading = true;
-        try {
-          pyodide = await loadPyodide({
-            indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/",
-          });
-          console.log("Pyodide loaded successfully");
-          return pyodide;
-        } catch (error) {
-          console.error("Failed to load Pyodide:", error);
-          throw error;
-        } finally {
-          pyodideLoading = false;
-        }
-      }
+              const code = codeElement.value;
+              if (!code.trim()) {
+                outputElement.textContent = "Please enter some Python code to run.";
+                outputElement.className = "output-content";
+                return;
+              }
 
-      async function runPythonCodeInQuiz(questionId) {
-        const codeElement = document.getElementById(
-          `code-editor-${questionId}`
-        );
-        const outputElement = document.getElementById(
-          `code-output-${questionId}`
-        );
-        const runButton = document.querySelector(
-          `#code-runner-${questionId} .run-code-btn`
-        );
+              // Update button state
+              runButton.disabled = true;
+              runButton.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Running...`;
+              outputElement.textContent = "Initializing Python environment...";
+              outputElement.className = "output-content";
 
-        if (!codeElement || !outputElement) return;
+              try {
+                // Initialize Pyodide if not already done
+                const py = await initPyodide();
 
-        const code = codeElement.value;
-        if (!code.trim()) {
-          outputElement.textContent = "Please enter some Python code to run.";
-          outputElement.className = "output-content";
-          return;
-        }
+                // Capture stdout and setup input() workaround
+                py.runPython(`
+      import sys
+      from io import StringIO
+      sys.stdout = StringIO()
 
-        // Update button state
-        runButton.disabled = true;
-        runButton.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Running...`;
-        outputElement.textContent = "Initializing Python environment...";
-        outputElement.className = "output-content";
+      # Enable input() to work in browser environment
+      from js import prompt
+      __builtins__.input = lambda msg="": str(prompt(msg) or "")
+      `);
 
-        try {
-          // Initialize Pyodide if not already done
-          const py = await initPyodide();
+                // Run the user's code
+                try {
+                  py.runPython(code);
 
-          // Capture stdout and setup input() workaround
-          py.runPython(`
-import sys
-from io import StringIO
-sys.stdout = StringIO()
+                  // Get the output
+                  const output = py.runPython("sys.stdout.getvalue()");
+                  outputElement.textContent =
+                    output || "Code executed successfully (no output)";
+                  outputElement.className = "output-content success";
+                } catch (pythonError) {
+                  outputElement.textContent = `Error: ${pythonError.message}`;
+                  outputElement.className = "output-content error";
+                }
+              } catch (error) {
+                outputElement.textContent = `Failed to initialize Python environment: ${error.message}`;
+                outputElement.className = "output-content error";
+              } finally {
+                // Re-enable button
+                runButton.disabled = false;
+                runButton.innerHTML = '<i class="fas fa-play"></i> Test Your Code';
+              }
+            }
 
-# Enable input() to work in browser environment
-from js import prompt
-__builtins__.input = lambda msg="": str(prompt(msg) or "")
-`);
+            function clearOutputInQuiz(questionId) {
+              const outputElement = document.getElementById(
+                `code-output-${questionId}`
+              );
+              if (outputElement) {
+                outputElement.textContent = "";
+                outputElement.className = "output-content";
+              }
+            }
 
-          // Run the user's code
-          try {
-            py.runPython(code);
+            function calculateTokenCost(code) {
+              const length = code ? code.length : 0;
+              if (length <= 0) return 0;
+              const rawTokens = length / 250;
+              const rounded = Math.floor(rawTokens + 0.5);
+              return Math.max(1, rounded);
+            }
 
-            // Get the output
-            const output = py.runPython("sys.stdout.getvalue()");
-            outputElement.textContent =
-              output || "Code executed successfully (no output)";
-            outputElement.className = "output-content success";
-          } catch (pythonError) {
-            outputElement.textContent = `Error: ${pythonError.message}`;
-            outputElement.className = "output-content error";
-          }
-        } catch (error) {
-          outputElement.textContent = `Failed to initialize Python environment: ${error.message}`;
-          outputElement.className = "output-content error";
-        } finally {
-          // Re-enable button
-          runButton.disabled = false;
-          runButton.innerHTML = '<i class="fas fa-play"></i> Test Your Code';
-        }
-      }
+            function updateTokenBadge(balance) {
+              const badge = document.getElementById("tokenBalanceBadge");
+              const value = document.getElementById("tokenBalanceValue");
+              if (!badge || !value) return;
+              value.textContent = balance;
+              badge.dataset.balance = balance;
+            }
 
-      function clearOutputInQuiz(questionId) {
-        const outputElement = document.getElementById(
-          `code-output-${questionId}`
-        );
-        if (outputElement) {
-          outputElement.textContent = "";
-          outputElement.className = "output-content";
-        }
-      }
+            function openQuizAiAnalysisModal(questionId, questionIndex) {
+              const modal = document.getElementById("aiAnalysisModal");
+              const codeElement = document.getElementById(`code-editor-${questionId}`);
+              if (!modal || !codeElement) return;
+
+              const code = codeElement.value || "";
+              const cost = calculateTokenCost(code);
+
+              activeQuizAiQuestionIndex = questionIndex;
+
+              document.getElementById("aiAnalysisTokenCost").textContent = cost;
+              document.getElementById("aiAnalysisTokenBalance").textContent = currentTokenBalance;
+              document.getElementById("aiAnalysisCodePreview").textContent = code || "(No code entered yet)";
+              document.getElementById("aiAnalysisError").textContent = "";
+              document.getElementById("aiAnalysisResult").textContent = "";
+
+              const confirmBtn = document.getElementById("aiAnalysisConfirm");
+              const insufficient = cost > currentTokenBalance || cost <= 0;
+              confirmBtn.disabled = insufficient;
+              if (insufficient) {
+                document.getElementById("aiAnalysisError").textContent = cost <= 0
+                  ? "Enter some code to analyze."
+                  : "Not enough tokens to run analysis.";
+              }
+
+              modal.classList.add("active");
+            }
+
+            function closeAiAnalysisModal() {
+              const modal = document.getElementById("aiAnalysisModal");
+              if (modal) {
+                modal.classList.remove("active");
+              }
+              activeQuizAiQuestionIndex = null;
+            }
+
+            async function confirmAiAnalysis() {
+              if (activeQuizAiQuestionIndex === null) return;
+
+              const questionId = `q${activeQuizAiQuestionIndex}`;
+              const codeElement = document.getElementById(`code-editor-${questionId}`);
+              if (!codeElement) return;
+
+              const code = codeElement.value || "";
+              const cost = calculateTokenCost(code);
+
+              const confirmBtn = document.getElementById("aiAnalysisConfirm");
+              const errorEl = document.getElementById("aiAnalysisError");
+              const resultEl = document.getElementById("aiAnalysisResult");
+
+              confirmBtn.disabled = true;
+              confirmBtn.textContent = "Analyzing...";
+              errorEl.textContent = "";
+              resultEl.textContent = "";
+
+              try {
+                const response = await fetch("/api/ai/code-analysis", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    code,
+                    question_index: activeQuizAiQuestionIndex,
+                  }),
+                });
+
+                const data = await response.json();
+                if (!response.ok) {
+                  throw new Error(data.error || "AI analysis failed.");
+                }
+
+                resultEl.textContent = data.analysis || "No feedback returned.";
+                currentTokenBalance = data.token_balance ?? currentTokenBalance - cost;
+                updateTokenBadge(currentTokenBalance);
+              } catch (err) {
+                errorEl.textContent = err.message || "AI analysis failed.";
+              } finally {
+                confirmBtn.disabled = false;
+                confirmBtn.textContent = "Confirm";
+              }
+            }
     </script>
 
     <style>
@@ -519,5 +637,51 @@ __builtins__.input = lambda msg="": str(prompt(msg) or "")
         font-size: 13px;
       }
     </style>
+
+    <div id="aiAnalysisModal" class="ai-analysis-modal" aria-hidden="true">
+      <div class="ai-analysis-modal-content" role="dialog" aria-modal="true">
+        <div class="ai-analysis-header">
+          <h3><i class="fas fa-robot"></i> AI Analysis</h3>
+          <button
+            class="ai-analysis-close"
+            type="button"
+            onclick="closeAiAnalysisModal()"
+          >
+            &times;
+          </button>
+        </div>
+        <div class="ai-analysis-body">
+          <p>
+            Your code will be sent to the AI tutor for feedback. This will cost
+            <strong><span id="aiAnalysisTokenCost">0</span> tokens</strong>. You
+            have <strong><span id="aiAnalysisTokenBalance">0</span></strong
+            >.
+          </p>
+          <div class="ai-analysis-preview">
+            <label>Code preview</label>
+            <pre id="aiAnalysisCodePreview"></pre>
+          </div>
+          <div id="aiAnalysisError" class="ai-analysis-error"></div>
+          <div class="ai-analysis-result" id="aiAnalysisResult"></div>
+        </div>
+        <div class="ai-analysis-actions">
+          <button
+            class="btn-secondary"
+            type="button"
+            onclick="closeAiAnalysisModal()"
+          >
+            Cancel
+          </button>
+          <button
+            class="btn-primary"
+            id="aiAnalysisConfirm"
+            type="button"
+            onclick="confirmAiAnalysis()"
+          >
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

@@ -2,6 +2,7 @@
 
 import json
 import os
+import math
 import random
 import string
 from typing import Dict, List, Optional
@@ -18,6 +19,7 @@ class UserService:
 
     CODE_LENGTH = 6
     ADMIN_STORE_FILENAME = "admin_users.json"
+    TOKEN_CHARS_PER = 250
 
     def _generate_class_code(self) -> str:
         """Generate a random alphanumeric class code."""
@@ -136,7 +138,10 @@ class UserService:
             return {"success": False, "error": "Role must be student or teacher."}
 
         if not password or len(password) < 8:
-            return {"success": False, "error": "Password must be at least 8 characters."}
+            return {
+                "success": False,
+                "error": "Password must be at least 8 characters.",
+            }
 
         if User.query.filter_by(email=email).first():
             return {"success": False, "error": "Email already registered."}
@@ -147,6 +152,7 @@ class UserService:
         try:
             password_hash = generate_password_hash(password)
             code = self._generate_unique_teacher_code() if role == "teacher" else None
+            token_balance = 10 if role == "student" else 0
 
             user = User(
                 username=username,
@@ -154,6 +160,7 @@ class UserService:
                 password_hash=password_hash,
                 role=role,
                 code=code,
+                token_balance=token_balance,
             )
             db.session.add(user)
             db.session.commit()
@@ -191,7 +198,11 @@ class UserService:
         admin_email = "admin@example.com"
         admin_password = "admin123"
 
-        if not user and identifier.lower() in {admin_username, admin_email} and password == admin_password:
+        if (
+            not user
+            and identifier.lower() in {admin_username, admin_email}
+            and password == admin_password
+        ):
             try:
                 password_hash = generate_password_hash(admin_password)
                 user = User(
@@ -200,12 +211,44 @@ class UserService:
                     password_hash=password_hash,
                     role="teacher",  # reuse teacher role; admin access is session-gated
                     code=None,
+                    token_balance=0,
                 )
                 db.session.add(user)
                 db.session.commit()
             except Exception as exc:
                 if current_app:
-                    current_app.logger.exception("Failed to create default admin: %s", exc)
+                    current_app.logger.exception(
+                        "Failed to create default admin: %s", exc
+                    )
+                db.session.rollback()
+                user = None
+
+        # Auto-provision a default test student account for demos.
+        student_username = "student"
+        student_email = "student@example.com"
+        student_password = "student123"
+
+        if (
+            not user
+            and identifier.lower() in {student_username, student_email}
+            and password == student_password
+        ):
+            try:
+                password_hash = generate_password_hash(student_password)
+                user = User(
+                    username=student_username,
+                    email=student_email,
+                    password_hash=password_hash,
+                    role="student",
+                    code=None,
+                )
+                db.session.add(user)
+                db.session.commit()
+            except Exception as exc:
+                if current_app:
+                    current_app.logger.exception(
+                        "Failed to create default student: %s", exc
+                    )
                 db.session.rollback()
                 user = None
 
@@ -218,21 +261,181 @@ class UserService:
         return User.query.get(user_id)
 
     # --------------------------------------------------------------------- #
+    # Token Management
+    # --------------------------------------------------------------------- #
+
+    @staticmethod
+    def calculate_token_cost(code: str) -> int:
+        """Calculate the token cost for a code submission."""
+        if not code:
+            return 0
+        length = len(code)
+        if length <= 0:
+            return 0
+        tokens = math.floor((length / 250) + 0.5)
+        return max(1, tokens)
+
+    def get_token_balance(self, user_id: int) -> Optional[int]:
+        """Return the token balance for a user."""
+        user = User.query.get(user_id)
+        if not user:
+            return None
+        return int(user.token_balance or 0)
+
+    def spend_tokens(self, user_id: int, amount: int) -> Dict[str, object]:
+        """Spend tokens for a student user."""
+        if amount <= 0:
+            return {"success": False, "error": "Token cost must be positive."}
+
+        user = User.query.get(user_id)
+        if not user:
+            return {"success": False, "error": "User not found."}
+
+        if (user.token_balance or 0) < amount:
+            return {"success": False, "error": "Insufficient tokens."}
+
+        try:
+            user.token_balance = max(0, (user.token_balance or 0) - amount)
+            db.session.commit()
+            return {"success": True, "balance": user.token_balance}
+        except Exception as exc:
+            if current_app:
+                current_app.logger.exception("Failed to spend tokens: %s", exc)
+            db.session.rollback()
+            return {"success": False, "error": "Failed to spend tokens."}
+
+    def adjust_student_tokens(
+        self, teacher_id: int, student_id: int, delta: int
+    ) -> Dict[str, object]:
+        """Adjust a student's token balance if they belong to the teacher."""
+        if delta == 0:
+            return {"success": False, "error": "Token adjustment cannot be zero."}
+
+        student = User.query.get(student_id)
+        if not student or student.role != "student":
+            return {"success": False, "error": "Student not found."}
+
+        belongs = (
+            User.query.join(ClassRegistration, ClassRegistration.student_id == User.id)
+            .join(Class, Class.id == ClassRegistration.class_id)
+            .filter(Class.teacher_id == teacher_id, User.id == student_id)
+            .first()
+        )
+        if not belongs:
+            return {
+                "success": False,
+                "error": "Student is not registered in your classes.",
+            }
+
+        try:
+            student.token_balance = max(0, (student.token_balance or 0) + delta)
+            db.session.commit()
+            return {"success": True, "balance": student.token_balance}
+        except Exception as exc:
+            if current_app:
+                current_app.logger.exception("Failed to adjust tokens: %s", exc)
+            db.session.rollback()
+            return {"success": False, "error": "Failed to adjust tokens."}
+
+    # --------------------------------------------------------------------- #
+    # Token Management
+    # --------------------------------------------------------------------- #
+
+    @staticmethod
+    def calculate_token_cost(code: str) -> int:
+        """Calculate token cost based on code length (1 token per 250 chars)."""
+        length = len(code or "")
+        if length <= 0:
+            return 0
+        raw_tokens = length / UserService.TOKEN_CHARS_PER
+        rounded_tokens = int(math.floor(raw_tokens + 0.5))
+        return max(1, rounded_tokens)
+
+    def get_token_balance(self, user_id: int) -> Optional[int]:
+        """Return a user's token balance."""
+        user = self.get_user(user_id)
+        if not user:
+            return None
+        return int(user.token_balance or 0)
+
+    def adjust_token_balance(self, user_id: int, delta: int) -> Dict[str, object]:
+        """Adjust a user's token balance by delta (can be negative)."""
+        user = self.get_user(user_id)
+        if not user:
+            return {"success": False, "error": "User not found."}
+
+        try:
+            current_balance = int(user.token_balance or 0)
+            new_balance = max(0, current_balance + int(delta))
+            user.token_balance = new_balance
+            db.session.commit()
+            return {"success": True, "balance": new_balance}
+        except Exception as exc:
+            current_app.logger.exception("Failed to adjust tokens: %s", exc)
+            db.session.rollback()
+            return {"success": False, "error": "Unable to update tokens."}
+
+    def spend_tokens(self, user_id: int, tokens: int) -> Dict[str, object]:
+        """Spend tokens for a user if balance allows."""
+        if tokens <= 0:
+            return {"success": False, "error": "Invalid token cost."}
+
+        user = self.get_user(user_id)
+        if not user:
+            return {"success": False, "error": "User not found."}
+
+        current_balance = int(user.token_balance or 0)
+        if current_balance < tokens:
+            return {
+                "success": False,
+                "error": "Insufficient tokens.",
+                "balance": current_balance,
+            }
+
+        try:
+            user.token_balance = current_balance - tokens
+            db.session.commit()
+            return {"success": True, "balance": user.token_balance}
+        except Exception as exc:
+            current_app.logger.exception("Failed to spend tokens: %s", exc)
+            db.session.rollback()
+            return {"success": False, "error": "Unable to spend tokens."}
+
+    # --------------------------------------------------------------------- #
     # Teacher / Student Relationships
     # --------------------------------------------------------------------- #
 
     def get_teacher_students(self, teacher_id: int) -> List[User]:
         """Return a list of distinct students enrolled in the teacher's classes."""
         return (
-            User.query.join(
-                ClassRegistration, ClassRegistration.student_id == User.id
-            )
+            User.query.join(ClassRegistration, ClassRegistration.student_id == User.id)
             .join(Class, Class.id == ClassRegistration.class_id)
             .filter(Class.teacher_id == teacher_id, User.role == "student")
             .distinct()
             .order_by(User.username.asc())
             .all()
         )
+
+    def can_teacher_manage_student(self, teacher_id: int, student_id: int) -> bool:
+        """Return True if the student belongs to the teacher's classes."""
+        if teacher_id == student_id:
+            return False
+        return any(
+            student.id == student_id
+            for student in self.get_teacher_students(teacher_id)
+        )
+
+    def adjust_student_tokens(
+        self, teacher_id: int, student_id: int, delta: int
+    ) -> Dict[str, object]:
+        """Adjust tokens for a student owned by the teacher."""
+        if not self.can_teacher_manage_student(teacher_id, student_id):
+            return {
+                "success": False,
+                "error": "Student is not registered in your classes.",
+            }
+
+        return self.adjust_token_balance(student_id, delta)
 
     def remove_student_from_teacher(self, teacher_id: int, student_id: int) -> None:
         """Remove a student's registration from all of the teacher's classes."""
