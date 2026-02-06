@@ -22,7 +22,9 @@ def upgrade():
         "user",
         sa.Column("token_balance", sa.Integer(), nullable=False, server_default="10"),
     )
-    op.alter_column("user", "token_balance", server_default=None)
+    bind = op.get_bind()
+    if bind.dialect.name != "sqlite":
+        op.alter_column("user", "token_balance", server_default=None)
 
 
 def downgrade():

@@ -18,7 +18,15 @@ from dotenv import load_dotenv
 import werkzeug
 
 from extensions import db, migrate, cache
-from models import Class, ClassRegistration, LessonProgress, User  # noqa: F401
+from models import (  # noqa: F401
+    AnonUser,
+    Attempt,
+    Class,
+    ClassRegistration,
+    Cycle,
+    LessonProgress,
+    User,
+)
 
 # Import our refactored services and blueprints
 from services import init_services
@@ -34,10 +42,21 @@ if not getattr(werkzeug, '__version__', None):
 app = Flask(__name__)
 
 # Database configuration
-app.config.setdefault(
-    "SQLALCHEMY_DATABASE_URI",
-    os.getenv("DATABASE_URL", "sqlite:///self_paced_learning.db"),
-)
+def _normalize_sqlite_uri(uri: str, base_dir: str) -> str:
+    if not uri or not uri.startswith("sqlite:///"):
+        return uri
+    raw_path = uri.replace("sqlite:///", "", 1)
+    # If already absolute (drive letter or leading slash), leave as-is.
+    if os.path.isabs(raw_path) or re.match(r"^[A-Za-z]:[\\/]", raw_path):
+        return uri
+    abs_path = os.path.abspath(os.path.join(base_dir, raw_path))
+    return f"sqlite:///{abs_path.replace(os.sep, '/')}"
+
+
+default_db_path = os.path.join(app.instance_path, "self_paced_learning.db")
+os.makedirs(app.instance_path, exist_ok=True)
+raw_db_uri = os.getenv("DATABASE_URL", f"sqlite:///{default_db_path.replace(os.sep, '/')}")
+app.config["SQLALCHEMY_DATABASE_URI"] = _normalize_sqlite_uri(raw_db_uri, app.root_path)
 app.config.setdefault("SQLALCHEMY_TRACK_MODIFICATIONS", False)
 app.config.setdefault("TEMPLATES_AUTO_RELOAD", True)
 

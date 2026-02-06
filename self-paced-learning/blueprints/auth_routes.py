@@ -9,8 +9,12 @@ from flask import (
     session,
     url_for,
 )
+import hashlib
+import os
 
 from services import get_user_service
+from extensions import db
+from models import AnonUser
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -59,6 +63,17 @@ def login():
             session["username"] = user.username
             session["is_admin"] = is_admin
             session["role"] = "admin" if is_admin else user.role
+            if not session.get("anon_user_id"):
+                salt = os.getenv("ANALYTICS_SALT") or os.getenv("FLASK_KEY") or ""
+                raw = f"{user.id}:{salt}"
+                anon_user_id = hashlib.sha256(raw.encode("utf-8")).hexdigest()
+                session["anon_user_id"] = anon_user_id
+                session.permanent = True
+                if anon_user_id:
+                    existing = AnonUser.query.get(anon_user_id)
+                    if not existing:
+                        db.session.add(AnonUser(anon_user_id=anon_user_id))
+                        db.session.commit()
             flash(f"Welcome back, {user.username}!", "success")
             return redirect(url_for("main.subject_selection"))
 

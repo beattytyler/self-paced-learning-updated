@@ -6,6 +6,8 @@ and primary user-facing functionality.
 
 import json
 import re
+import os
+from datetime import datetime
 
 from flask import (
     Blueprint,
@@ -361,6 +363,14 @@ def subtopic_prerequisites(subject, subtopic):
 # QUIZ ROUTES
 # ============================================================================
 
+# NOTE: If you want a route that records when a session ended and why, add it
+# here alongside the other quiz/session endpoints. Suggested pattern:
+# - POST /session/end (or /quiz/<subject>/<subtopic>/end)
+# - payload includes subject/subtopic, reason, and optional metadata
+# - update Attempt.ended_at, Attempt.end_reason, and Attempt.last_activity_at
+# - clear any quiz session state in progress_service
+# This keeps session-end tracking near the rest of the quiz lifecycle.
+
 
 @main_bp.route("/quiz/<subject>/<subtopic>")
 def quiz_page(subject, subtopic):
@@ -397,6 +407,31 @@ def quiz_page(subject, subtopic):
             subject, subtopic, "initial", quiz_questions
         )
         progress_service.clear_remedial_quiz_data(subject, subtopic)
+        session["current_cycle_index"] = 0
+
+        anon_user_id = session.get("anon_user_id")
+        if anon_user_id:
+            try:
+                from extensions import db
+                from models import Attempt
+
+                threshold_percent = int(os.getenv("QUIZ_PASS_THRESHOLD", "70"))
+                max_cycles_allowed = int(os.getenv("QUIZ_MAX_CYCLES", "3"))
+                attempt = Attempt(
+                    anon_user_id=anon_user_id,
+                    course_id=subject,
+                    module_id=subtopic,
+                    threshold_percent=threshold_percent,
+                    max_cycles_allowed=max_cycles_allowed,
+                    started_at=datetime.utcnow(),
+                    last_activity_at=datetime.utcnow(),
+                )
+                db.session.add(attempt)
+                db.session.commit()
+                session["current_attempt_id"] = attempt.attempt_id
+                session.permanent = True
+            except Exception as exc:
+                print(f"Error creating attempt: {exc}")
 
         return render_template(
             "quiz.html",
@@ -470,6 +505,66 @@ def analyze_quiz():
         )
 
         progress_service.store_quiz_answers(current_subject, current_subtopic, answers)
+
+        anon_user_id = session.get("anon_user_id")
+        attempt_id = session.get("current_attempt_id")
+        quiz_type = session.get(
+            progress_service.get_session_key(
+                current_subject, current_subtopic, "current_quiz_type"
+            )
+        )
+        if anon_user_id:
+            try:
+                from extensions import db
+                from models import Attempt, Cycle
+
+                if attempt_id:
+                    attempt = Attempt.query.get(attempt_id)
+                else:
+                    threshold_percent = int(os.getenv("QUIZ_PASS_THRESHOLD", "70"))
+                    max_cycles_allowed = int(os.getenv("QUIZ_MAX_CYCLES", "3"))
+                    attempt = Attempt(
+                        anon_user_id=anon_user_id,
+                        course_id=current_subject,
+                        module_id=current_subtopic,
+                        threshold_percent=threshold_percent,
+                        max_cycles_allowed=max_cycles_allowed,
+                        started_at=datetime.utcnow(),
+                        last_activity_at=datetime.utcnow(),
+                    )
+                    db.session.add(attempt)
+                    db.session.commit()
+                    attempt_id = attempt.attempt_id
+                    session["current_attempt_id"] = attempt_id
+                    session.permanent = True
+
+                cycle_index = (
+                    0
+                    if quiz_type == "initial"
+                    else int(session.get("current_cycle_index") or 1)
+                )
+                score_percentage = (
+                    analysis_result.get("score", {}).get("percentage", 0) or 0
+                )
+                passed_threshold = score_percentage >= attempt.threshold_percent
+                cycle = Cycle(
+                    attempt_id=attempt.attempt_id,
+                    cycle_index=cycle_index,
+                    quiz_id=f"{current_subject}:{current_subtopic}:{quiz_type or 'quiz'}:{cycle_index}",
+                    quiz_type="diagnostic" if quiz_type == "initial" else "remedial",
+                    quiz_submitted_at=datetime.utcnow(),
+                    score_percent=score_percentage,
+                    passed_threshold=passed_threshold,
+                )
+                db.session.add(cycle)
+                attempt.last_activity_at = datetime.utcnow()
+                if passed_threshold:
+                    progress_service.end_attempt(attempt, "passed")
+                elif quiz_type != "initial" and cycle_index >= attempt.max_cycles_allowed:
+                    progress_service.end_attempt(attempt, "max_cycles")
+                db.session.commit()
+            except Exception as exc:
+                print(f"Error logging cycle data: {exc}")
 
         return jsonify({"success": True, "analysis": stored_analysis})
 
@@ -616,9 +711,11 @@ def show_results_page():
                 "subtopic": current_subtopic,
             }
 
-        if deduped_topics:
+        if normalized_topics:
             normalized_topics = deduped_topics
             analysis["weak_topics"] = deduped_topics
+            analysis["weak_tags"] = deduped_topics
+            analysis["weak_areas"] = deduped_topics
             progress_service.store_quiz_analysis(
                 current_subject, current_subtopic, analysis
             )
@@ -813,6 +910,7 @@ def generate_remedial_quiz():
         progress_service.set_quiz_session_data(
             current_subject, current_subtopic, "remedial", remedial_questions
         )
+        session["current_cycle_index"] = int(session.get("current_cycle_index") or 0) + 1
 
         # Store AI feedback in session for display on quiz page
         if ai_feedback:
@@ -878,3 +976,19 @@ def take_remedial_quiz_page():
     except Exception as e:
         print(f"Error loading remedial quiz: {e}")
         return redirect(url_for("main.subject_selection"))
+
+
+@main_bp.route("/session/end/system-error", methods=["POST"])
+def end_session_system_error():
+    """Terminate an attempt when an unrecoverable error occurs."""
+    try:
+        progress_service = get_progress_service()
+        attempt_id = session.get("current_attempt_id")
+        if not attempt_id:
+            return jsonify({"success": False, "error": "No active attempt"}), 400
+        ended = progress_service.end_attempt_by_id(attempt_id, "system_error")
+        if not ended:
+            return jsonify({"success": False, "error": "Unable to end attempt"}), 400
+        return jsonify({"success": True})
+    except Exception as exc:
+        return jsonify({"success": False, "error": str(exc)}), 500

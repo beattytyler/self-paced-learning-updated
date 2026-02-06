@@ -34,7 +34,7 @@
 
     <h1>{{ quiz_title or "Quiz" }}</h1>
 
-    {% if token_balance is not none %}
+    {% if token_balance is defined and token_balance is not none %}
     <div
       class="token-badge quiz-token-badge"
       id="tokenBalanceBadge"
@@ -257,7 +257,7 @@
             // Pyodide functionality for code execution in quiz
             let pyodide = null;
             let pyodideLoading = false;
-        const initialTokenBalance = {{ token_balance if token_balance is not none else 0 }};
+        const initialTokenBalance = {{ token_balance|default(0, true) }};
         let currentTokenBalance = initialTokenBalance;
         let activeQuizAiQuestionIndex = null;
 

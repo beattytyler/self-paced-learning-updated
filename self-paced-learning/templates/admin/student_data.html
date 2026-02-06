@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Data Overview - Admin Panel</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body class="admin-body">
+    <div class="admin-layout">
+      <nav class="admin-sidebar">
+        <div class="admin-logo">
+          <h2><i class="fas fa-cog"></i> Admin Panel</h2>
+          <a href="/" class="back-to-site">â† Back to Site</a>
+        </div>
+        <ul class="admin-nav">
+          <li>
+            <a href="/admin"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+          </li>
+          <li>
+            <a href="/admin/subjects"
+              ><i class="fas fa-book-open"></i> Subjects</a
+            >
+          </li>
+          <li>
+            <a href="/admin/subtopics/select-subject"
+              ><i class="fas fa-sitemap"></i> Subtopics</a
+            >
+          </li>
+          <li>
+            <a href="/admin/lessons/select-subject"
+              ><i class="fas fa-chalkboard-teacher"></i> Lessons</a
+            >
+          </li>
+          <li>
+            <a href="/admin/questions/select-subject"
+              ><i class="fas fa-question-circle"></i> Questions</a
+            >
+          </li>
+          <li>
+            <a href="/admin/export"
+              ><i class="fas fa-download"></i> Export/Import</a
+            >
+          </li>
+          <li>
+            <span class="nav-heading">Analytics</span>
+          </li>
+          <li>
+            <a href="/admin/student-data" class="active"
+              ><i class="fas fa-chart-line"></i> Student Data</a
+            >
+          </li>
+        </ul>
+      </nav>
+
+      <main class="admin-content">
+        <header class="admin-header">
+          <div class="header-actions">
+            <div>
+              <h1><i class="fas fa-chart-line"></i> Student Data Overview</h1>
+              <p>High-level attempts and cycles data (anonymized).</p>
+            </div>
+          </div>
+        </header>
+
+        {% if error %}
+        <div class="empty-state">
+          <i class="fas fa-exclamation-triangle"></i>
+          <h3>Unable to load student data</h3>
+          <p>{{ error }}</p>
+        </div>
+        {% else %}
+        <section class="stats-overview">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-user-secret"></i>
+            </div>
+            <div class="stat-info">
+              <h3>{{ stats.anon_users | default(0) }}</h3>
+              <p>Anon Users</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #3182ce, #2b6cb0);">
+              <i class="fas fa-flag-checkered"></i>
+            </div>
+            <div class="stat-info">
+              <h3>{{ stats.attempts | default(0) }}</h3>
+              <p>Attempts</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #38a169, #2f855a);">
+              <i class="fas fa-sync-alt"></i>
+            </div>
+            <div class="stat-info">
+              <h3>{{ stats.cycles | default(0) }}</h3>
+              <p>Cycles</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #ed8936, #dd6b20);">
+              <i class="fas fa-percentage"></i>
+            </div>
+            <div class="stat-info">
+              <h3>{{ stats.avg_score | default(0) }}</h3>
+              <p>Avg Score</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #805ad5, #6b46c1);">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="stat-info">
+              <h3>{{ stats.pass_rate | default(0) }}%</h3>
+              <p>Pass Rate</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-section">
+          <h2>Recent Attempts</h2>
+          {% if recent_attempts %}
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Attempt</th>
+                  <th>Anon User</th>
+                  <th>Course</th>
+                  <th>Module</th>
+                  <th>Started</th>
+                  <th>Ended</th>
+                  <th>Reason</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for attempt in recent_attempts %}
+                <tr>
+                  <td>{{ attempt.attempt_id[:8] }}</td>
+                  <td>{{ attempt.anon_user_id[:8] }}</td>
+                  <td>{{ attempt.course_id }}</td>
+                  <td>{{ attempt.module_id }}</td>
+                  <td>{{ attempt.started_at }}</td>
+                  <td>{{ attempt.ended_at or "-" }}</td>
+                  <td>{{ attempt.end_reason or "-" }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% else %}
+          <p>No attempts logged yet.</p>
+          {% endif %}
+        </section>
+
+        <section class="admin-section">
+          <h2>Recent Cycles</h2>
+          {% if recent_cycles %}
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Attempt</th>
+                  <th>Cycle</th>
+                  <th>Quiz Type</th>
+                  <th>Score</th>
+                  <th>Passed</th>
+                  <th>Submitted</th>
+                  <th>Attempt Ended</th>
+                  <th>End Reason</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for cycle in recent_cycles %}
+                {% set attempt = attempt_lookup.get(cycle.attempt_id) if attempt_lookup else None %}
+                <tr>
+                  <td>{{ cycle.attempt_id[:8] }}</td>
+                  <td>{{ cycle.cycle_index }}</td>
+                  <td>{{ cycle.quiz_type }}</td>
+                  <td>{{ cycle.score_percent }}</td>
+                  <td>{{ "Yes" if cycle.passed_threshold else "No" }}</td>
+                  <td>{{ cycle.quiz_submitted_at }}</td>
+                  <td>{{ attempt.ended_at if attempt and attempt.ended_at else "-" }}</td>
+                  <td>{{ attempt.end_reason if attempt and attempt.end_reason else "-" }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% else %}
+          <p>No cycles logged yet.</p>
+          {% endif %}
+        </section>
+        {% endif %}
+      </main>
+    </div>
+
+    {% include 'admin/partials/overview_styles.html' %}
+  </body>
+</html>

@@ -5,7 +5,7 @@ Extracts progress logic from the main application routes.
 """
 
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import session, has_request_context, current_app
 from typing import Dict, List, Optional, Any, Tuple
 
@@ -502,6 +502,57 @@ class ProgressService:
     # QUIZ PROGRESS TRACKING
     # ============================================================================
 
+    # Attempt ending helpers
+    _VALID_END_REASONS = {"passed", "max_cycles", "abandoned", "system_error"}
+
+    def end_attempt(self, attempt, reason: str) -> bool:
+        """End an attempt with a validated reason."""
+        if attempt is None or attempt.ended_at is not None:
+            return False
+        if reason not in self._VALID_END_REASONS:
+            return False
+        try:
+            from extensions import db
+        except Exception:
+            return False
+        attempt.ended_at = datetime.utcnow()
+        attempt.end_reason = reason
+        attempt.last_activity_at = datetime.utcnow()
+        db.session.add(attempt)
+        db.session.commit()
+        return True
+
+    def end_attempt_by_id(self, attempt_id: str, reason: str) -> bool:
+        """Lookup and end an attempt by ID."""
+        if not attempt_id:
+            return False
+        try:
+            from models import Attempt
+        except Exception:
+            return False
+        attempt = Attempt.query.get(attempt_id)
+        return self.end_attempt(attempt, reason)
+
+    def end_stale_attempts(self, timeout_minutes: int) -> int:
+        """End stale attempts as abandoned."""
+        if timeout_minutes <= 0:
+            return 0
+        cutoff = datetime.utcnow() - timedelta(minutes=timeout_minutes)
+        try:
+            from models import Attempt
+        except Exception:
+            return 0
+        stale_attempts = (
+            Attempt.query.filter(Attempt.ended_at.is_(None))
+            .filter(Attempt.last_activity_at < cutoff)
+            .all()
+        )
+        ended = 0
+        for attempt in stale_attempts:
+            if self.end_attempt(attempt, "abandoned"):
+                ended += 1
+        return ended
+
     def set_quiz_session_data(
         self, subject: str, subtopic: str, quiz_type: str, questions: List[Dict]
     ) -> None:
@@ -593,6 +644,8 @@ class ProgressService:
         sanitized = self.prepare_analysis_for_session(analysis)
         key = self.get_session_key(subject, subtopic, "analysis_results")
         self._set_user_state_value("quiz_analysis", key, sanitized)
+        session[key] = sanitized
+        session.permanent = True
         return sanitized
 
     def get_quiz_analysis(
@@ -601,6 +654,8 @@ class ProgressService:
         """Retrieve stored quiz analysis if available."""
         key = self.get_session_key(subject, subtopic, "analysis_results")
         stored = self._get_user_state_value("quiz_analysis", key)
+        if stored is None:
+            stored = session.get(key)
         if stored is None:
             return None
         return stored
@@ -613,6 +668,8 @@ class ProgressService:
         sanitized_answers = [str(answer)[:300] for answer in answers or []]
         key = self.get_session_key(subject, subtopic, "quiz_answers")
         self._set_user_state_value("quiz_answers", key, sanitized_answers)
+        session[key] = sanitized_answers
+        session.permanent = True
         return sanitized_answers
 
     def get_quiz_answers(self, subject: str, subtopic: str) -> List[str]:
@@ -620,6 +677,8 @@ class ProgressService:
 
         key = self.get_session_key(subject, subtopic, "quiz_answers")
         stored = self._get_user_state_value("quiz_answers", key, [])
+        if not stored:
+            stored = session.get(key, [])
         if not stored:
             return []
         return list(stored)
@@ -641,6 +700,8 @@ class ProgressService:
 
         key = self.get_session_key(subject, subtopic, "wrong_indices")
         self._set_user_state_value("quiz_analysis", key, sanitized)
+        session[key] = sanitized
+        session.permanent = True
         return sanitized
 
     def get_wrong_indices(self, subject: str, subtopic: str) -> List[int]:
@@ -648,6 +709,8 @@ class ProgressService:
 
         key = self.get_session_key(subject, subtopic, "wrong_indices")
         stored = self._get_user_state_value("quiz_analysis", key, [])
+        if not stored:
+            stored = session.get(key, [])
         if not stored:
             return []
         return list(stored)
@@ -1189,7 +1252,11 @@ class ProgressService:
             lesson = lesson or {}
             if not include_lesson(lesson):
                 continue
-            lesson_id = lesson.get("id") or f"lesson_{index + 1}"
+            lesson_id = (
+                lesson.get("id")
+                or lesson.get("lesson_id")
+                or f"lesson_{index + 1}"
+            )
             lesson_id = str(lesson_id) if lesson_id is not None else ""
             if not lesson_id:
                 continue

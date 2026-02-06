@@ -1741,6 +1741,7 @@
             : "Learn with lessons and videos for this topic.";
 
         initializeLessonQuizButton(subject, subtopic);
+        updateQuizButtonStatus(subject, subtopic);
 
         // Load lessons and videos into sidebar
         loadInitialContent(subject, subtopic, videoCount);
@@ -2558,7 +2559,7 @@
         markLessonNavAsCompleted(lessonId);
         markLessonListAsCompleted(lessonId);
         updateSubtopicProgressAfterCompletion();
-        updateQuizButtonStatus();
+        updateQuizButtonStatus(currentSubject, currentSubtopic);
       }
 
       async function persistLearningItemOpen({
@@ -2989,42 +2990,39 @@
       }
 
       // Update quiz button status based on prerequisites
-      function updateQuizButtonStatus() {
-        const subject = "{{ subject }}";
-        const subtopicCards = document.querySelectorAll("[data-subtopic]");
+      function updateQuizButtonStatus(subjectOverride, subtopicOverride) {
+        const subject = subjectOverride || "{{ subject }}";
+        const subtopic = subtopicOverride;
 
-        subtopicCards.forEach((card) => {
-          const subtopic = card.getAttribute("data-subtopic");
-          if (!subtopic) {
-            return;
-          }
+        if (!subject || !subtopic) {
+          return;
+        }
 
-          fetch(`/api/quiz-prerequisites/${subject}/${subtopic}`)
-            .then((response) => response.json())
-            .then((data) => {
-              applyLessonQuizButtonState({ ...data, subject, subtopic });
-              const allMet = data.admin_override || data.all_met;
-              updateRequirementsDisplay(subtopic, data, allMet);
-            })
-            .catch((error) => {
-              console.error(
-                `Error checking prerequisites for ${subtopic}:`,
-                error
-              );
-              const fallbackData = {
-                subject,
-                subtopic,
-                admin_override: false,
-                has_prerequisites: false,
-                all_met: true,
-                lessons_complete: true,
-                videos_complete: true,
-                missing_items: [],
-              };
-              applyLessonQuizButtonState(fallbackData);
-              updateRequirementsDisplay(subtopic, fallbackData, true);
-            });
-        });
+        fetch(`/api/quiz-prerequisites/${subject}/${subtopic}`)
+          .then((response) => response.json())
+          .then((data) => {
+            applyLessonQuizButtonState({ ...data, subject, subtopic });
+            const allMet = data.admin_override || data.all_met;
+            updateRequirementsDisplay(subtopic, data, allMet);
+          })
+          .catch((error) => {
+            console.error(
+              `Error checking prerequisites for ${subtopic}:`,
+              error
+            );
+            const fallbackData = {
+              subject,
+              subtopic,
+              admin_override: false,
+              has_prerequisites: false,
+              all_met: true,
+              lessons_complete: true,
+              videos_complete: true,
+              missing_items: [],
+            };
+            applyLessonQuizButtonState(fallbackData);
+            updateRequirementsDisplay(subtopic, fallbackData, true);
+          });
       }
 
       // Update the requirements display
@@ -3137,9 +3135,15 @@
         });
       }
 
-      // Update quiz button status on page load and periodically
-      updateQuizButtonStatus();
-      setInterval(updateQuizButtonStatus, 30000); // Check every 30 seconds
+      // Update quiz button status for the active subtopic only
+      if (currentSubject && currentSubtopic) {
+        updateQuizButtonStatus(currentSubject, currentSubtopic);
+      }
+      setInterval(() => {
+        if (currentSubject && currentSubtopic) {
+          updateQuizButtonStatus(currentSubject, currentSubtopic);
+        }
+      }, 120000); // Check every 2 minutes
 
       // Pyodide functionality for code execution
       let pyodide = null;

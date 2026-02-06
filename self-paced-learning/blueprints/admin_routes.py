@@ -15,11 +15,13 @@ from flask import (
     session,
 )
 from services import get_admin_service, get_data_service, get_user_service
+from extensions import db
 from typing import Any, Dict, List
+from sqlalchemy import func
 import os
 import json
 from datetime import datetime
-from models import User
+from models import User, AnonUser, Attempt, Cycle
 
 # Create the Blueprint
 admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
@@ -84,6 +86,52 @@ def admin_dashboard():
     except Exception as e:
         print(f"Error loading admin dashboard: {e}")
         return f"Error loading admin dashboard: {e}", 500
+
+
+@admin_bp.route("/student-data")
+def admin_student_data():
+    """Admin view for anonymized student attempts/cycles data."""
+    try:
+        anon_count = AnonUser.query.count()
+        attempt_count = Attempt.query.count()
+        cycle_count = Cycle.query.count()
+
+        avg_score = (
+            db.session.query(func.avg(Cycle.score_percent)).scalar() or 0
+        )
+        pass_count = Cycle.query.filter_by(passed_threshold=True).count()
+        pass_rate = (pass_count / cycle_count * 100) if cycle_count else 0
+
+        recent_attempts = (
+            Attempt.query.order_by(Attempt.started_at.desc()).limit(50).all()
+        )
+        recent_cycles = (
+            Cycle.query.order_by(Cycle.quiz_submitted_at.desc()).limit(50).all()
+        )
+
+        stats = {
+            "anon_users": anon_count,
+            "attempts": attempt_count,
+            "cycles": cycle_count,
+            "avg_score": round(float(avg_score), 2),
+            "pass_rate": round(float(pass_rate), 2),
+        }
+
+        attempt_lookup = {attempt.attempt_id: attempt for attempt in recent_attempts}
+
+        return render_template(
+            "admin/student_data.html",
+            stats=stats,
+            recent_attempts=recent_attempts,
+            recent_cycles=recent_cycles,
+            attempt_lookup=attempt_lookup,
+        )
+    except Exception as e:
+        print(f"Error loading student data overview: {e}")
+        return (
+            render_template("admin/student_data.html", error=str(e)),
+            500,
+        )
 
 
 # ============================================================================
@@ -1682,6 +1730,20 @@ def admin_clear_cache():
     except Exception as e:
         print(f"Failed to clear cache: {e}")
         return jsonify({"success": False, "error": str(e)}), 500
+
+
+@admin_bp.route("/maintenance/expire-attempts", methods=["POST"])
+def admin_expire_attempts():
+    """Expire stale attempts as abandoned."""
+    try:
+        timeout_minutes = int(request.args.get("timeout", "60"))
+        from services import get_progress_service
+
+        progress_service = get_progress_service()
+        ended_count = progress_service.end_stale_attempts(timeout_minutes)
+        return jsonify({"success": True, "ended": ended_count})
+    except Exception as exc:
+        return jsonify({"success": False, "error": str(exc)}), 500
 
 
 # ============================================================================

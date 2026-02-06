@@ -182,7 +182,11 @@ class DataService:
                 if not isinstance(lesson_content, dict):
                     continue
                 lesson_copy = dict(lesson_content)
-                lesson_copy["id"] = lesson_copy.get("id", lesson_id)
+                lesson_copy["id"] = (
+                    lesson_copy.get("id")
+                    or lesson_copy.get("lesson_id")
+                    or lesson_id
+                )
                 lesson_list.append(lesson_copy)
         elif isinstance(lessons, list):
             for index, lesson_content in enumerate(lessons):

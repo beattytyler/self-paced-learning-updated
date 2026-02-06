@@ -379,7 +379,11 @@ def api_lesson_plans(subject, subtopic):
                 continue
 
             lesson_copy = dict(lesson)
-            lesson_id = lesson_copy.get("id") or f"lesson_{len(ordered_lessons) + 1}"
+            lesson_id = (
+                lesson_copy.get("id")
+                or lesson_copy.get("lesson_id")
+                or f"lesson_{len(ordered_lessons) + 1}"
+            )
             lesson_copy["id"] = lesson_id
             lesson_copy["completed"] = lesson_id in completed_lessons
 
