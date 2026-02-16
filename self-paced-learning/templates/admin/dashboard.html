@@ -292,6 +292,40 @@
             <div class="admin-modal-divider"></div>
 
             <div class="admin-modal-section">
+              <h4>Teacher Subject Assignments</h4>
+              <p>
+                Assign teachers to whole subjects so they can create lessons,
+                quizzes, and tags for every topic in those subjects.
+              </p>
+              <div class="admin-modal-form">
+                <label for="topicAssignmentTeacherSelect">Teacher account</label>
+                <select id="topicAssignmentTeacherSelect"></select>
+                <label for="topicAssignmentTopicSelect">Assignable subject</label>
+                <select id="topicAssignmentTopicSelect"></select>
+                <div class="admin-modal-actions">
+                  <button
+                    type="button"
+                    class="action-btn primary"
+                    id="assignTeacherTopicBtn"
+                    onclick="assignTeacherTopic()"
+                  >
+                    <i class="fas fa-link"></i>
+                    Assign Subject
+                  </button>
+                </div>
+                <p
+                  id="topicAssignmentEmpty"
+                  class="admin-modal-note is-hidden"
+                >
+                  No assignable subjects are currently available.
+                </p>
+              </div>
+              <ul class="admin-list" id="teacherTopicAssignmentList"></ul>
+            </div>
+
+            <div class="admin-modal-divider"></div>
+
+            <div class="admin-modal-section">
               <h4>Create New Admin</h4>
               <p>Create a new teacher account and grant admin access.</p>
               <div class="admin-modal-form">
@@ -1045,6 +1079,7 @@
         modal.classList.remove("is-hidden");
         document.body.style.overflow = "hidden";
         loadAdminCandidates();
+        loadTeacherTopicAssignments();
       }
 
       function closeAdminModal() {
@@ -1171,6 +1206,222 @@
           });
       }
 
+      function loadTeacherTopicAssignments() {
+        const teacherSelect = document.getElementById(
+          "topicAssignmentTeacherSelect"
+        );
+        const topicSelect = document.getElementById("topicAssignmentTopicSelect");
+        const assignmentList = document.getElementById(
+          "teacherTopicAssignmentList"
+        );
+        const emptyNote = document.getElementById("topicAssignmentEmpty");
+        const assignBtn = document.getElementById("assignTeacherTopicBtn");
+
+        if (!teacherSelect || !topicSelect || !assignmentList || !assignBtn) {
+          return;
+        }
+
+        teacherSelect.innerHTML = "";
+        topicSelect.innerHTML = "";
+        assignmentList.innerHTML = "";
+
+        fetch("/admin/teacher-topic-assignments")
+          .then((response) => response.json())
+          .then((data) => {
+            if (!data.success) {
+              throw new Error(data.error || "Unable to load subject assignments.");
+            }
+
+            const teachers = Array.isArray(data.teachers) ? data.teachers : [];
+            const assignableSubjects = Array.isArray(data.assignable_subjects)
+              ? data.assignable_subjects
+              : [];
+            const assignments = Array.isArray(data.assignments)
+              ? data.assignments
+              : [];
+
+            if (teachers.length) {
+              teachers.forEach((teacher) => {
+                const option = document.createElement("option");
+                option.value = teacher.id;
+                option.textContent = `${teacher.username} (${teacher.email})`;
+                teacherSelect.appendChild(option);
+              });
+              teacherSelect.disabled = false;
+            } else {
+              const option = document.createElement("option");
+              option.value = "";
+              option.textContent = "No teacher accounts found";
+              teacherSelect.appendChild(option);
+              teacherSelect.disabled = true;
+            }
+
+            if (assignableSubjects.length) {
+              assignableSubjects.forEach((subjectEntry) => {
+                const option = document.createElement("option");
+                option.value = subjectEntry.subject;
+                option.textContent = `${subjectEntry.subject_name}`;
+                topicSelect.appendChild(option);
+              });
+              topicSelect.disabled = false;
+              assignBtn.disabled = teacherSelect.disabled;
+              if (emptyNote) {
+                emptyNote.classList.add("is-hidden");
+              }
+            } else {
+              const option = document.createElement("option");
+              option.value = "";
+              option.textContent = "No assignable subjects available";
+              topicSelect.appendChild(option);
+              topicSelect.disabled = true;
+              assignBtn.disabled = true;
+              if (emptyNote) {
+                emptyNote.classList.remove("is-hidden");
+              }
+            }
+
+            if (assignments.length) {
+              assignments.forEach((assignment) => {
+                const item = document.createElement("li");
+
+                const info = document.createElement("div");
+                info.className = "admin-entry-info";
+
+                const name = document.createElement("span");
+                name.className = "admin-name";
+                name.textContent = `${assignment.teacher_username} - ${assignment.subject}`;
+
+                const email = document.createElement("span");
+                email.className = "admin-email";
+                email.textContent = assignment.teacher_email || "";
+
+                info.appendChild(name);
+                info.appendChild(email);
+                item.appendChild(info);
+
+                const actions = document.createElement("div");
+                actions.className = "admin-entry-actions";
+                const removeBtn = document.createElement("button");
+                removeBtn.type = "button";
+                removeBtn.className = "admin-remove-btn";
+                removeBtn.textContent = "Remove";
+                removeBtn.addEventListener("click", () =>
+                  removeTeacherTopicAssignment(assignment)
+                );
+                actions.appendChild(removeBtn);
+                item.appendChild(actions);
+
+                assignmentList.appendChild(item);
+              });
+            } else {
+              const item = document.createElement("li");
+              const label = document.createElement("span");
+              label.className = "admin-name";
+              label.textContent = "No teacher subject assignments yet.";
+              item.appendChild(label);
+              assignmentList.appendChild(item);
+            }
+          })
+          .catch((error) => {
+            console.error("Error loading teacher subject assignments:", error);
+            showNotification(
+              error.message || "Unable to load teacher subject assignments.",
+              "error"
+            );
+            assignBtn.disabled = true;
+          });
+      }
+
+      function assignTeacherTopic() {
+        const teacherSelect = document.getElementById(
+          "topicAssignmentTeacherSelect"
+        );
+        const topicSelect = document.getElementById("topicAssignmentTopicSelect");
+        const assignBtn = document.getElementById("assignTeacherTopicBtn");
+
+        if (!teacherSelect || !topicSelect || !assignBtn) {
+          return;
+        }
+
+        const teacherId = teacherSelect.value;
+        const subject = topicSelect.value || "";
+
+        if (!teacherId || !subject) {
+          showNotification("Select a teacher and subject first.", "error");
+          return;
+        }
+
+        const originalLabel = assignBtn.innerHTML;
+        assignBtn.disabled = true;
+        assignBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Assigning...';
+
+        fetch("/admin/teacher-topic-assignments", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            teacher_id: teacherId,
+            subject: subject,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (!data.success) {
+              throw new Error(data.error || "Unable to assign subject.");
+            }
+            showNotification(data.message || "Subject assigned.", "success");
+            loadTeacherTopicAssignments();
+          })
+          .catch((error) => {
+            console.error("Error assigning subject:", error);
+            showNotification(error.message || "Unable to assign subject.", "error");
+          })
+          .finally(() => {
+            assignBtn.disabled = false;
+            assignBtn.innerHTML = originalLabel;
+          });
+      }
+
+      function removeTeacherTopicAssignment(assignment) {
+        if (!assignment) {
+          return;
+        }
+        const label = `${assignment.teacher_username} (${assignment.subject})`;
+        if (!confirm(`Remove assignment for ${label}?`)) {
+          return;
+        }
+
+        fetch("/admin/teacher-topic-assignments", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            teacher_id: assignment.teacher_id,
+            subject: assignment.subject,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (!data.success) {
+              throw new Error(data.error || "Unable to remove assignment.");
+            }
+            showNotification(
+              data.message || "Assignment removed successfully.",
+              "success"
+            );
+            loadTeacherTopicAssignments();
+          })
+          .catch((error) => {
+            console.error("Error removing subject assignment:", error);
+            showNotification(
+              error.message || "Unable to remove assignment.",
+              "error"
+            );
+          });
+      }
+
       function grantAdminAccess() {
         const teacherSelect = document.getElementById("adminTeacherSelect");
         const grantBtn = document.getElementById("grantAdminBtn");
@@ -1201,6 +1452,7 @@
             if (data.success) {
               showNotification(data.message || "Admin access granted.", "success");
               loadAdminCandidates();
+              loadTeacherTopicAssignments();
             } else {
               throw new Error(data.error || "Unable to grant admin access.");
             }
@@ -1268,6 +1520,7 @@
               emailInput.value = "";
               passwordInput.value = "";
               loadAdminCandidates();
+              loadTeacherTopicAssignments();
             } else {
               throw new Error(data.error || "Unable to create admin account.");
             }
@@ -1310,6 +1563,7 @@
                 "success"
               );
               loadAdminCandidates();
+              loadTeacherTopicAssignments();
             } else {
               throw new Error(data.error || "Unable to remove admin access.");
             }

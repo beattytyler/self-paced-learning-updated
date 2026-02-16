@@ -99,11 +99,11 @@
     </div>
 
     <!-- Admin Panel Link (Optional) -->
-    {% if is_admin %}
+    {% if can_manage_content %}
       <div class="admin-link">
-        <a href="/admin" class="btn btn-secondary">
+        <a href="{{ content_builder_url or '/admin' }}" class="btn btn-secondary">
           <i class="fas fa-cog"></i>
-          Admin Panel
+          {{ content_builder_label or ('Admin Panel' if is_admin else 'Content Builder') }}
         </a>
       </div>
     {% endif %}

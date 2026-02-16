@@ -502,57 +502,6 @@ class ProgressService:
     # QUIZ PROGRESS TRACKING
     # ============================================================================
 
-    # Attempt ending helpers
-    _VALID_END_REASONS = {"passed", "max_cycles", "abandoned", "system_error"}
-
-    def end_attempt(self, attempt, reason: str) -> bool:
-        """End an attempt with a validated reason."""
-        if attempt is None or attempt.ended_at is not None:
-            return False
-        if reason not in self._VALID_END_REASONS:
-            return False
-        try:
-            from extensions import db
-        except Exception:
-            return False
-        attempt.ended_at = datetime.utcnow()
-        attempt.end_reason = reason
-        attempt.last_activity_at = datetime.utcnow()
-        db.session.add(attempt)
-        db.session.commit()
-        return True
-
-    def end_attempt_by_id(self, attempt_id: str, reason: str) -> bool:
-        """Lookup and end an attempt by ID."""
-        if not attempt_id:
-            return False
-        try:
-            from models import Attempt
-        except Exception:
-            return False
-        attempt = Attempt.query.get(attempt_id)
-        return self.end_attempt(attempt, reason)
-
-    def end_stale_attempts(self, timeout_minutes: int) -> int:
-        """End stale attempts as abandoned."""
-        if timeout_minutes <= 0:
-            return 0
-        cutoff = datetime.utcnow() - timedelta(minutes=timeout_minutes)
-        try:
-            from models import Attempt
-        except Exception:
-            return 0
-        stale_attempts = (
-            Attempt.query.filter(Attempt.ended_at.is_(None))
-            .filter(Attempt.last_activity_at < cutoff)
-            .all()
-        )
-        ended = 0
-        for attempt in stale_attempts:
-            if self.end_attempt(attempt, "abandoned"):
-                ended += 1
-        return ended
-
     def set_quiz_session_data(
         self, subject: str, subtopic: str, quiz_type: str, questions: List[Dict]
     ) -> None:
@@ -1114,6 +1063,42 @@ class ProgressService:
         summary["subtopic_count"] = total_subtopics
 
         return summary
+    
+    VALID_END_REASONS = {"passed", "max_cycles", "abandoned", "system_error"}
+
+    def end_attempt(self, attempt: "Attempt", reason: str) -> bool:
+        """End the given attempt with the specified reason."""
+        if not attempt or attempt.ended_at is not None:
+            return False
+        if reason not in self.VALID_END_REASONS:
+            return False
+
+        from extensions import db
+
+        now = datetime.utcnow()
+        attempt.ended_at = now
+        attempt.end_reason = reason
+        attempt.last_activity_at = now
+        db.session.add(attempt)
+        db.session.commit()
+        return True
+
+    def end_stale_attempts(self, timeout_minutes: int) -> int:
+        """Mark stale active attempts as abandoned and return count ended."""
+        from models import Attempt
+
+        cutoff = datetime.utcnow() - timedelta(minutes=timeout_minutes)
+        stale_attempts = (
+            Attempt.query.filter(Attempt.ended_at.is_(None))
+            .filter(Attempt.last_activity_at < cutoff)
+            .all()
+        )
+
+        ended = 0
+        for attempt in stale_attempts:
+            if self.end_attempt(attempt, "abandoned"):
+                ended += 1
+        return ended
 
     # ============================================================================
     # ADMIN OVERRIDE FUNCTIONALITY

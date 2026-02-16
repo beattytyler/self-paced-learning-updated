@@ -34,11 +34,121 @@ admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
 
 @admin_bp.before_request
 def require_admin():
-    """Restrict admin routes to authenticated admin users."""
+    """Restrict admin routes to admins or scoped teacher topic editors."""
     if not session.get("user_id"):
         return redirect(url_for("auth.login"))
-    if not session.get("is_admin"):
+    if session.get("is_admin"):
+        return None
+
+    role = (session.get("role") or "").strip().lower()
+    if role != "teacher":
         return redirect(url_for("main.subject_selection"))
+
+    if not _is_scoped_teacher_route_allowed(request.endpoint):
+        return redirect(url_for("main.subject_selection"))
+    if not _get_scoped_teacher_assignments():
+        return redirect(url_for("main.subject_selection"))
+
+    # For route patterns that include a concrete subject/subtopic in the URL,
+    # enforce assignment boundaries early.
+    route_subject = (request.view_args or {}).get("subject")
+    route_subtopic = (request.view_args or {}).get("subtopic")
+    if route_subject and route_subtopic and not _teacher_can_manage_topic(
+        route_subject, route_subtopic
+    ):
+        return jsonify({"success": False, "error": "Topic access denied."}), 403
+
+
+SCOPED_TEACHER_ALLOWED_ENDPOINTS = {
+    "admin.admin_lessons",
+    "admin.admin_create_lesson",
+    "admin.admin_edit_lesson",
+    "admin.admin_delete_lesson",
+    "admin.admin_reorder_lessons",
+    "admin.admin_select_subject_for_lessons",
+    "admin.admin_select_subtopic_for_lessons",
+    "admin.admin_questions",
+    "admin.admin_select_subject_for_questions",
+    "admin.admin_select_subtopic_for_questions",
+    "admin.admin_quiz_editor",
+    "admin.admin_quiz_initial",
+    "admin.admin_quiz_pool",
+}
+
+
+def _is_scoped_teacher() -> bool:
+    return bool(session.get("user_id")) and not bool(session.get("is_admin")) and (
+        (session.get("role") or "").strip().lower() == "teacher"
+    )
+
+
+def _is_scoped_teacher_route_allowed(endpoint: str) -> bool:
+    return endpoint in SCOPED_TEACHER_ALLOWED_ENDPOINTS
+
+
+def _get_scoped_teacher_assignments() -> List[Dict[str, Any]]:
+    user_id = session.get("user_id")
+    if not user_id:
+        return []
+    user_service = get_user_service()
+    return user_service.get_teacher_subject_assignments(int(user_id))
+
+
+def _get_scoped_teacher_assignment_subjects() -> set:
+    subjects = set()
+    for assignment in _get_scoped_teacher_assignments():
+        subject = assignment.get("subject")
+        if subject:
+            subjects.add(subject)
+    return subjects
+
+
+def _get_primary_scoped_assignment() -> Dict[str, Any]:
+    assignments = _get_scoped_teacher_assignments()
+    if not assignments:
+        return {}
+    ordered = sorted(
+        assignments,
+        key=lambda item: (
+            str(item.get("subject", "")).lower(),
+        ),
+    )
+    return ordered[0]
+
+
+def _teacher_can_manage_topic(subject: str, subtopic: str) -> bool:
+    if session.get("is_admin"):
+        return True
+    if not _is_scoped_teacher():
+        return False
+    return subject in _get_scoped_teacher_assignment_subjects()
+
+
+def _teacher_can_manage_subject(subject: str) -> bool:
+    if session.get("is_admin"):
+        return True
+    if not _is_scoped_teacher():
+        return False
+    return subject in _get_scoped_teacher_assignment_subjects()
+
+
+def _list_assignable_subjects() -> List[Dict[str, str]]:
+    """Return subjects that are considered assignable."""
+    data_service = get_data_service()
+    subjects = data_service.discover_subjects()
+    assignable_subjects: List[Dict[str, str]] = []
+
+    for subject_id, subject_info in subjects.items():
+        subject_name = subject_info.get("name", subject_id.title())
+        assignable_subjects.append(
+            {
+                "subject": subject_id,
+                "subject_name": subject_name,
+            }
+        )
+
+    assignable_subjects.sort(key=lambda item: item.get("subject_name", "").lower())
+    return assignable_subjects
 
 
 # ============================================================================
@@ -384,6 +494,126 @@ def admin_create_admin():
         )
     except Exception as exc:
         print(f"Error creating admin: {exc}")
+        return jsonify({"success": False, "error": str(exc)}), 500
+
+
+@admin_bp.route("/teacher-topic-assignments", methods=["GET"])
+def admin_list_teacher_topic_assignments():
+    """Return subject assignment metadata for the admin dashboard."""
+    if not session.get("is_admin"):
+        return jsonify({"success": False, "error": "Admin access required."}), 403
+
+    try:
+        user_service = get_user_service()
+        teachers = (
+            User.query.filter_by(role="teacher")
+            .order_by(User.username.asc())
+            .all()
+        )
+        teacher_lookup = {teacher.id: teacher for teacher in teachers}
+
+        assignments = []
+        for entry in user_service.get_all_teacher_subject_assignments():
+            teacher_id = entry.get("teacher_id")
+            teacher = teacher_lookup.get(teacher_id)
+            if not teacher:
+                continue
+            assignments.append(
+                {
+                    "teacher_id": teacher.id,
+                    "teacher_username": teacher.username,
+                    "teacher_email": teacher.email,
+                    "subject": entry.get("subject"),
+                }
+            )
+
+        return jsonify(
+            {
+                "success": True,
+                "teachers": [
+                    {
+                        "id": teacher.id,
+                        "username": teacher.username,
+                        "email": teacher.email,
+                    }
+                    for teacher in teachers
+                ],
+                "assignable_subjects": _list_assignable_subjects(),
+                "assignments": assignments,
+            }
+        )
+    except Exception as exc:
+        print(f"Error loading teacher subject assignments: {exc}")
+        return jsonify({"success": False, "error": str(exc)}), 500
+
+
+@admin_bp.route("/teacher-topic-assignments", methods=["POST"])
+def admin_assign_teacher_topic():
+    """Assign a teacher to an entire subject."""
+    if not session.get("is_admin"):
+        return jsonify({"success": False, "error": "Admin access required."}), 403
+
+    try:
+        payload = request.get_json(silent=True) or {}
+        teacher_id = payload.get("teacher_id")
+        subject = (payload.get("subject") or "").strip()
+
+        try:
+            teacher_id = int(teacher_id)
+        except (TypeError, ValueError):
+            return jsonify({"success": False, "error": "Teacher ID is required."}), 400
+
+        if not subject:
+            return (
+                jsonify(
+                    {
+                        "success": False,
+                        "error": "Subject is required.",
+                    }
+                ),
+                400,
+            )
+
+        assignable_subjects = {
+            item.get("subject") for item in _list_assignable_subjects() if item.get("subject")
+        }
+        if subject not in assignable_subjects:
+            return (
+                jsonify(
+                    {
+                        "success": False,
+                        "error": "Subject is not assignable or does not exist.",
+                    }
+                ),
+                400,
+            )
+
+        user_service = get_user_service()
+        result = user_service.assign_teacher_topic(teacher_id, subject)
+        status = 200 if result.get("success") else 400
+        return jsonify(result), status
+    except Exception as exc:
+        print(f"Error assigning teacher topic: {exc}")
+        return jsonify({"success": False, "error": str(exc)}), 500
+
+
+@admin_bp.route("/teacher-topic-assignments", methods=["DELETE"])
+def admin_unassign_teacher_topic():
+    """Remove a teacher assignment for a subject."""
+    if not session.get("is_admin"):
+        return jsonify({"success": False, "error": "Admin access required."}), 403
+
+    try:
+        payload = request.get_json(silent=True) or {}
+        teacher_id = payload.get("teacher_id")
+        subject = (payload.get("subject") or "").strip()
+
+        user_service = get_user_service()
+        result = user_service.unassign_teacher_topic(teacher_id, subject)
+        status = 200 if result.get("success") else 400
+        return jsonify(result), status
+    except Exception as exc:
+        print(f"Error removing teacher topic assignment: {exc}")
         return jsonify({"success": False, "error": str(exc)}), 500
 
 
@@ -790,10 +1020,136 @@ def admin_lessons():
         subject_filter = request.args.get("subject")
         subtopic_filter = request.args.get("subtopic")
 
-        # Require both subject and subtopic for the drag-to-reorder view
-        if not subject_filter or not subtopic_filter:
-            # Redirect to subject selection if parameters are missing
-            return redirect(url_for("admin.admin_select_subject_for_lessons"))
+        if _is_scoped_teacher():
+            assignments = _get_scoped_teacher_assignments()
+            if not assignments:
+                return redirect(url_for("main.subject_selection"))
+
+            # Teacher overview: show assigned subjects as blocks first.
+            if not subject_filter and not subtopic_filter:
+                all_subjects = data_service.discover_subjects()
+                assigned_subjects = sorted(
+                    {
+                        item.get("subject")
+                        for item in assignments
+                        if item.get("subject")
+                    }
+                )
+
+                for assignment_subject in assigned_subjects:
+                    subject_config = data_service.load_subject_config(assignment_subject)
+                    subtopics = (
+                        subject_config.get("subtopics", {}) if subject_config else {}
+                    )
+                    lesson_count = 0
+                    subtopic_count = 0
+                    for assignment_subtopic in subtopics.keys():
+                        subtopic_count += 1
+                        lesson_count += len(
+                            data_service.get_lesson_map(
+                                assignment_subject, assignment_subtopic
+                            )
+                            or {}
+                        )
+
+                    if assignment_subject in all_subjects:
+                        all_subjects[assignment_subject]["assigned_lesson_count"] = (
+                            lesson_count
+                        )
+                        all_subjects[assignment_subject]["assigned_subtopic_count"] = (
+                            subtopic_count
+                        )
+
+                teacher_subjects = {
+                    subject_id: all_subjects[subject_id]
+                    for subject_id in assigned_subjects
+                    if subject_id in all_subjects
+                }
+
+                return render_template(
+                    "admin/lessons.html",
+                    lessons=[],
+                    subjects=teacher_subjects,
+                    filtered_view=False,
+                    teacher_subject_overview=True,
+                )
+
+            # Teacher subject view: show lessons for a subject grouped by subtopic.
+            if subject_filter and not subtopic_filter:
+                if not _teacher_can_manage_subject(subject_filter):
+                    return jsonify({"success": False, "error": "Topic access denied."}), 403
+
+                all_subjects = data_service.discover_subjects()
+                subject_info = all_subjects.get(subject_filter, {})
+                subject_name = subject_info.get(
+                    "name", subject_filter.replace("_", " ").title()
+                )
+
+                subject_config = data_service.load_subject_config(subject_filter)
+                subtopics = subject_config.get("subtopics", {}) if subject_config else {}
+
+                all_lessons = []
+                for assignment_subtopic, subtopic_info in sorted(
+                    subtopics.items(), key=lambda item: str(item[0]).lower()
+                ):
+                    subtopic_name = (
+                        subtopic_info.get(
+                            "name", assignment_subtopic.replace("_", " ").title()
+                        )
+                        if isinstance(subtopic_info, dict)
+                        else assignment_subtopic.replace("_", " ").title()
+                    )
+
+                    lesson_map = (
+                        data_service.get_lesson_map(subject_filter, assignment_subtopic)
+                        or {}
+                    )
+                    sorted_lesson_items = sorted(
+                        lesson_map.items(),
+                        key=lambda entry: (entry[1].get("order", 999), entry[0]),
+                    )
+
+                    for lesson_id, lesson_data in sorted_lesson_items:
+                        content_blocks = lesson_data.get("content", [])
+                        all_lessons.append(
+                            {
+                                "subject": subject_filter,
+                                "subject_name": subject_name,
+                                "subtopic": assignment_subtopic,
+                                "subtopic_name": subtopic_name,
+                                "id": lesson_id,
+                                "title": lesson_data.get(
+                                    "title", lesson_id.replace("-", " ").title()
+                                ),
+                                "type": lesson_data.get("type", "remedial"),
+                                "content_count": len(content_blocks)
+                                if isinstance(content_blocks, list)
+                                else 0,
+                            }
+                        )
+
+                return render_template(
+                    "admin/lessons.html",
+                    lessons=all_lessons,
+                    subjects={subject_filter: subject_info} if subject_info else {},
+                    filtered_view=False,
+                    teacher_scoped_overview=True,
+                    teacher_subject_grouped=True,
+                    subject_name=subject_name,
+                    subject=subject_filter,
+                )
+
+            # If one filter is missing, route to a safe scoped page.
+            if subtopic_filter and not subject_filter:
+                return redirect(url_for("admin.admin_lessons"))
+
+            if not _teacher_can_manage_topic(subject_filter, subtopic_filter):
+                return jsonify({"success": False, "error": "Topic access denied."}), 403
+
+        else:
+            # Require both subject and subtopic for the drag-to-reorder view.
+            if not subject_filter or not subtopic_filter:
+                return redirect(url_for("admin.admin_select_subject_for_lessons"))
 
         # Use auto-discovery for subjects dropdown
         subjects = data_service.discover_subjects()
@@ -869,6 +1225,10 @@ def admin_create_lesson():
 
         if request.method == "POST":
             data = request.get_json()
+            subject = (data or {}).get("subject")
+            subtopic = (data or {}).get("subtopic")
+            if _is_scoped_teacher() and not _teacher_can_manage_topic(subject, subtopic):
+                return jsonify({"success": False, "error": "Topic access denied."}), 403
             result = admin_service.create_lesson(data)
 
             if result["success"]:
@@ -879,6 +1239,15 @@ def admin_create_lesson():
         # GET request - show create form
         data_service = get_data_service()
         subjects = data_service.discover_subjects()
+
+        if _is_scoped_teacher():
+            assignments = _get_scoped_teacher_assignments()
+            subject_ids = {item.get("subject") for item in assignments if item.get("subject")}
+            subjects = {
+                subject_id: subject_data
+                for subject_id, subject_data in subjects.items()
+                if subject_id in subject_ids
+            }
         return render_template("admin/create_lesson.html", subjects=subjects)
 
     except Exception as e:
@@ -891,6 +1260,9 @@ def admin_create_lesson():
 )
 def admin_edit_lesson(subject, subtopic, lesson_id):
     """Edit an existing lesson."""
+    if _is_scoped_teacher() and not _teacher_can_manage_topic(subject, subtopic):
+        return jsonify({"success": False, "error": "Topic access denied."}), 403
+
     if request.method == "POST":
         try:
             data = request.json
@@ -994,6 +1366,9 @@ def admin_edit_lesson(subject, subtopic, lesson_id):
 @admin_bp.route("/lessons/<subject>/<subtopic>/<lesson_id>/delete", methods=["DELETE"])
 def admin_delete_lesson(subject, subtopic, lesson_id):
     """Delete a lesson."""
+    if _is_scoped_teacher() and not _teacher_can_manage_topic(subject, subtopic):
+        return jsonify({"success": False, "error": "Topic access denied."}), 403
+
     try:
         admin_service = get_admin_service()
         result = admin_service.delete_lesson(subject, subtopic, lesson_id)
@@ -1013,6 +1388,9 @@ def admin_delete_lesson(subject, subtopic, lesson_id):
 @admin_bp.route("/lessons/<subject>/<subtopic>/reorder", methods=["POST"])
 def admin_reorder_lessons(subject, subtopic):
     """Reorder lessons in a subtopic."""
+    if _is_scoped_teacher() and not _teacher_can_manage_topic(subject, subtopic):
+        return jsonify({"success": False, "error": "Topic access denied."}), 403
+
     try:
         admin_service = get_admin_service()
         data = request.get_json()
@@ -1033,6 +1411,10 @@ def admin_reorder_lessons(subject, subtopic):
 def admin_select_subject_for_lessons():
     """Select subject for lesson management."""
     try:
+        if _is_scoped_teacher():
+            # Teacher content builders should land on their assigned lessons overview.
+            return redirect(url_for("admin.admin_lessons"))
+
         data_service = get_data_service()
         subjects = data_service.discover_subjects()
         return render_template("admin/select_subject_lessons.html", subjects=subjects)
@@ -1047,7 +1429,19 @@ def admin_select_subtopic_for_lessons():
     try:
         subject = request.args.get("subject")
         if not subject:
+            if _is_scoped_teacher():
+                primary_assignment = _get_primary_scoped_assignment()
+                if primary_assignment:
+                    return redirect(
+                        url_for(
+                            "admin.admin_select_subtopic_for_lessons",
+                            subject=primary_assignment.get("subject"),
+                        )
+                    )
             return redirect(url_for("admin.admin_select_subject_for_lessons"))
+
+        if _is_scoped_teacher() and not _teacher_can_manage_subject(subject):
+            return jsonify({"success": False, "error": "Topic access denied."}), 403
 
         data_service = get_data_service()
         subject_config = data_service.load_subject_config(subject)
@@ -1076,6 +1470,21 @@ def admin_questions():
         # Get URL parameters for filtering
         subject_filter = request.args.get("subject")
         subtopic_filter = request.args.get("subtopic")
+
+        if _is_scoped_teacher():
+            assignments = _get_scoped_teacher_assignments()
+            if not assignments:
+                return redirect(url_for("main.subject_selection"))
+
+            # If only subtopic is passed, scope is ambiguous; route to overview.
+            if subtopic_filter and not subject_filter:
+                return redirect(url_for("admin.admin_questions"))
+
+            # If both are provided, enforce exact assignment.
+            if subject_filter and subtopic_filter and not _teacher_can_manage_topic(
+                subject_filter, subtopic_filter
+            ):
+                return jsonify({"success": False, "error": "Topic access denied."}), 403
 
         # Use auto-discovery instead of subjects.json
         subjects_data = {}
@@ -1108,6 +1517,8 @@ def admin_questions():
                         )
 
         for subject_id, subject_info in discovered_subjects.items():
+            if _is_scoped_teacher() and not _teacher_can_manage_subject(subject_id):
+                continue
             # Skip if we're filtering by subject and this isn't the one
             if subject_filter and subject_id != subject_filter:
                 continue
@@ -1122,6 +1533,10 @@ def admin_questions():
                 }
 
                 for subtopic_id, subtopic_data in subject_config["subtopics"].items():
+                    if _is_scoped_teacher() and not _teacher_can_manage_topic(
+                        subject_id, subtopic_id
+                    ):
+                        continue
                     # Skip if we're filtering by subtopic and this isn't the one
                     if subtopic_filter and subtopic_id != subtopic_filter:
                         continue
@@ -1169,6 +1584,10 @@ def admin_questions():
 def admin_select_subject_for_questions():
     """Select subject for questions management."""
     try:
+        if _is_scoped_teacher():
+            # Teacher content builders should land on their assigned questions overview.
+            return redirect(url_for("admin.admin_questions"))
+
         data_service = get_data_service()
         subjects = data_service.discover_subjects()
         return render_template("admin/select_subject_questions.html", subjects=subjects)
@@ -1183,7 +1602,19 @@ def admin_select_subtopic_for_questions():
     try:
         subject = request.args.get("subject")
         if not subject:
+            if _is_scoped_teacher():
+                primary_assignment = _get_primary_scoped_assignment()
+                if primary_assignment:
+                    return redirect(
+                        url_for(
+                            "admin.admin_select_subtopic_for_questions",
+                            subject=primary_assignment.get("subject"),
+                        )
+                    )
             return redirect(url_for("admin.admin_select_subject_for_questions"))
+
+        if _is_scoped_teacher() and not _teacher_can_manage_subject(subject):
+            return jsonify({"success": False, "error": "Topic access denied."}), 403
 
         data_service = get_data_service()
         subject_config = data_service.load_subject_config(subject)
@@ -1200,6 +1631,9 @@ def admin_select_subtopic_for_questions():
 @admin_bp.route("/quiz/<subject>/<subtopic>")
 def admin_quiz_editor(subject, subtopic):
     """Quiz editor page for a specific subject/subtopic."""
+    if _is_scoped_teacher() and not _teacher_can_manage_topic(subject, subtopic):
+        return jsonify({"success": False, "error": "Topic access denied."}), 403
+
     try:
         from utils.data_loader import DataLoader
 
@@ -1252,6 +1686,9 @@ def admin_quiz_editor(subject, subtopic):
 @admin_bp.route("/quiz/<subject>/<subtopic>/initial", methods=["GET", "POST"])
 def admin_quiz_initial(subject, subtopic):
     """Manage initial quiz questions."""
+    if _is_scoped_teacher() and not _teacher_can_manage_topic(subject, subtopic):
+        return jsonify({"success": False, "error": "Topic access denied."}), 403
+
     data_service = get_data_service()
     data_loader = data_service.data_loader
 
@@ -1306,6 +1743,9 @@ def admin_quiz_initial(subject, subtopic):
 @admin_bp.route("/quiz/<subject>/<subtopic>/pool", methods=["GET", "POST"])
 def admin_quiz_pool(subject, subtopic):
     """Manage question pool for remedial quizzes."""
+    if _is_scoped_teacher() and not _teacher_can_manage_topic(subject, subtopic):
+        return jsonify({"success": False, "error": "Topic access denied."}), 403
+
     data_service = get_data_service()
     data_loader = data_service.data_loader
 

@@ -225,6 +225,27 @@ def subject_selection():
         user_role = session.get("role")
         username = session.get("username")
         is_admin = session.get("is_admin", False)
+        can_manage_content = bool(is_admin)
+        content_builder_url = "/admin"
+        content_builder_label = "Admin Panel"
+        if not can_manage_content and user_role == "teacher" and session.get("user_id"):
+            user_service = get_user_service()
+            assignments = user_service.get_teacher_subject_assignments(
+                int(session.get("user_id"))
+            )
+            can_manage_content = bool(assignments)
+            if assignments:
+                primary_assignment = sorted(
+                    assignments,
+                    key=lambda item: (
+                        str(item.get("subject", "")).lower(),
+                        str(item.get("subtopic", "")).lower(),
+                    ),
+                )[0]
+                assigned_subject = primary_assignment.get("subject")
+                if assigned_subject:
+                    content_builder_url = "/admin/lessons"
+                    content_builder_label = "Content Builder"
 
         return render_template(
             "subject_selection.html",
@@ -232,6 +253,9 @@ def subject_selection():
             user_role=user_role,
             username=username,
             is_admin=is_admin,
+            can_manage_content=can_manage_content,
+            content_builder_url=content_builder_url,
+            content_builder_label=content_builder_label,
         )
 
     except Exception as e:
@@ -243,6 +267,9 @@ def subject_selection():
             subjects={},
             user_role=user_role,
             username=username,
+            can_manage_content=False,
+            content_builder_url="/admin",
+            content_builder_label="Admin Panel",
         )
 
 
@@ -253,6 +280,7 @@ def subject_page(subject):
     try:
         data_service = get_data_service()
         progress_service = get_progress_service()
+        user_service = get_user_service()
 
         # Load subject configuration and info
         subject_config = data_service.load_subject_config(subject)
@@ -263,6 +291,18 @@ def subject_page(subject):
             return redirect(url_for("main.subject_selection"))
 
         subtopics = filter_active_subtopics(subject_config.get("subtopics", {}))
+
+        current_user_id = session.get("user_id")
+        is_admin = bool(session.get("is_admin"))
+        role = (session.get("role") or "").strip().lower()
+        teacher_assignment_subjects = set()
+        if current_user_id and role == "teacher" and not is_admin:
+            assignments = user_service.get_teacher_subject_assignments(int(current_user_id))
+            teacher_assignment_subjects = {
+                item.get("subject")
+                for item in assignments
+                if item.get("subject")
+            }
 
         # Calculate actual counts for each subtopic by checking the files
         for subtopic_id, subtopic_data in subtopics.items():
@@ -290,6 +330,16 @@ def subject_page(subject):
                 )
                 subtopic_data["progress"] = progress_stats
 
+                can_manage_topic = is_admin or (
+                    role == "teacher"
+                    and subject in teacher_assignment_subjects
+                )
+                subtopic_data["can_manage_content"] = can_manage_topic
+                if can_manage_topic:
+                    subtopic_data["content_builder_url"] = (
+                        f"/admin/lessons?subject={subject}&subtopic={subtopic_id}"
+                    )
+
             except Exception as e:
                 print(f"Error processing subtopic {subtopic_id}: {e}")
                 subtopic_data["question_count"] = 0
@@ -298,6 +348,7 @@ def subject_page(subject):
                 subtopic_data["progress"] = {
                     "overall": {"completion_percentage": 0, "is_complete": False}
                 }
+                subtopic_data["can_manage_content"] = False
 
         return render_template(
             "python_subject.html",
@@ -362,14 +413,6 @@ def subtopic_prerequisites(subject, subtopic):
 # ============================================================================
 # QUIZ ROUTES
 # ============================================================================
-
-# NOTE: If you want a route that records when a session ended and why, add it
-# here alongside the other quiz/session endpoints. Suggested pattern:
-# - POST /session/end (or /quiz/<subject>/<subtopic>/end)
-# - payload includes subject/subtopic, reason, and optional metadata
-# - update Attempt.ended_at, Attempt.end_reason, and Attempt.last_activity_at
-# - clear any quiz session state in progress_service
-# This keeps session-end tracking near the rest of the quiz lifecycle.
 
 
 @main_bp.route("/quiz/<subject>/<subtopic>")
@@ -559,9 +602,14 @@ def analyze_quiz():
                 db.session.add(cycle)
                 attempt.last_activity_at = datetime.utcnow()
                 if passed_threshold:
-                    progress_service.end_attempt(attempt, "passed")
-                elif quiz_type != "initial" and cycle_index >= attempt.max_cycles_allowed:
-                    progress_service.end_attempt(attempt, "max_cycles")
+                    attempt.ended_at = datetime.utcnow()
+                    attempt.end_reason = "passed"
+                elif (
+                    quiz_type != "initial"
+                    and cycle_index >= attempt.max_cycles_allowed
+                ):
+                    attempt.ended_at = datetime.utcnow()
+                    attempt.end_reason = "max_cycles"
                 db.session.commit()
             except Exception as exc:
                 print(f"Error logging cycle data: {exc}")
@@ -976,19 +1024,3 @@ def take_remedial_quiz_page():
     except Exception as e:
         print(f"Error loading remedial quiz: {e}")
         return redirect(url_for("main.subject_selection"))
-
-
-@main_bp.route("/session/end/system-error", methods=["POST"])
-def end_session_system_error():
-    """Terminate an attempt when an unrecoverable error occurs."""
-    try:
-        progress_service = get_progress_service()
-        attempt_id = session.get("current_attempt_id")
-        if not attempt_id:
-            return jsonify({"success": False, "error": "No active attempt"}), 400
-        ended = progress_service.end_attempt_by_id(attempt_id, "system_error")
-        if not ended:
-            return jsonify({"success": False, "error": "Unable to end attempt"}), 400
-        return jsonify({"success": True})
-    except Exception as exc:
-        return jsonify({"success": False, "error": str(exc)}), 500

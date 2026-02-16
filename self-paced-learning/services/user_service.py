@@ -19,6 +19,7 @@ class UserService:
 
     CODE_LENGTH = 6
     ADMIN_STORE_FILENAME = "admin_users.json"
+    TEACHER_TOPIC_ASSIGNMENTS_FILENAME = "teacher_topic_assignments.json"
     TOKEN_CHARS_PER = 250
 
     def _generate_class_code(self) -> str:
@@ -68,6 +69,101 @@ class UserService:
         path = self._get_admin_store_path()
         unique_ids = sorted({int(value) for value in admin_ids if value})
         payload = {"admins": unique_ids}
+        with open(path, "w", encoding="utf-8") as handle:
+            json.dump(payload, handle, indent=2)
+
+    def _get_teacher_topic_assignment_store_path(self) -> str:
+        """Return the path to the teacher topic assignment store."""
+        if current_app:
+            base_dir = current_app.instance_path
+        else:
+            base_dir = os.path.join(os.getcwd(), "instance")
+        os.makedirs(base_dir, exist_ok=True)
+        return os.path.join(base_dir, self.TEACHER_TOPIC_ASSIGNMENTS_FILENAME)
+
+    def _load_teacher_topic_assignment_store(self) -> Dict[str, List[Dict[str, str]]]:
+        """Load teacher subject assignments from disk."""
+        path = self._get_teacher_topic_assignment_store_path()
+        if not os.path.exists(path):
+            return {"assignments": []}
+
+        try:
+            with open(path, "r", encoding="utf-8") as handle:
+                payload = json.load(handle) or {}
+        except Exception as exc:
+            if current_app:
+                current_app.logger.exception(
+                    "Failed to read teacher topic assignment store: %s", exc
+                )
+            return {"assignments": []}
+
+        assignments = payload.get("assignments")
+        if not isinstance(assignments, list):
+            assignments = []
+
+        normalized: List[Dict[str, str]] = []
+        seen = set()
+        for entry in assignments:
+            if not isinstance(entry, dict):
+                continue
+            teacher_id = entry.get("teacher_id")
+            subject = (entry.get("subject") or "").strip()
+            if not teacher_id or not subject:
+                continue
+            try:
+                normalized_teacher_id = int(teacher_id)
+            except (TypeError, ValueError):
+                continue
+            key = (normalized_teacher_id, subject)
+            if key in seen:
+                continue
+            seen.add(key)
+            normalized.append(
+                {
+                    "teacher_id": normalized_teacher_id,
+                    "subject": subject,
+                }
+            )
+
+        return {"assignments": normalized}
+
+    def _save_teacher_topic_assignment_store(
+        self, assignments: List[Dict[str, str]]
+    ) -> None:
+        """Persist teacher subject assignments to disk."""
+        path = self._get_teacher_topic_assignment_store_path()
+
+        normalized: List[Dict[str, str]] = []
+        seen = set()
+        for entry in assignments:
+            if not isinstance(entry, dict):
+                continue
+            teacher_id = entry.get("teacher_id")
+            subject = (entry.get("subject") or "").strip()
+            if not teacher_id or not subject:
+                continue
+            try:
+                normalized_teacher_id = int(teacher_id)
+            except (TypeError, ValueError):
+                continue
+            key = (normalized_teacher_id, subject)
+            if key in seen:
+                continue
+            seen.add(key)
+            normalized.append(
+                {
+                    "teacher_id": normalized_teacher_id,
+                    "subject": subject,
+                }
+            )
+
+        normalized.sort(
+            key=lambda item: (
+                item.get("subject", "").lower(),
+                item.get("teacher_id", 0),
+            )
+        )
+        payload = {"assignments": normalized}
         with open(path, "w", encoding="utf-8") as handle:
             json.dump(payload, handle, indent=2)
 
@@ -124,6 +220,146 @@ class UserService:
         if not user:
             return False
         return (user.username or "").strip().lower() == "admin"
+
+    def get_teacher_subject_assignments(self, teacher_id: int) -> List[Dict[str, str]]:
+        """Return all subject assignments for a teacher."""
+        try:
+            normalized_teacher_id = int(teacher_id)
+        except (TypeError, ValueError):
+            return []
+
+        payload = self._load_teacher_topic_assignment_store()
+        assignments = payload.get("assignments", [])
+        return [
+            dict(entry)
+            for entry in assignments
+            if int(entry.get("teacher_id", 0)) == normalized_teacher_id
+        ]
+
+    def get_teacher_topic_assignments(self, teacher_id: int) -> List[Dict[str, str]]:
+        """Backward-compatible alias for subject assignment retrieval."""
+        return self.get_teacher_subject_assignments(teacher_id)
+
+    def get_all_teacher_subject_assignments(self) -> List[Dict[str, str]]:
+        """Return all teacher subject assignments."""
+        payload = self._load_teacher_topic_assignment_store()
+        assignments = payload.get("assignments", [])
+        if not isinstance(assignments, list):
+            return []
+        return [dict(entry) for entry in assignments if isinstance(entry, dict)]
+
+    def get_all_teacher_topic_assignments(self) -> List[Dict[str, str]]:
+        """Backward-compatible alias for subject assignment retrieval."""
+        return self.get_all_teacher_subject_assignments()
+
+    def teacher_has_topic_assignment(
+        self, teacher_id: int, subject: str, subtopic: str
+    ) -> bool:
+        """Return True if the teacher is assigned to the subject."""
+        return self.teacher_has_subject_assignment(teacher_id, subject)
+
+    def teacher_has_subject_assignment(self, teacher_id: int, subject: str) -> bool:
+        """Return True if the teacher is assigned to the subject."""
+        normalized_subject = (subject or "").strip()
+        if not normalized_subject:
+            return False
+        assignments = self.get_teacher_subject_assignments(teacher_id)
+        return any(entry.get("subject") == normalized_subject for entry in assignments)
+
+    def assign_teacher_topic(
+        self, teacher_id: int, subject: str, subtopic: str = ""
+    ) -> Dict[str, object]:
+        """Assign a teacher to a subject."""
+        try:
+            normalized_teacher_id = int(teacher_id)
+        except (TypeError, ValueError):
+            return {"success": False, "error": "Teacher ID is required."}
+
+        teacher = User.query.get(normalized_teacher_id)
+        if not teacher or teacher.role != "teacher":
+            return {"success": False, "error": "Teacher account not found."}
+
+        normalized_subject = (subject or "").strip()
+        if not normalized_subject:
+            return {
+                "success": False,
+                "error": "Subject is required.",
+            }
+
+        payload = self._load_teacher_topic_assignment_store()
+        assignments = payload.get("assignments", [])
+
+        already_assigned = any(
+            int(entry.get("teacher_id", 0)) == normalized_teacher_id
+            and entry.get("subject") == normalized_subject
+            for entry in assignments
+            if isinstance(entry, dict)
+        )
+        if already_assigned:
+            return {
+                "success": True,
+                "message": "Teacher is already assigned to that subject.",
+                "assignment": {
+                    "teacher_id": normalized_teacher_id,
+                    "subject": normalized_subject,
+                },
+            }
+
+        assignments.append(
+            {
+                "teacher_id": normalized_teacher_id,
+                "subject": normalized_subject,
+            }
+        )
+        self._save_teacher_topic_assignment_store(assignments)
+
+        return {
+            "success": True,
+            "message": "Teacher assigned successfully.",
+            "assignment": {
+                "teacher_id": normalized_teacher_id,
+                "subject": normalized_subject,
+            },
+        }
+
+    def unassign_teacher_topic(
+        self, teacher_id: int, subject: str, subtopic: str = ""
+    ) -> Dict[str, object]:
+        """Remove a teacher assignment for a subject."""
+        try:
+            normalized_teacher_id = int(teacher_id)
+        except (TypeError, ValueError):
+            return {"success": False, "error": "Teacher ID is required."}
+
+        normalized_subject = (subject or "").strip()
+        if not normalized_subject:
+            return {
+                "success": False,
+                "error": "Subject is required.",
+            }
+
+        payload = self._load_teacher_topic_assignment_store()
+        assignments = payload.get("assignments", [])
+
+        kept = []
+        removed = False
+        for entry in assignments:
+            if not isinstance(entry, dict):
+                continue
+            matches = (
+                int(entry.get("teacher_id", 0)) == normalized_teacher_id
+                and entry.get("subject") == normalized_subject
+            )
+            if matches:
+                removed = True
+                continue
+            kept.append(entry)
+
+        if removed:
+            self._save_teacher_topic_assignment_store(kept)
+            return {"success": True, "message": "Teacher assignment removed."}
+
+        return {"success": True, "message": "Assignment already removed."}
 
     # --------------------------------------------------------------------- #
     # Authentication

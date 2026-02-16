@@ -64,8 +64,26 @@
             <span>{{ subtopic_name or subtopic|title }}</span>
           </div>
           {% else %}
+          {% if teacher_scoped_overview %}
+          {% if teacher_subject_grouped %}
+          <h1>Lessons for {{ subject_name or subject|title }}</h1>
+          <p>Grouped by subtopic. Manage lessons in each section below.</p>
+          <div class="breadcrumb">
+            <a href="/admin/lessons">Assigned Subjects</a>
+            <span aria-hidden="true">›</span>
+            <span>{{ subject_name or subject|title }}</span>
+          </div>
+          {% else %}
+          <h1>Assigned Lesson Management</h1>
+          <p>View and manage lessons across all topics assigned to you.</p>
+          {% endif %}
+          {% elif teacher_subject_overview %}
+          <h1>Assigned Subjects</h1>
+          <p>Select a subject to view and manage its lessons grouped by subtopic.</p>
+          {% else %}
           <h1>Lesson Management</h1>
           <p>Create and manage remedial and initial lessons for all subjects.</p>
+          {% endif %}
           {% endif %}
         </header>
 
@@ -335,7 +353,129 @@
           </div>
           {% endif %}
           {% else %}
-          {% if lessons %}
+          {% if teacher_subject_overview %}
+          {% if subjects %}
+          <div class="subject-cards-grid">
+            {% for subject_id, subject_data in subjects.items() %}
+            <article class="subject-overview-card">
+              <div class="subject-overview-header">
+                <span
+                  class="subject-badge-small"
+                  style="background-color: {{ subject_data.color or '#2b6cb0' }}"
+                >
+                  <i class="{{ subject_data.icon or 'fas fa-book' }}"></i>
+                </span>
+                <div>
+                  <h3>{{ subject_data.name or subject_id|title }}</h3>
+                  <p>{{ subject_data.description or 'Manage lesson content across this subject.' }}</p>
+                </div>
+              </div>
+              <div class="subject-overview-stats">
+                <span>
+                  <i class="fas fa-layer-group"></i>
+                  {{ subject_data.assigned_subtopic_count or 0 }} subtopics
+                </span>
+                <span>
+                  <i class="fas fa-book-open"></i>
+                  {{ subject_data.assigned_lesson_count or 0 }} lessons
+                </span>
+              </div>
+              <div class="subject-overview-actions">
+                <a
+                  href="/admin/lessons?subject={{ subject_id|urlencode }}"
+                  class="action-btn primary"
+                >
+                  <i class="fas fa-arrow-right"></i>
+                  Manage Subject Lessons
+                </a>
+              </div>
+            </article>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="empty-state">
+            <i class="fas fa-info-circle"></i>
+            <p>No assigned subjects found.</p>
+          </div>
+          {% endif %}
+          {% elif lessons %}
+          {% if teacher_scoped_overview %}
+          {% set ns = namespace(current_subject='', current_subtopic='') %}
+          {% for lesson in lessons %}
+          {% set is_new_group = lesson.subject != ns.current_subject or lesson.subtopic != ns.current_subtopic %}
+          {% if is_new_group %}
+          {% if not loop.first %}
+            </div>
+          </section>
+          {% endif %}
+          <section class="lesson-section">
+            <div class="section-header">
+              <h2>
+                <i class="fas fa-layer-group"></i>
+                {{ lesson.subject_name or lesson.subject|title }} - {{ lesson.subtopic_name or lesson.subtopic|title }}
+              </h2>
+              <p>Manage all lessons for this subtopic.</p>
+            </div>
+            <div class="lessons-list">
+          {% set ns.current_subject = lesson.subject %}
+          {% set ns.current_subtopic = lesson.subtopic %}
+          {% endif %}
+              <article
+                class="lesson-card lesson-list-item {{ 'initial-lesson' if (lesson.type or 'remedial') == 'initial' else 'remedial-lesson' }}"
+              >
+                <div class="lesson-order-badge">
+                  <i class="fas fa-book"></i>
+                </div>
+                <div class="lesson-main-content">
+                  <div class="lesson-header-inline">
+                    <h3>{{ lesson.title }}</h3>
+                    <div class="lesson-meta-inline">
+                      <span class="lesson-type-badge {{ 'initial' if (lesson.type or 'remedial') == 'initial' else 'remedial' }}">
+                        <i class="fas {{ 'fa-seedling' if (lesson.type or 'remedial') == 'initial' else 'fa-bandage' }}"></i>
+                        {{ (lesson.type or 'remedial')|title }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="lesson-details">
+                    <div class="lesson-detail-item">
+                      <i class="fas fa-list"></i>
+                      <span>{{ lesson.content_count or 0 }} content blocks</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="lesson-actions-inline">
+                  <a
+                    href="/admin/lessons/{{ lesson.subject|urlencode }}/{{ lesson.subtopic|urlencode }}/{{ lesson.id|urlencode }}/edit"
+                    class="btn-action btn-edit"
+                    title="Edit Lesson"
+                  >
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <button
+                    type="button"
+                    class="btn-action btn-delete"
+                    onclick="deleteLesson({{ lesson.subject|tojson }}, {{ lesson.subtopic|tojson }}, {{ lesson.id|tojson }})"
+                    title="Delete Lesson"
+                  >
+                    <i class="fas fa-trash"></i>
+                  </button>
+                  <a
+                    href="/subjects/{{ lesson.subject|urlencode }}?subtopic={{ lesson.subtopic|urlencode }}&lesson={{ lesson.id|urlencode }}"
+                    target="_blank"
+                    rel="noopener"
+                    class="btn-action btn-view"
+                    title="Preview Lesson"
+                  >
+                    <i class="fas fa-eye"></i>
+                  </a>
+                </div>
+              </article>
+          {% if loop.last %}
+            </div>
+          </section>
+          {% endif %}
+          {% endfor %}
+          {% else %}
           <div class="lessons-table-wrapper">
             <table class="lessons-table">
               <thead>
@@ -345,6 +485,7 @@
                   <th>Title</th>
                   <th>Type</th>
                   <th>Content Blocks</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -355,11 +496,40 @@
                   <td data-label="Title">{{ lesson.title }}</td>
                   <td data-label="Type">{{ lesson.type|default('Remedial')|title }}</td>
                   <td data-label="Content">{{ lesson.content_count or lesson.content|length }}</td>
+                  <td data-label="Actions">
+                    <div class="lesson-actions-inline">
+                      <a
+                        href="/admin/lessons/{{ lesson.subject|urlencode }}/{{ lesson.subtopic|urlencode }}/{{ lesson.id|urlencode }}/edit"
+                        class="btn-action btn-edit"
+                        title="Edit Lesson"
+                      >
+                        <i class="fas fa-edit"></i>
+                      </a>
+                      <button
+                        type="button"
+                        class="btn-action btn-delete"
+                        onclick="deleteLesson({{ lesson.subject|tojson }}, {{ lesson.subtopic|tojson }}, {{ lesson.id|tojson }})"
+                        title="Delete Lesson"
+                      >
+                        <i class="fas fa-trash"></i>
+                      </button>
+                      <a
+                        href="/subjects/{{ lesson.subject|urlencode }}?subtopic={{ lesson.subtopic|urlencode }}&lesson={{ lesson.id|urlencode }}"
+                        target="_blank"
+                        rel="noopener"
+                        class="btn-action btn-view"
+                        title="Preview Lesson"
+                      >
+                        <i class="fas fa-eye"></i>
+                      </a>
+                    </div>
+                  </td>
                 </tr>
                 {% endfor %}
               </tbody>
             </table>
           </div>
+          {% endif %}
           {% else %}
           <div class="empty-state">
             <i class="fas fa-info-circle"></i>
@@ -370,6 +540,59 @@
         </div>
       </main>
     </div>
+
+    <style>
+      .subject-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 18px;
+      }
+
+      .subject-overview-card {
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 16px;
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+      }
+
+      .subject-overview-header {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+      }
+
+      .subject-overview-header h3 {
+        margin: 0;
+        font-size: 1.05rem;
+        color: #1f2937;
+      }
+
+      .subject-overview-header p {
+        margin: 4px 0 0 0;
+        color: #64748b;
+        font-size: 0.9rem;
+      }
+
+      .subject-overview-stats {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+        color: #334155;
+        font-size: 0.9rem;
+      }
+
+      .subject-overview-stats span {
+        display: inline-flex;
+        gap: 6px;
+        align-items: center;
+      }
+
+      .subject-overview-actions {
+        margin-top: 14px;
+      }
+    </style>
 
     <script>
       function deleteLesson(subject, subtopic, lessonId) {

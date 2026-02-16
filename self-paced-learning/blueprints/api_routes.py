@@ -18,6 +18,28 @@ from urllib.parse import unquote
 api_bp = Blueprint("api", __name__, url_prefix="/api")
 
 
+def _is_scoped_teacher() -> bool:
+    return bool(session.get("user_id")) and not bool(session.get("is_admin")) and (
+        (session.get("role") or "").strip().lower() == "teacher"
+    )
+
+
+def _teacher_can_manage_subject(subject: str) -> bool:
+    user_id = session.get("user_id")
+    if not user_id:
+        return False
+    user_service = get_user_service()
+    return user_service.teacher_has_subject_assignment(int(user_id), subject)
+
+
+def _teacher_can_manage_topic(subject: str, subtopic: str) -> bool:
+    user_id = session.get("user_id")
+    if not user_id:
+        return False
+    user_service = get_user_service()
+    return user_service.teacher_has_topic_assignment(int(user_id), subject, subtopic)
+
+
 # ============================================================================
 # VIDEO API ENDPOINTS
 # ============================================================================
@@ -471,6 +493,9 @@ def api_find_lessons_by_tags():
 def api_get_subject_tags(subject):
     """API endpoint to get available tags for a subject."""
     try:
+        if _is_scoped_teacher() and not _teacher_can_manage_subject(subject):
+            return jsonify({"error": "Topic access denied."}), 403
+
         data_service = get_data_service()
 
         # Validate subject exists
@@ -496,6 +521,9 @@ def api_get_subject_tags(subject):
 def api_add_subject_tag(subject):
     """API endpoint to add a new tag to a subject's tag pool."""
     try:
+        if _is_scoped_teacher() and not _teacher_can_manage_subject(subject):
+            return jsonify({"error": "Topic access denied."}), 403
+
         data_service = get_data_service()
 
         # Validate subject exists
@@ -540,6 +568,9 @@ def api_add_subject_tag(subject):
 def api_remove_subject_tag(subject, tag):
     """API endpoint to remove a tag from a subject's tag pool."""
     try:
+        if _is_scoped_teacher() and not _teacher_can_manage_subject(subject):
+            return jsonify({"error": "Topic access denied."}), 403
+
         data_service = get_data_service()
 
         # Validate subject exists
@@ -579,6 +610,9 @@ def api_remove_subject_tag(subject, tag):
 def api_get_subtopics(subject):
     """API endpoint to get subtopics for a subject."""
     try:
+        if _is_scoped_teacher() and not _teacher_can_manage_subject(subject):
+            return jsonify({"error": "Topic access denied."}), 403
+
         data_service = get_data_service()
 
         # Validate subject exists
@@ -594,6 +628,12 @@ def api_get_subtopics(subject):
             if str((subtopic_data or {}).get("status", "") or "").strip().lower()
             in ("", "active")
         }
+        if _is_scoped_teacher():
+            active_subtopics = {
+                subtopic_id: subtopic_data
+                for subtopic_id, subtopic_data in active_subtopics.items()
+                if _teacher_can_manage_topic(subject, subtopic_id)
+            }
 
         return jsonify({"subject": subject, "subtopics": active_subtopics})
 
